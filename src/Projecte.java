@@ -18,8 +18,10 @@ public class Projecte{
 		String usuari,contrasenya;
 		boolean usuariRepetit = false;
 		
+		System.out.println("Benvingut al <inserte nombre del programa aqui>");
 		while(stop == false)
 		{
+			usuarisActius=0; //Es posa a 0 per quan compti que no surti dels limits
 			for(int i=0;i<usuaris.length;i++){
 				if(!(usuaris[i] == null))
 					usuarisActius++;
@@ -41,6 +43,7 @@ public class Projecte{
 						break;
 					}
 				}
+				//Si el nom d'usuari es valid et demana contrasenya i el fica en la array.
 				if(!usuariRepetit){
 					System.out.print("Introdueix la contrasenya: ");
 					contrasenya=sc.nextLine();
@@ -52,6 +55,7 @@ public class Projecte{
 				
 				break;
 			default:
+				System.out.println("Opcio no reconeguda");
 			}
 		}
 	}
