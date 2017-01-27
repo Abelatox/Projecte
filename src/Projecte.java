@@ -27,6 +27,7 @@ public class Projecte{
 		
 		String deutor=""; //Qui deu diners
 		float quantitat=0F;
+		float total=0;
 		boolean usuariRepetit = false;
 		
 		System.out.println("Benvingut al <inserte nombre del programa aqui>");
@@ -83,6 +84,7 @@ public class Projecte{
                     if(usuariRepetit){ //Si existeix l'usuari
                             if(contrasenya.equals(password[index])){ // Comprova si la contrassenya és correta per l'usuari
                 				System.out.println("Benvingut "+usuari);
+            					System.out.println();
                                 pantallaActual=1;
                             }else{
                                     System.out.println("contrasenya erronia!!");
@@ -97,7 +99,7 @@ public class Projecte{
                 }
 
 			}else if(pantallaActual==1){
-				System.out.println("1- Afegir deute");
+				System.out.println("1- Editar deute");
 				System.out.println("2- Informacio de deutes");
 				System.out.println("3- Tornar enrera");
 				System.out.print("Tria una opcio: ");
@@ -106,12 +108,10 @@ public class Projecte{
 				switch(Integer.parseInt(opcioMenuLogin)){
 				case 1: //Afegir deute
 					System.out.print("Introdueix qui et deu diners: ");
-					deutor = sc.nextLine();
+					deutor = sc.nextLine().toUpperCase();
 					System.out.print("Introdueix la quantitat: ");
 					quantitat=Float.parseFloat(sc.nextLine());
-					
-					System.out.println(deutor+" deu "+quantitat+" a "+usuari);
-					
+										
 					//Afegim les dades a les arrays
 					for(int i=0;i<deutors.length;i++){
 						if(deutors[i]==null){
@@ -129,12 +129,19 @@ public class Projecte{
 				break;
 					
 				case 2: //Notifiacions / informació
-					System.out.println("Deutor\tQuantitat");
+					System.out.println("|---------------|");
+					System.out.println("|Deutor\tQtat."+"\t|");
+					System.out.println("|---------------|");
 					for(int i=0;i<deutors.length;i++){
 						if(prestamistes[i]==usuari){
-							System.out.println(deutors[i]+"\t"+quantitats[i]);
+							total=total+quantitats[i];
+							System.out.println("|"+deutors[i]+"\t"+quantitats[i]+"\t|");
+							System.out.println("|---------------|");
 						}
 					}
+					System.out.println("|---------------|");
+					System.out.println("|Total\t"+total+"\t|");
+					System.out.println("|---------------|");
 					
 					break;
 				case 3: //Enrera
@@ -143,7 +150,8 @@ public class Projecte{
 					
 				default:
 					System.out.println("Opcio no reconeguda");
-				}				
+				}	
+				System.out.println();
 			}
 		}
 	}
