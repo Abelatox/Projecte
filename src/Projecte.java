@@ -95,32 +95,6 @@ public class Projecte{
                     System.out.println("Opcio no reconeguda");
                 }
 
-					int index=-1; //Variable que guarda en quin index es troba l'usuari.
-					System.out.print("Usuari: ");
-					usuari=sc.nextLine(); //Llegim el que Introdueix l'usuari.
-					System.out.print("Contrassenya: ");
-					contrasenya=sc.nextLine(); 
-					for(int i=0;i<usuarisActius;i++){ //Aquest for guarda l'index en el que està l'usuari que volem saber i si existeix.
-						if(usuaris[i].equals(usuari)){
-							usuariRepetit = true;
-							index=i;
-							break;
-						}
-					}
-					if(usuariRepetit){ //Si existeix l'usuari
-							if(contrasenya.equals(password[index])){ // Comprova si la contrassenya és correta per l'usuari
-								pantallaActual=1;
-							}else{
-									System.out.println("contrasenya erronia!!"); 
-								}
-					}else{
-						System.out.println("usuari erroni!!");
-					}
-					break;
-					
-				default:
-					System.out.println("Opcio no reconeguda");
-				}
 			}else if(pantallaActual==1){
 				System.out.println("Benvingut "+usuari);
 				System.out.println("1- Afegir deute");
