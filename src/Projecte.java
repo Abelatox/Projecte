@@ -21,6 +21,7 @@ public class Projecte{
 		System.out.println("Benvingut al <inserte nombre del programa aqui>");
 		while(stop == false)
 		{
+			usuariRepetit=false;
 			usuarisActius=0; //Es posa a 0 per quan compti que no surti dels limits
 			for(int i=0;i<usuaris.length;i++){
 				if(!(usuaris[i] == null))
@@ -31,10 +32,9 @@ public class Projecte{
 			System.out.println("2: Loguejar-se");
 			opcio = sc.nextLine();
 			switch(Integer.parseInt(opcio)){
-			case 1:
+			case 1: //Registre
 				System.out.print("Introdueix el nom d'usuari: ");
 				usuari=sc.nextLine();
-				usuariRepetit=false;
 				//Comprova si l'usuari ja existeix.
 				for(int i=0;i<usuarisActius;i++){
 					if(usuaris[i].equals(usuari)){
@@ -51,9 +51,28 @@ public class Projecte{
 					password[usuarisActius] = contrasenya;
 				}
 				break;
-			case 2:
-				
+			case 2: //Login
+				int index=-1;
+				System.out.print("Usuari: ");
+				usuari=sc.nextLine(); //Llegim el que Introdueix l'usuari.
+				System.out.print("Contrassenya: ");
+				contrasenya=sc.nextLine(); 
+				for(int i=0;i<usuarisActius;i++){
+					if(usuaris[i].equals(usuari)){
+						usuariRepetit = true;
+						index=i;
+						break;
+					}
+				}
+				if(usuariRepetit){
+					if(usuari.equals(usuaris[index])){
+						if(contrasenya.equals(password[index])){
+							System.out.println("Benvingut "+usuari);
+						}
+					}
+				}
 				break;
+				
 			default:
 				System.out.println("Opcio no reconeguda");
 			}
