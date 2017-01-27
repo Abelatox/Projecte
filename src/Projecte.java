@@ -60,19 +60,19 @@ public class Projecte{
 					break;
 					
 				case 2: //Login
-					int index=-1;
+					int index=-1; //Variable que guarda en quin index es troba l'usuari.
 					System.out.print("Usuari: ");
 					usuari=sc.nextLine(); //Llegim el que Introdueix l'usuari.
 					System.out.print("Contrassenya: ");
 					contrasenya=sc.nextLine(); 
-					for(int i=0;i<usuarisActius;i++){
+					for(int i=0;i<usuarisActius;i++){ //Aquest for guarda l'index en el que està l'usuari que volem saber.
 						if(usuaris[i].equals(usuari)){
 							usuariRepetit = true;
 							index=i;
 							break;
 						}
 					}
-					if(usuariRepetit){
+					if(usuariRepetit){ //Si hi ha un usuari repetit
 						if(usuari.equals(usuaris[index])){
 							if(contrasenya.equals(password[index])){
 								pantallaActual=1;
