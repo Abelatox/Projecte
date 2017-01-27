@@ -124,6 +124,12 @@ public class Projecte{
 				break;
 					
 				case 2: //Notifiacions / informació
+					System.out.println("Deutor\tQuantitat");
+					for(int i=0;i<deutors.length;i++){
+						if(prestamistes[i]==usuari){
+							System.out.println(deutors[i]+"\t"+quantitats[i]);
+						};
+					};
 					
 					break;
 				case 3: //Enrera
