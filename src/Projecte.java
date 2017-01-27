@@ -71,7 +71,7 @@ public class Projecte{
                     int index=-1; //Variable que guarda en quin index es troba l'usuari.
                     System.out.print("Usuari: ");
                     usuari=sc.nextLine(); //Llegim el que Introdueix l'usuari.
-                    System.out.print("Contrassenya: ");
+                    System.out.print("Contrasenya: ");
                     contrasenya=sc.nextLine();
                     for(int i=0;i<usuarisActius;i++){ //Aquest for guarda l'index en el que està l'usuari que volem saber i si existeix.
                         if(usuaris[i].equals(usuari)){
@@ -82,6 +82,7 @@ public class Projecte{
                     }
                     if(usuariRepetit){ //Si existeix l'usuari
                             if(contrasenya.equals(password[index])){ // Comprova si la contrassenya és correta per l'usuari
+                				System.out.println("Benvingut "+usuari);
                                 pantallaActual=1;
                             }else{
                                     System.out.println("contrasenya erronia!!");
@@ -96,11 +97,10 @@ public class Projecte{
                 }
 
 			}else if(pantallaActual==1){
-				System.out.println("Benvingut "+usuari);
 				System.out.println("1- Afegir deute");
-				System.out.println("2- Notificacions");
+				System.out.println("2- Informacio de deutes");
 				System.out.println("3- Tornar enrera");
-				System.out.print("Tria una opció: ");
+				System.out.print("Tria una opcio: ");
 				opcioMenuLogin = sc.nextLine();
 				
 				switch(Integer.parseInt(opcioMenuLogin)){
@@ -119,6 +119,11 @@ public class Projecte{
 							quantitats[i]=quantitat;
 							prestamistes[i]=usuari;
 							break;
+						}else{ //Si el usuari �s el mateix es suma / resta a la quantitat que deu
+							if(deutors[i].equals(deutor)){
+								quantitats[i]=quantitats[i]+quantitat;
+								break;
+							}
 						}
 					}
 				break;
@@ -128,8 +133,8 @@ public class Projecte{
 					for(int i=0;i<deutors.length;i++){
 						if(prestamistes[i]==usuari){
 							System.out.println(deutors[i]+"\t"+quantitats[i]);
-						};
-					};
+						}
+					}
 					
 					break;
 				case 3: //Enrera
