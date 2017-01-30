@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.util.Scanner;
 
 public class Projecte{
@@ -44,7 +43,7 @@ public class Projecte{
 				}
 				//En cada bucle recompta els usuaris actius
 				System.out.println("1: Registrar-se");
-				System.out.println("2: Loguejar-se");
+				System.out.println("2: Entrar");
 				opcio = sc.nextLine();
 				
 				switch(Integer.parseInt(opcio)){
@@ -108,7 +107,7 @@ public class Projecte{
 				switch(Integer.parseInt(opcioMenuLogin)){
 				case 1: //Afegir deute
 					System.out.print("Introdueix qui et deu diners: ");
-					deutor = sc.nextLine().toUpperCase();
+					deutor = sc.nextLine().toUpperCase().trim();
 					System.out.print("Introdueix la quantitat: ");
 					quantitat=Float.parseFloat(sc.nextLine());
 										
@@ -119,7 +118,7 @@ public class Projecte{
 							quantitats[i]=quantitat;
 							prestamistes[i]=usuari;
 							break;
-						}else{ //Si el usuari és el mateix es suma / resta a la quantitat que deu
+						}else{ //Si el usuari ï¿½s el mateix es suma / resta a la quantitat que deu
 							if(deutors[i].equals(deutor)){
 								quantitats[i]=quantitats[i]+quantitat;
 								break;
@@ -132,6 +131,7 @@ public class Projecte{
 					System.out.println("|---------------|");
 					System.out.println("|Deutor\tQtat."+"\t|");
 					System.out.println("|---------------|");
+					total=0;
 					for(int i=0;i<deutors.length;i++){
 						if(prestamistes[i]==usuari){
 							total=total+quantitats[i];
