@@ -5,9 +5,12 @@ public class Projecte{
 	public enum Pantalles{
 		PRINCIPAL, USUARI
 	}
+	public enum Idioma{
+		ENGLISH, CASTELLANO, CATALA
+	}
 	
 	public static void main(String[] args) {
-		int idioma;
+		Idioma idioma=Idioma.CATALA;
 		//Definim la variable de la pantalla actual.
 		Pantalles pantallaActual = Pantalles.PRINCIPAL;
 		
@@ -35,15 +38,103 @@ public class Projecte{
 		float quantitat=0F;
 		float total=0;
 		boolean usuariRepetit = false;
+		//Variables Tradució
+		String sRegistre="";
+		String sEntrar="";
+		String sIntNom="";
+		String sRepetitUsu="";
+		String sInContrasenya="";
+		String sUsuari="";
+		String sContrasenya="";
+		String sBen="";
+		String sErUsuari="";
+		String sErContrasenya="";
+		String sOpcioNr="";
+		String sEDeute="";
+		String sIDeute="";
+		String sEnrera="";
+		String sOpcio="";
+		String sDeuDiners="";
+		String sQuantitat="";
+		String sDeutor="";
+		String sTotal="";
+		
 		
 		System.out.println("Benvingut al programa");
 		System.out.println("1- English");
 		System.out.println("2- Castellano");
 		System.out.println("3- Catala");
 		System.out.print("Escull el teu idioma: ");
-		idioma=Integer.parseInt(sc.nextLine());
-
+		switch (Integer.parseInt(sc.nextLine())){
 		
+			case 1	://ENGLISH
+				sRegistre="Sign up";
+				sEntrar="Sign in";
+				sIntNom="Insert username";
+				sRepetitUsu="User already exists";
+				sInContrasenya="Insert password";
+				sUsuari="User";
+				sContrasenya="Password";
+				sBen="Welcome ";
+				sErUsuari="user incorect";
+				sErContrasenya="password incorect";
+				sOpcioNr="Unrecognized option";
+				sEDeute="Edit debt";
+				sIDeute="Debts information";
+				sEnrera="Return";
+				sOpcio="Choose an option";
+				sDeuDiners="Insert who owes you money";
+				sQuantitat="Insert the amount";
+				sDeutor="Debtor\tAmnt.\t";
+				sTotal="Total";
+				
+				break;
+			case 2	://CASTELLANO
+				sRegistre="Registrarse";
+				sEntrar="Entrar";
+				sIntNom="Introduce el nombre de usuario";
+				sRepetitUsu="Usuario repetido";
+				sInContrasenya="Introduce la contraseña";
+				sUsuari="Usuario";
+				sContrasenya="Contraseña";
+				sBen="Bienvenido";
+				sErUsuari="user incorect";
+				sErContrasenya="password incorect";
+				sOpcioNr="Opcion no reconocida";
+				sEDeute="Editar deuda";
+				sIDeute="Informacion de deudas";
+				sEnrera="Volver atras";
+				sOpcio="Elige una opcion";
+				sDeuDiners="Introduce quien te debe dinero";
+				sQuantitat="Introduce la cantidad";
+				sDeutor="Deutor\tQtat.\t";
+				sTotal="Total";
+				
+				break;
+			case 3	://CATALA
+				sRegistre="Registrar-se";
+				sEntrar="Entra";
+				sIntNom="Introdueix el nom d'usuari";
+				sRepetitUsu="Usuari repetit";
+				sInContrasenya="Introdueix la contrasenya";
+				sUsuari="Usuari";
+				sContrasenya="Contrasenya";
+				sBen="Benvingut";
+				sErUsuari="usuari incorrecte";
+				sErContrasenya="contrasenya incorrecte";
+				sOpcioNr="Opcio no reconeguda";
+				sEDeute="Editar deute";
+				sIDeute="Informacio de deutes";
+				sEnrera="Tornar enrera";
+				sOpcio="Tria una opcio";
+				sDeuDiners="Introdueix qui et deu diners";
+				sQuantitat="Introdueix la quantitat";
+				sDeutor="Deutor\tQtat.\t";
+				sTotal="Total";
+				break;
+			
+			default	: System.out.println("");
+		}
 		while(stop == false)
 		{
 			if(pantallaActual==Pantalles.PRINCIPAL){
@@ -56,19 +147,19 @@ public class Projecte{
 						usuarisActius++;
 				}
 				//En cada bucle recompta els usuaris actius
-				System.out.println("1: Registrar-se");
-				System.out.println("2: Entrar");
+				System.out.println("1: "+sRegistre);
+				System.out.println("2: "+sEntrar);
 				opcio = sc.nextLine();
 				
 				switch(Integer.parseInt(opcio)){
 				case 1: //Registre
-					System.out.print("Introdueix el nom d'usuari: ");
+					System.out.print(sIntNom+":  ");
 					usuari=sc.nextLine();
 					//Comprova si l'usuari ja existeix.
 					
 					for(int i=0;i<usuarisActius;i++){
 						if(usuaris[i].equals(usuari)){
-							System.out.println("Usuari repetit");
+							System.out.println(sRepetitUsu);
 							usuariRepetit = true;
 							break;
 						}
@@ -76,7 +167,7 @@ public class Projecte{
 					
 					//Si el nom d'usuari es valid et demana contrasenya i el fica en la array.
 					if(!usuariRepetit){
-						System.out.print("Introdueix la contrasenya: ");
+						System.out.print(sInContrasenya+": ");
 						contrasenya=sc.nextLine();
 						usuaris[usuarisActius] = usuari;
 						password[usuarisActius] = contrasenya;
@@ -85,9 +176,9 @@ public class Projecte{
 					
 				case 2: //Login
                     int index=-1; //Variable que guarda en quin index es troba l'usuari.
-                    System.out.print("Usuari: ");
+                    System.out.print(sUsuari+": ");
                     usuari=sc.nextLine(); //Llegim el que Introdueix l'usuari.
-                    System.out.print("Contrasenya: ");
+                    System.out.print(sContrasenya+": ");
                     contrasenya=sc.nextLine();
                     
                     for(int i=0;i<usuarisActius;i++){ //Aquest for guarda l'index en el que està l'usuari que volem saber i si existeix.
@@ -100,33 +191,33 @@ public class Projecte{
                     
                     if(usuariRepetit){ //Si existeix l'usuari
                             if(contrasenya.equals(password[index])){ // Comprova si la contrassenya és correta per l'usuari
-                				System.out.println("Benvingut "+usuari);
+                				System.out.println(sBen+" "+usuari);
             					System.out.println();
                                 pantallaActual=Pantalles.USUARI;
                             }else{
-                            	System.out.println("Contrasenya incorrecte!\n");
+                            	System.out.println(sErContrasenya+"\n");
                             }
                     }else{
-                        System.out.println("Usuari incorrecte!\n");
+                        System.out.println(sErUsuari+"\n");
                     }
                     break;
                     
                 default:
-                    System.out.println("Opcio no reconeguda");
+                    System.out.println(sOpcioNr);
                 }
 
 			}else if(pantallaActual==Pantalles.USUARI){
-				System.out.println("1- Editar deute");
-				System.out.println("2- Informacio de deutes");
-				System.out.println("3- Tornar enrera");
-				System.out.print("Tria una opcio: ");
+				System.out.println("1- "+sEDeute);
+				System.out.println("2- "+sIDeute);
+				System.out.println("3- "+sEnrera);
+				System.out.print(sOpcio+": ");
 				opcioMenuLogin = sc.nextLine();
 				
 				switch(Integer.parseInt(opcioMenuLogin)){
 				case 1: //Afegir deute
-					System.out.print("Introdueix qui et deu diners: ");
+					System.out.print(sDeuDiners+": ");
 					deutor = sc.nextLine().toUpperCase().trim();
-					System.out.print("Introdueix la quantitat: ");
+					System.out.print(sQuantitat+": ");
 					quantitat=Float.parseFloat(sc.nextLine());
 										
 					//Afegim les dades a les arrays
@@ -147,7 +238,7 @@ public class Projecte{
 					
 				case 2: //Notifiacions / informació
 					System.out.println("|---------------|");
-					System.out.println("|Deutor\tQtat."+"\t|");
+					System.out.println(sDeutor+"\t|");
 					System.out.println("|---------------|");
 					total=0;
 					for(int i=0;i<deutors.length;i++){
@@ -158,16 +249,16 @@ public class Projecte{
 						}
 					}
 					System.out.println("|---------------|");
-					System.out.println("|Total\t"+total+"\t|");
+					System.out.println("|"+sTotal+"\t"+total+"\t|");
 					System.out.println("|---------------|");
 					
 					break;
 				case 3: //Enrera
-					pantallaActual=Pantalles.USUARI;
+					pantallaActual=Pantalles.PRINCIPAL;
 					break;
 					
 				default:
-					System.out.println("Opcio no reconeguda");
+					System.out.println(sOpcioNr);
 				}	
 				System.out.println();
 			}
