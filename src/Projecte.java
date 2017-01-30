@@ -1,9 +1,16 @@
 import java.util.Scanner;
 
 public class Projecte{
+	
+	public enum Pantalles{
+		PRINCIPAL, USUARI
+	}
+	
 	public static void main(String[] args) {
+		int idioma;
 		//Definim la variable de la pantalla actual.
-		int pantallaActual=0;
+		Pantalles pantallaActual = Pantalles.PRINCIPAL;
+		
 		//Creem les arrays per usuaris
 		String[] usuaris= new String[10];
 		String[] password=new String[10];
@@ -29,10 +36,17 @@ public class Projecte{
 		float total=0;
 		boolean usuariRepetit = false;
 		
-		System.out.println("Benvingut al <inserte nombre del programa aqui>");
+		System.out.println("Benvingut al programa");
+		System.out.println("1- English");
+		System.out.println("2- Castellano");
+		System.out.println("3- Catala");
+		System.out.print("Escull el teu idioma: ");
+		idioma=Integer.parseInt(sc.nextLine());
+
+		
 		while(stop == false)
 		{
-			if(pantallaActual==0){
+			if(pantallaActual==Pantalles.PRINCIPAL){
 				usuari="";
 				contrasenya="";
 				usuariRepetit=false;
@@ -51,6 +65,7 @@ public class Projecte{
 					System.out.print("Introdueix el nom d'usuari: ");
 					usuari=sc.nextLine();
 					//Comprova si l'usuari ja existeix.
+					
 					for(int i=0;i<usuarisActius;i++){
 						if(usuaris[i].equals(usuari)){
 							System.out.println("Usuari repetit");
@@ -58,6 +73,7 @@ public class Projecte{
 							break;
 						}
 					}
+					
 					//Si el nom d'usuari es valid et demana contrasenya i el fica en la array.
 					if(!usuariRepetit){
 						System.out.print("Introdueix la contrasenya: ");
@@ -73,6 +89,7 @@ public class Projecte{
                     usuari=sc.nextLine(); //Llegim el que Introdueix l'usuari.
                     System.out.print("Contrasenya: ");
                     contrasenya=sc.nextLine();
+                    
                     for(int i=0;i<usuarisActius;i++){ //Aquest for guarda l'index en el que està l'usuari que volem saber i si existeix.
                         if(usuaris[i].equals(usuari)){
                             usuariRepetit = true;
@@ -80,16 +97,17 @@ public class Projecte{
                             break;
                         }
                     }
+                    
                     if(usuariRepetit){ //Si existeix l'usuari
                             if(contrasenya.equals(password[index])){ // Comprova si la contrassenya és correta per l'usuari
                 				System.out.println("Benvingut "+usuari);
             					System.out.println();
-                                pantallaActual=1;
+                                pantallaActual=Pantalles.USUARI;
                             }else{
-                                    System.out.println("contrasenya erronia!!");
-                                }
+                            	System.out.println("Contrasenya incorrecte!\n");
+                            }
                     }else{
-                        System.out.println("usuari erroni!!");
+                        System.out.println("Usuari incorrecte!\n");
                     }
                     break;
                     
@@ -97,7 +115,7 @@ public class Projecte{
                     System.out.println("Opcio no reconeguda");
                 }
 
-			}else if(pantallaActual==1){
+			}else if(pantallaActual==Pantalles.USUARI){
 				System.out.println("1- Editar deute");
 				System.out.println("2- Informacio de deutes");
 				System.out.println("3- Tornar enrera");
@@ -145,7 +163,7 @@ public class Projecte{
 					
 					break;
 				case 3: //Enrera
-					pantallaActual=0;
+					pantallaActual=Pantalles.USUARI;
 					break;
 					
 				default:
