@@ -5,12 +5,8 @@ public class Projecte{
 	public enum Pantalles{
 		PRINCIPAL, USUARI
 	}
-	public enum Idioma{
-		ENGLISH, CASTELLANO, CATALA
-	}
-	
+
 	public static void main(String[] args) {
-		Idioma idioma=Idioma.CATALA;
 		//Definim la variable de la pantalla actual.
 		Pantalles pantallaActual = Pantalles.PRINCIPAL;
 		
@@ -27,6 +23,7 @@ public class Projecte{
 		password[0] = "123";
 		usuaris[1] = "Xevi";
 		password[1] = "456";
+		
 		int usuarisActius=0;
 		Scanner sc = new Scanner(System.in);
 		boolean stop = false;
@@ -36,41 +33,44 @@ public class Projecte{
 		String usuari="",contrasenya="";
 		
 		String deutor=""; //Qui deu diners
+		String sQuantitatFloat="";
 		float quantitat=0F;
 		float total=0;
 		boolean usuariRepetit = false;
 		//Variables TraduciÃ³
-		String sRegistre="";
-		String sEntrar="";
-		String sIntNom="";
-		String sRepetitUsu="";
-		String sInContrasenya="";
-		String sUsuari="";
-		String sContrasenya="";
-		String sBen="";
-		String sErUsuari="";
-		String sErContrasenya="";
-		String sOpcioNr="";
-		String sEDeute="";
-		String sIDeute="";
-		String sEnrera="";
-		String sOpcio="";
-		String sDeuDiners="";
-		String sQuantitat="";
-		String sDeutor="";
-		String sTotal="";
-		
+		String 
+		sRegistre="",
+		sEntrar="",
+		sIntNom="",
+		sRepetitUsu="",
+		sInContrasenya="",
+		sUsuari="",
+		sContrasenya="",
+		sBen="",
+		sErUsuari="",
+		sErContrasenya="",
+		sOpcioNr="",
+		sEDeute="",
+		sIDeute="",
+		sEnrera="",
+		sOpcio="",
+		sDeuDiners="",
+		sQuantitat="",
+		sIntrodueixNum="",
+		sDeutor="",
+		sTotal="";
 		
 		System.out.println("Benvingut al programa");
+		
 		do{
-		System.out.println("1- English");
-		System.out.println("2- Castellano");
-		System.out.println("3- Catala");
-		System.out.print("Escull el teu idioma: ");
-		
-		opcioIdioma=sc.nextLine();
-		
-		switch (opcioIdioma){
+			System.out.println("1- English");
+			System.out.println("2- Castellano");
+			System.out.println("3- Catala");
+			System.out.print("Escull el teu idioma: ");
+			
+			opcioIdioma=sc.nextLine();
+			
+			switch (opcioIdioma){
 			case "1": //ENGLISH
 				sRegistre="Sign up";
 				sEntrar="Sign in";
@@ -79,7 +79,7 @@ public class Projecte{
 				sInContrasenya="Insert password";
 				sUsuari="User";
 				sContrasenya="Password";
-				sBen="Welcome ";
+				sBen="Welcome";
 				sErUsuari="Invalid user";
 				sErContrasenya="Invalid password";
 				sOpcioNr="Unrecognized option";
@@ -89,6 +89,7 @@ public class Projecte{
 				sOpcio="Choose an option";
 				sDeuDiners="Insert who owes you money";
 				sQuantitat="Insert the amount";
+				sIntrodueixNum="Insert a number";
 				sDeutor="Debtor\tAmnt.";
 				sTotal="Total";
 				
@@ -112,6 +113,7 @@ public class Projecte{
 				sOpcio="Elige una opcion";
 				sDeuDiners="Introduce quien te debe dinero";
 				sQuantitat="Introduce la cantidad";
+				sIntrodueixNum="Introduce un numero";
 				sDeutor="Deutor\tCdad.";
 				sTotal="Total";
 				
@@ -135,11 +137,13 @@ public class Projecte{
 				sOpcio="Tria una opcio";
 				sDeuDiners="Introdueix qui et deu diners";
 				sQuantitat="Introdueix la quantitat";
+				sIntrodueixNum="Introdueix un numero";
 				sDeutor="Deutor\tQtat.";
 				sTotal="Total";
 			break;
-				
-				default	: opcioIdioma="0";
+			
+			default	: 
+				opcioIdioma="0";
 				System.out.println();
 			}
 		}while(opcioIdioma.equals("0"));
@@ -155,6 +159,7 @@ public class Projecte{
 					if(!(usuaris[i] == null))
 						usuarisActius++;
 				}
+				
 				//En cada bucle recompta els usuaris actius
 				System.out.println("1: "+sRegistre);
 				System.out.println("2: "+sEntrar);
@@ -226,9 +231,14 @@ public class Projecte{
 				case "1": //Afegir deute
 					System.out.print(sDeuDiners+": ");
 					deutor = sc.nextLine().toUpperCase().trim();
-					System.out.print(sQuantitat+": ");
-					quantitat=Float.parseFloat(sc.nextLine());
-										
+					
+					while(sQuantitatFloat.equals("")){
+						System.out.print(sQuantitat+": ");
+						sQuantitatFloat = sc.nextLine(); //Emmagatzema la quantitat en forma d'String per evitar errors si no introdueix número
+						System.out.println(sIntrodueixNum);
+					}
+					quantitat=Float.parseFloat(sQuantitatFloat);
+					
 					//Afegim les dades a les arrays
 					for(int i=0;i<deutors.length;i++){
 						if(deutors[i]==null){
@@ -236,7 +246,7 @@ public class Projecte{
 							quantitats[i]=quantitat;
 							prestamistes[i]=usuari;
 							break;
-						}else{ //Si el usuari ï¿½s el mateix es suma / resta a la quantitat que deu
+						}else{ //Si el usuari és el mateix es suma / resta a la quantitat que deu
 							if(deutors[i].equals(deutor)){
 								quantitats[i]=quantitats[i]+quantitat;
 								break;
@@ -250,6 +260,7 @@ public class Projecte{
 					System.out.println("|"+sDeutor+"\t|");
 					System.out.println("|---------------|");
 					total=0;
+					
 					for(int i=0;i<deutors.length;i++){
 						if(prestamistes[i]==usuari){
 							total=total+quantitats[i];
@@ -257,6 +268,7 @@ public class Projecte{
 							System.out.println("|---------------|");
 						}
 					}
+					
 					System.out.println("|---------------|");
 					System.out.println("|"+sTotal+"\t"+total+"\t|");
 					System.out.println("|---------------|");
