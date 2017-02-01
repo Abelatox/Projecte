@@ -233,13 +233,8 @@ public class Projecte{
 				case "1": //Afegir deute
 					System.out.print(sDeuDiners+": ");
 					deutor = sc.nextLine().toUpperCase().trim();
-					
-					while(sQuantitatFloat.equals("")){
-						System.out.print(sQuantitat+": ");
-						sQuantitatFloat = sc.nextLine(); //Emmagatzema la quantitat en forma d'String per evitar errors si no introdueix n�mero
-						System.out.println(sIntrodueixNum);
-					}
-					quantitat=Float.parseFloat(sQuantitatFloat);
+					System.out.print(sQuantitat+": ");
+					quantitat=Float.parseFloat(sc.nextLine());
 					
 					//Afegim les dades a les arrays
 					for(int i=0;i<deutors.length;i++){
