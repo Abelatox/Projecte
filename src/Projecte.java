@@ -27,16 +27,17 @@ public class Projecte{
 		int usuarisActius=0;
 		Scanner sc = new Scanner(System.in);
 		boolean stop = false;
-		String opcioIdioma;
-		String opcio;
-		String opcioMenuLogin;
+		String opcioIdioma; //Opci√≥ d'idioma (1-3)
+		String opcio; //Opcio de registre/login (1-2)
+		String opcioMenuLogin; //Opcions d'usuari (1-3)
 		String usuari="",contrasenya="";
 		
 		String deutor=""; //Qui deu diners
-		String sQuantitatFloat="";
-		float quantitat=0F;
-		float total=0;
+		String sQuantitatFloat=""; //Quantitat de diners en string (per evitar que pugui haver espai en blanc)
+		float quantitat=0F; //Quantitat ja en float
+		float total=0; //Total de diners
 		boolean usuariRepetit = false;
+		
 		//Variables Traduci√≥
 		String 
 		sRegistre="",
@@ -73,7 +74,7 @@ public class Projecte{
 			switch (opcioIdioma){
 			case "1": //ENGLISH
 				sRegistre="Sign up";
-				sEntrar="Sign in";
+				sEntrar="Login";
 				sIntNom="Insert username";
 				sRepetitUsu="User already exists";
 				sInContrasenya="Insert password";
@@ -92,8 +93,7 @@ public class Projecte{
 				sIntrodueixNum="Insert a number";
 				sDeutor="Debtor\tAmnt.";
 				sTotal="Total";
-				
-			break;
+				break;
 			
 			case "2": //CASTELLANO
 				sRegistre="Registrarse";
@@ -116,8 +116,7 @@ public class Projecte{
 				sIntrodueixNum="Introduce un numero";
 				sDeutor="Deutor\tCdad.";
 				sTotal="Total";
-				
-			break;
+				break;
 			
 			case "3": //CATALA
 				sRegistre="Registrar-se";
@@ -140,12 +139,13 @@ public class Projecte{
 				sIntrodueixNum="Introdueix un numero";
 				sDeutor="Deutor\tQtat.";
 				sTotal="Total";
-			break;
+				break;
 			
-			default	: 
+			default: 
 				opcioIdioma="0";
 				System.out.println();
 			}
+			
 		}while(opcioIdioma.equals("0"));
 		
 		while(stop == false)
@@ -155,6 +155,7 @@ public class Projecte{
 				contrasenya="";
 				usuariRepetit=false;
 				usuarisActius=0; //Es posa a 0 per quan compti que no surti dels limits
+				
 				for(int i=0;i<usuaris.length;i++){
 					if(!(usuaris[i] == null))
 						usuarisActius++;
@@ -169,8 +170,8 @@ public class Projecte{
 				case "1": //Registre
 					System.out.print(sIntNom+":  ");
 					usuari=sc.nextLine();
-					//Comprova si l'usuari ja existeix.
 					
+					//Comprova si l'usuari ja existeix.
 					for(int i=0;i<usuarisActius;i++){
 						if(usuaris[i].equals(usuari)){
 							System.out.println(sRepetitUsu);
@@ -186,6 +187,7 @@ public class Projecte{
 						usuaris[usuarisActius] = usuari;
 						password[usuarisActius] = contrasenya;
 					}
+					
 					break;
 					
 				case "2": //Login
@@ -234,7 +236,7 @@ public class Projecte{
 					
 					while(sQuantitatFloat.equals("")){
 						System.out.print(sQuantitat+": ");
-						sQuantitatFloat = sc.nextLine(); //Emmagatzema la quantitat en forma d'String per evitar errors si no introdueix n˙mero
+						sQuantitatFloat = sc.nextLine(); //Emmagatzema la quantitat en forma d'String per evitar errors si no introdueix nÔøΩmero
 						System.out.println(sIntrodueixNum);
 					}
 					quantitat=Float.parseFloat(sQuantitatFloat);
@@ -246,7 +248,7 @@ public class Projecte{
 							quantitats[i]=quantitat;
 							prestamistes[i]=usuari;
 							break;
-						}else{ //Si el usuari Ès el mateix es suma / resta a la quantitat que deu
+						}else{ //Si el usuari ÔøΩs el mateix es suma / resta a la quantitat que deu
 							if(deutors[i].equals(deutor)){
 								quantitats[i]=quantitats[i]+quantitat;
 								break;
