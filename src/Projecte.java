@@ -7,16 +7,24 @@ public class Projecte{
 	}
 
 	public static void main(String[] args) {
+		
+		class Dades{
+			String deutor;
+			float quantitat;
+			String prestamista;
+		}
+		
+		Dades[] dades = new Dades[10];
+		
+		for(int i=0;i<10;i++)
+			dades[i] = new Dades();
+		
 		//Definim la variable de la pantalla actual.
 		Pantalles pantallaActual = Pantalles.PRINCIPAL;
 		
 		//Creem les arrays per usuaris
 		String[] usuaris= new String[10];
 		String[] password=new String[10];
-		
-		String[] deutors=new String[10];
-		float[] quantitats=new float[10];
-		String[] prestamistes=new String[10];
 		
 		//Usuaris inicials
 		usuaris[0] = "Abel";
@@ -27,18 +35,19 @@ public class Projecte{
 		int usuarisActius=0;
 		Scanner sc = new Scanner(System.in);
 		boolean stop = false;
+		
 		String opcioIdioma; //OpciÃ³ d'idioma (1-3)
 		String opcio; //Opcio de registre/login (1-2)
 		String opcioMenuLogin; //Opcions d'usuari (1-3)
+		
 		String usuari="",contrasenya="";
 		
 		String deutor=""; //Qui deu diners
-		String sQuantitatFloat=""; //Quantitat de diners en string (per evitar que pugui haver espai en blanc)
 		float quantitat=0F; //Quantitat ja en float
 		float total=0; //Total de diners
 		boolean usuariRepetit = false;
 		
-		//Variables TraduciÃ³
+		//Variables TraducciÃ³
 		String 
 		sRegistre="",
 		sEntrar="",
@@ -57,9 +66,12 @@ public class Projecte{
 		sOpcio="",
 		sDeuDiners="",
 		sQuantitat="",
-		sIntrodueixNum="",
 		sDeutor="",
 		sTotal="";
+		
+		//Moneda
+		String monedaInicial=""; //Pounds i dolars
+		String monedaFinal=""; //Euros
 		
 		System.out.println("Benvingut al programa");
 		
@@ -90,9 +102,10 @@ public class Projecte{
 				sOpcio="Choose an option";
 				sDeuDiners="Insert who owes you money";
 				sQuantitat="Insert the amount";
-				sIntrodueixNum="Insert a number";
 				sDeutor="Debtor\tAmnt.";
 				sTotal="Total";
+				monedaInicial="$";
+				monedaFinal="";
 				break;
 			
 			case "2": //CASTELLANO
@@ -113,9 +126,10 @@ public class Projecte{
 				sOpcio="Elige una opcion";
 				sDeuDiners="Introduce quien te debe dinero";
 				sQuantitat="Introduce la cantidad";
-				sIntrodueixNum="Introduce un numero";
 				sDeutor="Deutor\tCdad.";
 				sTotal="Total";
+				monedaInicial="";
+				monedaFinal="€";
 				break;
 			
 			case "3": //CATALA
@@ -136,9 +150,10 @@ public class Projecte{
 				sOpcio="Tria una opcio";
 				sDeuDiners="Introdueix qui et deu diners";
 				sQuantitat="Introdueix la quantitat";
-				sIntrodueixNum="Introdueix un numero";
 				sDeutor="Deutor\tQtat.";
 				sTotal="Total";
+				monedaInicial="";
+				monedaFinal="€";
 				break;
 			
 			default: 
@@ -206,7 +221,7 @@ public class Projecte{
                     }
                     
                     if(usuariRepetit){ //Si existeix l'usuari
-                        if(contrasenya.equals(password[index])){ // Comprova si la contrassenya Ã©s correta per l'usuari
+                        if(contrasenya.equals(password[index])){ // Comprova si la contrasenya es correcta per l'usuari
             				System.out.println(sBen+" "+usuari);
         					System.out.println();
                             pantallaActual=Pantalles.USUARI;
@@ -234,21 +249,34 @@ public class Projecte{
 					System.out.print(sDeuDiners+": ");
 					deutor = sc.nextLine().toUpperCase().trim();
 					System.out.print(sQuantitat+": ");
-					quantitat=Float.parseFloat(sc.nextLine());
+					String inputQuantitat = sc.nextLine(); //TODO String definició a dalt
 					
-					//Afegim les dades a les arrays
-					for(int i=0;i<deutors.length;i++){
-						if(deutors[i]==null){
-							deutors[i]=deutor;
-							quantitats[i]=quantitat;
-							prestamistes[i]=usuari;
-							break;
-						}else{ //Si el usuari ï¿½s el mateix es suma / resta a la quantitat que deu
-							if(deutors[i].equals(deutor)){
-								quantitats[i]=quantitats[i]+quantitat;
+					boolean quantitatEsNumero=true;
+					for(int i=0;i<inputQuantitat.length();i++){
+						if(inputQuantitat.charAt(i) != '-' && (inputQuantitat.charAt(i)<48 || inputQuantitat.charAt(i)>57)){
+							quantitatEsNumero=false;
+						}
+					}
+					if(quantitatEsNumero){
+							
+						quantitat=Float.parseFloat(inputQuantitat);
+						
+						//Afegim les dades a la class Dades
+						for(int i=0;i<dades.length;i++){
+							if(dades[i].deutor==null){
+								dades[i].deutor=deutor;
+								dades[i].quantitat=quantitat;
+								dades[i].prestamista=usuari;
 								break;
+							}else{ //Si el usuari es el mateix es suma / resta a la quantitat que deu
+								if(dades[i].deutor.equals(deutor)){
+									dades[i].quantitat=dades[i].quantitat+quantitat;
+									break;
+								}
 							}
 						}
+					}else{
+						System.out.println("No es un numero");
 					}
 				break;
 					
@@ -258,16 +286,20 @@ public class Projecte{
 					System.out.println("|---------------|");
 					total=0;
 					
-					for(int i=0;i<deutors.length;i++){
-						if(prestamistes[i]==usuari){
-							total=total+quantitats[i];
-							System.out.println("|"+deutors[i]+"\t"+quantitats[i]+"\t|");
+					for(int i=0;i<dades.length;i++){
+						if(dades[i].prestamista==usuari){
+							total=total+dades[i].quantitat;
+							if(dades[i].quantitat>0){
+								System.out.println("|"+dades[i].deutor+"\t"+monedaInicial+dades[i].quantitat+monedaFinal+"\t|");
+							}else{
+								System.err.println("|"+dades[i].deutor+"\t"+monedaInicial+dades[i].quantitat+monedaFinal+"\t|");
+							}
 							System.out.println("|---------------|");
 						}
 					}
 					
 					System.out.println("|---------------|");
-					System.out.println("|"+sTotal+"\t"+total+"\t|");
+					System.out.println("|"+sTotal+"\t"+monedaInicial+total+monedaFinal+"\t|");
 					System.out.println("|---------------|");
 					
 					break;
