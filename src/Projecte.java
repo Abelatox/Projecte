@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class Projecte{
 	
 	public enum Pantalles{
-		PRINCIPAL, USUARI
+		PRINCIPAL, USUARI, IDIOMES
 	}
 
 	public static void main(String[] args) {
@@ -28,7 +28,7 @@ public class Projecte{
 		}
 		
 		//Definim la variable de la pantalla actual.
-		Pantalles pantallaActual = Pantalles.PRINCIPAL;
+		Pantalles pantallaActual = Pantalles.IDIOMES;
 		
 	/*	//Creem les arrays per usuaris
 		String[] usuaris= new String[10];
@@ -59,6 +59,7 @@ public class Projecte{
 		String 
 		sRegistre="",
 		sEntrar="",
+		sIdioma="",
 		sIntNom="",
 		sRepetitUsu="",
 		sInContrasenya="",
@@ -83,97 +84,104 @@ public class Projecte{
 		
 		System.out.println("Benvingut al programa");
 		
-		do{
-			System.out.println("1- English");
-			System.out.println("2- Castellano");
-			System.out.println("3- Catala");
-			System.out.print("Escull el teu idioma: ");
-			
-			opcioIdioma=sc.nextLine();
-			
-			switch (opcioIdioma){
-			case "1": //ENGLISH
-				sRegistre="Sign up";
-				sEntrar="Login";
-				sIntNom="Insert username";
-				sRepetitUsu="User already exists";
-				sInContrasenya="Insert password";
-				sUsuari="User";
-				sContrasenya="Password";
-				sBen="Welcome";
-				sErUsuari="Invalid user";
-				sErContrasenya="Invalid password";
-				sOpcioNr="Unrecognized option";
-				sEDeute="Add/edit debt";
-				sIDeute="Debts information";
-				sEnrera="Return";
-				sOpcio="Choose an option";
-				sDeuDiners="Insert who owes you money";
-				sQuantitat="Insert the amount";
-				sDeutor="Debtor\tAmnt.";
-				sTotal="Total";
-				monedaInicial="$";
-				monedaFinal="";
-				break;
-			
-			case "2": //CASTELLANO
-				sRegistre="Registrarse";
-				sEntrar="Entrar";
-				sIntNom="Introduce el nombre de usuario";
-				sRepetitUsu="Usuario repetido";
-				sInContrasenya="Introduce la contrase√±a";
-				sUsuari="Usuario";
-				sContrasenya="Contrase√±a";
-				sBen="Bienvenido";
-				sErUsuari="Usuario incorrecto";
-				sErContrasenya="Contrase√±a incorrecta";
-				sOpcioNr="Opcion no reconocida";
-				sEDeute="A√±adir/editar deuda";
-				sIDeute="Informacion de deudas";
-				sEnrera="Volver atras";
-				sOpcio="Elige una opcion";
-				sDeuDiners="Introduce quien te debe dinero";
-				sQuantitat="Introduce la cantidad";
-				sDeutor="Deutor\tCdad.";
-				sTotal="Total";
-				monedaInicial="";
-				monedaFinal="Ä";
-				break;
-			
-			case "3": //CATALA
-				sRegistre="Registrar-se";
-				sEntrar="Entra";
-				sIntNom="Introdueix el nom d'usuari";
-				sRepetitUsu="Usuari repetit";
-				sInContrasenya="Introdueix la contrasenya";
-				sUsuari="Usuari";
-				sContrasenya="Contrasenya";
-				sBen="Benvingut";
-				sErUsuari="usuari incorrecte";
-				sErContrasenya="contrasenya incorrecte";
-				sOpcioNr="Opcio no reconeguda";
-				sEDeute="Afegir/editar deute";
-				sIDeute="Informacio de deutes";
-				sEnrera="Tornar enrera";
-				sOpcio="Tria una opcio";
-				sDeuDiners="Introdueix qui et deu diners";
-				sQuantitat="Introdueix la quantitat";
-				sDeutor="Deutor\tQtat.";
-				sTotal="Total";
-				monedaInicial="";
-				monedaFinal="Ä";
-				break;
-			
-			default: 
-				opcioIdioma="0";
-				System.out.println();
-			}
-			
-		}while(opcioIdioma.equals("0"));
-		
 		while(stop == false)
-		{
-			if(pantallaActual==Pantalles.PRINCIPAL){
+		{		
+			if(pantallaActual==Pantalles.IDIOMES){
+				
+				do{
+					System.out.println("1- English");
+					System.out.println("2- Castellano");
+					System.out.println("3- Catala");
+					System.out.print("Escull el teu idioma: ");
+					
+					opcioIdioma=sc.nextLine();
+				
+					switch (opcioIdioma){
+					case "1": //ENGLISH
+						sRegistre="Sign up";
+						sEntrar="Login";
+						sIdioma="Change language";
+						sIntNom="Insert username";
+						sRepetitUsu="User already exists";
+						sInContrasenya="Insert password";
+						sUsuari="User";
+						sContrasenya="Password";
+						sBen="Welcome";
+						sErUsuari="Invalid user";
+						sErContrasenya="Invalid password";
+						sOpcioNr="Unrecognized option";
+						sEDeute="Add/edit debt";
+						sIDeute="Debts information";
+						sEnrera="Return";
+						sOpcio="Choose an option";
+						sDeuDiners="Insert who owes you money";
+						sQuantitat="Insert the amount";
+						sDeutor="Debtor\tAmnt.";
+						sTotal="Total";
+						monedaInicial="$";
+						monedaFinal="";
+						break;
+					
+					case "2": //CASTELLANO
+						sRegistre="Registrarse";
+						sEntrar="Entrar";
+						sIdioma="Cambiar idioma";
+						sIntNom="Introduce el nombre de usuario";
+						sRepetitUsu="Usuario repetido";
+						sInContrasenya="Introduce la contrase√±a";
+						sUsuari="Usuario";
+						sContrasenya="Contrase√±a";
+						sBen="Bienvenido";
+						sErUsuari="Usuario incorrecto";
+						sErContrasenya="Contrase√±a incorrecta";
+						sOpcioNr="Opcion no reconocida";
+						sEDeute="A√±adir/editar deuda";
+						sIDeute="Informacion de deudas";
+						sEnrera="Volver atras";
+						sOpcio="Elige una opcion";
+						sDeuDiners="Introduce quien te debe dinero";
+						sQuantitat="Introduce la cantidad";
+						sDeutor="Deutor\tCdad.";
+						sTotal="Total";
+						monedaInicial="";
+						monedaFinal="Ä";
+						break;
+					
+					case "3": //CATALA
+						sRegistre="Registrar-se";
+						sEntrar="Entra";
+						sIdioma="Canviar idioma";
+						sIntNom="Introdueix el nom d'usuari";
+						sRepetitUsu="Usuari repetit";
+						sInContrasenya="Introdueix la contrasenya";
+						sUsuari="Usuari";
+						sContrasenya="Contrasenya";
+						sBen="Benvingut";
+						sErUsuari="Usuari incorrecte";
+						sErContrasenya="Contrasenya incorrecte";
+						sOpcioNr="Opcio no reconeguda";
+						sEDeute="Afegir/editar deute";
+						sIDeute="Informacio de deutes";
+						sEnrera="Tornar enrera";
+						sOpcio="Tria una opcio";
+						sDeuDiners="Introdueix qui et deu diners";
+						sQuantitat="Introdueix la quantitat";
+						sDeutor="Deutor\tQtat.";
+						sTotal="Total";
+						monedaInicial="";
+						monedaFinal="Ä";
+						break;
+					
+					default: 
+						opcioIdioma="0";
+						System.out.println("*Idioma incorrecte*\n");
+					}
+					
+				}while(opcioIdioma.equals("0")); //Quan l'idioma Ès 1, 2 o 3 passa a la pantalla principal, sino segueix fent bucle
+				
+				pantallaActual=Pantalles.PRINCIPAL;
+				
+			}else if(pantallaActual==Pantalles.PRINCIPAL){
 				usuari="";
 				contrasenya="";
 				usuariRepetit=false;
@@ -185,12 +193,14 @@ public class Projecte{
 				}
 				
 				//En cada bucle recompta els usuaris actius
-				System.out.println("1: "+sRegistre);
-				System.out.println("2: "+sEntrar);
+				System.out.println("1- "+sRegistre);
+				System.out.println("2- "+sEntrar);
+				System.out.println("3- "+sIdioma);
 				opcio = sc.nextLine();
 				
 				switch(opcio){
 				case "1": //Registre
+					
 					System.out.print(sIntNom+":  ");
 					usuari=sc.nextLine();
 					
@@ -214,6 +224,7 @@ public class Projecte{
 					break;
 					
 				case "2": //Login
+					
                     int index=-1; //Variable que guarda en quin index es troba l'usuari.
                     System.out.print(sUsuari+": ");
                     usuari=sc.nextLine(); //Llegim el que Introdueix l'usuari.
@@ -240,6 +251,11 @@ public class Projecte{
                         System.out.println(sErUsuari+"\n");
                     }
                     break;
+                    
+				case "3": //Idioma
+					
+					pantallaActual=Pantalles.IDIOMES;
+					break;
                     
                 default:
                     System.out.println(sOpcioNr);
@@ -284,7 +300,7 @@ public class Projecte{
 							}
 						}
 					}else{
-						System.out.println("No es un numero");
+						System.out.println("*No es un numero*");
 					}
 				break;
 					
