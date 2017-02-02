@@ -8,29 +8,37 @@ public class Projecte{
 
 	public static void main(String[] args) {
 		
+		class Usuaris{
+			String usuari;
+			String password;
+		}
+		
 		class Dades{
 			String deutor;
 			float quantitat;
 			String prestamista;
 		}
 		
+		Usuaris[] usuaris = new Usuaris[10];
 		Dades[] dades = new Dades[10];
 		
-		for(int i=0;i<10;i++)
+		for(int i=0;i<10;i++){
+			usuaris[i] = new Usuaris();
 			dades[i] = new Dades();
+		}
 		
 		//Definim la variable de la pantalla actual.
 		Pantalles pantallaActual = Pantalles.PRINCIPAL;
 		
-		//Creem les arrays per usuaris
+	/*	//Creem les arrays per usuaris
 		String[] usuaris= new String[10];
-		String[] password=new String[10];
+		String[] password=new String[10];*/
 		
 		//Usuaris inicials
-		usuaris[0] = "Abel";
-		password[0] = "123";
-		usuaris[1] = "Xevi";
-		password[1] = "456";
+		usuaris[0].usuari = "Abel";
+		usuaris[0].password = "123";
+		usuaris[1].usuari = "Xevi";
+		usuaris[1].password = "456";
 		
 		int usuarisActius=0;
 		Scanner sc = new Scanner(System.in);
@@ -172,7 +180,7 @@ public class Projecte{
 				usuarisActius=0; //Es posa a 0 per quan compti que no surti dels limits
 				
 				for(int i=0;i<usuaris.length;i++){
-					if(!(usuaris[i] == null))
+					if(!(usuaris[i].usuari == null))
 						usuarisActius++;
 				}
 				
@@ -188,7 +196,7 @@ public class Projecte{
 					
 					//Comprova si l'usuari ja existeix.
 					for(int i=0;i<usuarisActius;i++){
-						if(usuaris[i].equals(usuari)){
+						if(usuaris[i].usuari!=null && usuaris[i].usuari.equals(usuari)){
 							System.out.println(sRepetitUsu);
 							usuariRepetit = true;
 							break;
@@ -199,8 +207,8 @@ public class Projecte{
 					if(!usuariRepetit){
 						System.out.print(sInContrasenya+": ");
 						contrasenya=sc.nextLine();
-						usuaris[usuarisActius] = usuari;
-						password[usuarisActius] = contrasenya;
+						usuaris[usuarisActius].usuari = usuari;
+						usuaris[usuarisActius].password = contrasenya;
 					}
 					
 					break;
@@ -213,7 +221,7 @@ public class Projecte{
                     contrasenya=sc.nextLine();
                     
                     for(int i=0;i<usuarisActius;i++){ //Aquest for guarda l'index en el que està l'usuari que volem saber i si existeix.
-                        if(usuaris[i].equals(usuari)){
+                        if(usuaris[i].usuari.equals(usuari)){
                             usuariRepetit = true;
                             index=i;
                             break;
@@ -221,7 +229,7 @@ public class Projecte{
                     }
                     
                     if(usuariRepetit){ //Si existeix l'usuari
-                        if(contrasenya.equals(password[index])){ // Comprova si la contrasenya es correcta per l'usuari
+                        if(contrasenya.equals(usuaris[index].password)){ // Comprova si la contrasenya es correcta per l'usuari
             				System.out.println(sBen+" "+usuari);
         					System.out.println();
                             pantallaActual=Pantalles.USUARI;
