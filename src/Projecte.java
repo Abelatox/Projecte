@@ -93,11 +93,11 @@ public class Projecte{
 					System.out.println("2- Castellano");
 					System.out.println("3- Catala");
 					System.out.print("Escull el teu idioma: ");
-					
 					opcioIdioma=sc.nextLine();
 				
 					switch (opcioIdioma){
 					case "1": //ENGLISH
+						
 						sRegistre="Sign up";
 						sEntrar="Login";
 						sIdioma="Change language";
@@ -123,6 +123,7 @@ public class Projecte{
 						break;
 					
 					case "2": //CASTELLANO
+						
 						sRegistre="Registrarse";
 						sEntrar="Entrar";
 						sIdioma="Cambiar idioma";
@@ -148,6 +149,7 @@ public class Projecte{
 						break;
 					
 					case "3": //CATALA
+						
 						sRegistre="Registrar-se";
 						sEntrar="Entra";
 						sIdioma="Canviar idioma";
@@ -274,8 +276,8 @@ public class Projecte{
 					deutor = sc.nextLine().toUpperCase().trim();
 					System.out.print(sQuantitat+": ");
 					String inputQuantitat = sc.nextLine(); //TODO String definició a dalt
-					
 					boolean quantitatEsNumero=true;
+					
 					for(int i=0;i<inputQuantitat.length();i++){
 						if(inputQuantitat.charAt(i) != '-' && (inputQuantitat.charAt(i)<48 || inputQuantitat.charAt(i)>57)){
 							quantitatEsNumero=false;
@@ -287,6 +289,7 @@ public class Projecte{
 						
 						//Afegim les dades a la class Dades
 						for(int i=0;i<dades.length;i++){
+							
 							if(dades[i].deutor==null){
 								dades[i].deutor=deutor;
 								dades[i].quantitat=quantitat;
@@ -298,13 +301,16 @@ public class Projecte{
 									break;
 								}
 							}
+							
 						}
+						
 					}else{
 						System.out.println("*No es un numero*");
 					}
 				break;
 					
 				case "2": //Notifiacions / informaciÃ³
+					
 					System.out.println("|---------------|");
 					System.out.println("|"+sDeutor+"\t|");
 					System.out.println("|---------------|");
@@ -328,6 +334,7 @@ public class Projecte{
 					
 					break;
 				case "3": //Enrera
+					
 					pantallaActual=Pantalles.PRINCIPAL;
 					break;
 					
