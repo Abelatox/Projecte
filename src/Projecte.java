@@ -145,7 +145,7 @@ public class Projecte{
 						sDeutor="Deutor\tCdad.";
 						sTotal="Total";
 						monedaInicial="";
-						monedaFinal="€";
+						monedaFinal="ï¿½";
 						break;
 					
 					case "3": //CATALA
@@ -171,7 +171,7 @@ public class Projecte{
 						sDeutor="Deutor\tQtat.";
 						sTotal="Total";
 						monedaInicial="";
-						monedaFinal="€";
+						monedaFinal="ï¿½";
 						break;
 					
 					default: 
@@ -179,7 +179,7 @@ public class Projecte{
 						System.out.println("*Idioma incorrecte*\n");
 					}
 					
-				}while(opcioIdioma.equals("0")); //Quan l'idioma és 1, 2 o 3 passa a la pantalla principal, sino segueix fent bucle
+				}while(opcioIdioma.equals("0")); //Quan l'idioma ï¿½s 1, 2 o 3 passa a la pantalla principal, sino segueix fent bucle
 				
 				pantallaActual=Pantalles.PRINCIPAL;
 				
@@ -275,7 +275,7 @@ public class Projecte{
 					System.out.print(sDeuDiners+": ");
 					deutor = sc.nextLine().toUpperCase().trim();
 					System.out.print(sQuantitat+": ");
-					String inputQuantitat = sc.nextLine(); //TODO String definició a dalt
+					String inputQuantitat = sc.nextLine(); //TODO String definiciï¿½ a dalt
 					boolean quantitatEsNumero=true;
 					
 					for(int i=0;i<inputQuantitat.length();i++){
@@ -319,11 +319,7 @@ public class Projecte{
 					for(int i=0;i<dades.length;i++){
 						if(dades[i].prestamista==usuari){
 							total=total+dades[i].quantitat;
-							if(dades[i].quantitat>0){
-								System.out.println("|"+dades[i].deutor+"\t"+monedaInicial+dades[i].quantitat+monedaFinal+"\t|");
-							}else{
-								System.err.println("|"+dades[i].deutor+"\t"+monedaInicial+dades[i].quantitat+monedaFinal+"\t|");
-							}
+							System.out.println("|"+dades[i].deutor+"\t"+monedaInicial+dades[i].quantitat+monedaFinal+"\t|");
 							System.out.println("|---------------|");
 						}
 					}
