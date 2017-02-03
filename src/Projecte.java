@@ -298,12 +298,22 @@ public class Projecte{
 							}else{ //Si el usuari es el mateix es suma / resta a la quantitat que deu
 								if(dades[i].deutor.equals(deutor)){
 									dades[i].quantitat=dades[i].quantitat+quantitat;
+									
 									break;
 								}
 							}
-							
+							//Array a valor null.
+							if(dades[i].quantitat==0){
+								dades[i].deutor=null;
+								dades[i].prestamista=null;
+							}
 						}
-						
+						for(int i = 0; i<dades.length;i++){
+							if(dades[i].quantitat==0){
+								dades[i].deutor=null;
+								dades[i].prestamista=null;
+							}
+						}
 					}else{
 						System.out.println("*No es un numero*");
 					}
