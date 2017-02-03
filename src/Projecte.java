@@ -299,11 +299,6 @@ public class Projecte{
 									break;
 								}
 							}
-							//Array a valor null.
-							if(dades[i].quantitat==0){
-								dades[i].deutor=null;
-								dades[i].prestamista=null;
-							}
 						}
 						for(int i = 0; i<dades.length;i++){
 							if(dades[i].quantitat==0){
