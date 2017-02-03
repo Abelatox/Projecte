@@ -7,8 +7,6 @@ public class Projecte{
 	}
 
 	public static void main(String[] args) {
-		//TODO eliminar un deutor si la quantitat que deu es 0.
-		//TODO dir a en jordi lo de la class o array per usuari
 		class Usuaris{
 			String usuari;
 			String password;
@@ -300,6 +298,7 @@ public class Projecte{
 								}
 							}
 						}
+						
 						for(int i = 0; i<dades.length;i++){
 							if(dades[i].quantitat==0){
 								dades[i].deutor=null;
@@ -312,7 +311,8 @@ public class Projecte{
 				break;
 					
 				case "2": //Notifiacions / informació
-					
+					System.out.println("|---------------|");
+					System.out.println("|\t"+usuari+"\t|");
 					System.out.println("|---------------|");
 					System.out.println("|"+sDeutor+"\t|");
 					System.out.println("|---------------|");
