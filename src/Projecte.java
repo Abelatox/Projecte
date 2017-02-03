@@ -7,7 +7,8 @@ public class Projecte{
 	}
 
 	public static void main(String[] args) {
-		
+		//TODO eliminar un deutor si la quantitat que deu es 0.
+		//TODO dir a en jordi lo de la class o array per usuari
 		class Usuaris{
 			String usuari;
 			String password;
@@ -51,6 +52,7 @@ public class Projecte{
 		String usuari="",contrasenya="";
 		
 		String deutor=""; //Qui deu diners
+		String inputQuantitat; //String del preu per comprovar si és un número
 		float quantitat=0F; //Quantitat ja en float
 		float total=0; //Total de diners
 		boolean usuariRepetit = false;
@@ -59,7 +61,7 @@ public class Projecte{
 		String 
 		sRegistre="",
 		sEntrar="",
-		sIdioma="",
+		sEscullOpcio="",
 		sIntNom="",
 		sRepetitUsu="",
 		sInContrasenya="",
@@ -79,7 +81,7 @@ public class Projecte{
 		sTotal="";
 		
 		//Moneda
-		String monedaInicial=""; //Pounds i dolars
+		String monedaInicial=""; //Dolars
 		String monedaFinal=""; //Euros
 		
 		System.out.println("Benvingut al programa");
@@ -89,7 +91,7 @@ public class Projecte{
 			if(pantallaActual==Pantalles.IDIOMES){
 				
 				do{
-					System.out.println("1- English");
+					System.out.println("\n1- English");
 					System.out.println("2- Castellano");
 					System.out.println("3- Catala");
 					System.out.print("Escull el teu idioma: ");
@@ -98,9 +100,9 @@ public class Projecte{
 					switch (opcioIdioma){
 					case "1": //ENGLISH
 						
-						sRegistre="Sign up";
+						sRegistre="Register";
 						sEntrar="Login";
-						sIdioma="Change language";
+						sEscullOpcio="Choose an option";
 						sIntNom="Insert username";
 						sRepetitUsu="User already exists";
 						sInContrasenya="Insert password";
@@ -126,7 +128,7 @@ public class Projecte{
 						
 						sRegistre="Registrarse";
 						sEntrar="Entrar";
-						sIdioma="Cambiar idioma";
+						sEscullOpcio="Elige una opcion";
 						sIntNom="Introduce el nombre de usuario";
 						sRepetitUsu="Usuario repetido";
 						sInContrasenya="Introduce la contraseña";
@@ -145,14 +147,14 @@ public class Projecte{
 						sDeutor="Deutor\tCdad.";
 						sTotal="Total";
 						monedaInicial="";
-						monedaFinal="�";
+						monedaFinal="€";
 						break;
 					
 					case "3": //CATALA
 						
 						sRegistre="Registrar-se";
 						sEntrar="Entra";
-						sIdioma="Canviar idioma";
+						sEscullOpcio="Escull una opcio";
 						sIntNom="Introdueix el nom d'usuari";
 						sRepetitUsu="Usuari repetit";
 						sInContrasenya="Introdueix la contrasenya";
@@ -171,12 +173,12 @@ public class Projecte{
 						sDeutor="Deutor\tQtat.";
 						sTotal="Total";
 						monedaInicial="";
-						monedaFinal="�";
+						monedaFinal="€";
 						break;
 					
 					default: 
 						opcioIdioma="0";
-						System.out.println("*Idioma incorrecte*\n");
+						System.out.println("Idioma incorrecte\n");
 					}
 					
 				}while(opcioIdioma.equals("0")); //Quan l'idioma �s 1, 2 o 3 passa a la pantalla principal, sino segueix fent bucle
@@ -195,9 +197,9 @@ public class Projecte{
 				}
 				
 				//En cada bucle recompta els usuaris actius
-				System.out.println("1- "+sRegistre);
+				System.out.println("\n1- "+sRegistre);
 				System.out.println("2- "+sEntrar);
-				System.out.println("3- "+sIdioma);
+				System.out.print(sEscullOpcio+": ");
 				opcio = sc.nextLine();
 				
 				switch(opcio){
@@ -242,23 +244,18 @@ public class Projecte{
                     }
                     
                     if(usuariRepetit){ //Si existeix l'usuari
-                        if(contrasenya.equals(usuaris[index].password)){ // Comprova si la contrasenya es correcta per l'usuari
+                    	if(contrasenya.equals(usuaris[index].password)){ // Comprova si la contrasenya es correcta per l'usuari
             				System.out.println(sBen+" "+usuari);
         					System.out.println();
                             pantallaActual=Pantalles.USUARI;
                         }else{
-                        	System.out.println(sErContrasenya+"\n");
+                        	System.out.println(sErContrasenya);
                         }
                     }else{
-                        System.out.println(sErUsuari+"\n");
+                        System.out.println(sErUsuari);
                     }
                     break;
-                    
-				case "3": //Idioma
-					
-					pantallaActual=Pantalles.IDIOMES;
-					break;
-                    
+                   
                 default:
                     System.out.println(sOpcioNr);
                 }
@@ -275,7 +272,7 @@ public class Projecte{
 					System.out.print(sDeuDiners+": ");
 					deutor = sc.nextLine().toUpperCase().trim();
 					System.out.print(sQuantitat+": ");
-					String inputQuantitat = sc.nextLine(); //TODO String definici� a dalt
+					inputQuantitat = sc.nextLine();
 					boolean quantitatEsNumero=true;
 					
 					for(int i=0;i<inputQuantitat.length();i++){
@@ -317,7 +314,7 @@ public class Projecte{
 					total=0;
 					
 					for(int i=0;i<dades.length;i++){
-						if(dades[i].prestamista==usuari){
+						if(dades[i].prestamista!= null && dades[i].prestamista.equals(usuari)){
 							total=total+dades[i].quantitat;
 							System.out.println("|"+dades[i].deutor+"\t"+monedaInicial+dades[i].quantitat+monedaFinal+"\t|");
 							System.out.println("|---------------|");
