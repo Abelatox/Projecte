@@ -1,6 +1,32 @@
 import java.util.Scanner;
 
 public class Projecte{
+	static final int 
+		REGISTRE=0,
+		ENTRAR=1,
+		ESCULLOPCIO=2,
+		INTNOM=3,
+		REPETITUSU=4,
+		INCONTRASENYA=5,
+		USUARI=6,
+		CONTRASENYA=7,
+		BEN=8,
+		ERUSUARI=9,
+		ERCONTRASENYA=10,
+		OPCIONR=11,
+		EDEUTE=12,
+		IDEUTE=13,
+		ENRERA=14,
+		OPCIO=15,
+		DEUDINERS=16,
+		QUANTITAT=17,
+		DEUTOR=18,
+		TOTAL=19;
+	
+	static final int 
+		ENG=0, 
+		CAST = 1,
+		CAT = 2;
 	
 	public enum Pantalles{
 		PRINCIPAL, USUARI, IDIOMES
@@ -27,7 +53,7 @@ public class Projecte{
 			dades[i] = new Dades();
 		}
 		
-		//DefiniciÛ de la variable de la pantalla actual.
+		//Definici√≥ de la variable de la pantalla actual.
 		Pantalles pantallaActual = Pantalles.IDIOMES;
 		
 		//Usuaris inicials
@@ -40,7 +66,7 @@ public class Projecte{
 		Scanner sc = new Scanner(System.in);
 		boolean stop = false;
 		
-		//Opcions de men˙
+		//Opcions de men√∫
 		String opcioIdioma; //Opci√≥ d'idioma (1-3)
 		String opcio; //Opcio de registre/login (1-2)
 		String opcioMenuLogin; //Opcions d'usuari (1-3)
@@ -53,53 +79,29 @@ public class Projecte{
 		float total=0; //Total de diners
 		boolean usuariRepetit = false;
 		
-		//Variables Traducci√≥
-		int 
-		iRegistre=0,
-		iEntrar=1,
-		iEscullOpcio=2,
-		iIntNom=3,
-		iRepetitUsu=4,
-		iInContrasenya=5,
-		iUsuari=6,
-		iContrasenya=7,
-		iBen=8,
-		iErUsuari=9,
-		iErContrasenya=10,
-		iOpcioNr=11,
-		iEDeute=12,
-		iIDeute=13,
-		iEnrera=14,
-		iOpcio=15,
-		iDeuDiners=16,
-		iQuantitat=17,
-		iDeutor=18,
-		iTotal=19;
 		
-		int eng=0, cast = 1, cat = 2;
-		
-		//AssignaciÛ d'idioma
+		//Assignaci√≥ d'idioma
 		String[][] traduccio = new String[20][3]; //[numParaules][numIdiomes]
-		traduccio[iRegistre][eng]="Register";					traduccio[iRegistre][cast]="Registrarse";						traduccio[iRegistre][cat]="Registrar-se";
-		traduccio[iEntrar][eng]="Login";						traduccio[iEntrar][cast]="Entrar";								traduccio[iEntrar][cat]="Entrar";
-		traduccio[iEscullOpcio][eng]="Choose an option";		traduccio[iEscullOpcio][cast]="Elige una opcion";				traduccio[iEscullOpcio][cat]="Escull una opcio";
-		traduccio[iIntNom][eng]="Insert username";				traduccio[iIntNom][cast]="Introduce el nombre de usuario";		traduccio[iIntNom][cat]="Introdueix el nom d'usuari";
-		traduccio[iRepetitUsu][eng]="User already exists";		traduccio[iRepetitUsu][cast]="Usuario repetido";				traduccio[iRepetitUsu][cat]="Usuari repetit";
-		traduccio[iInContrasenya][eng]="Insert password";		traduccio[iInContrasenya][cast]="Introduce la contraseÒa";		traduccio[iInContrasenya][cat]="Introdueix la contrasenya";
-		traduccio[iUsuari][eng]="User";							traduccio[iUsuari][cast]="Usuario";								traduccio[iUsuari][cat]="Usuari";
-		traduccio[iContrasenya][eng]="Password";				traduccio[iContrasenya][cast]="ContraseÒa";						traduccio[iContrasenya][cat]="Contrasenya";
-		traduccio[iBen][eng]="Welcome";							traduccio[iBen][cast]="Bienvenido";								traduccio[iBen][cat]="Benvingut";
-		traduccio[iErUsuari][eng]="Invalid user";				traduccio[iErUsuari][cast]="Usuario incorrecto";				traduccio[iErUsuari][cat]="Usuari incorrecte";
-		traduccio[iErContrasenya][eng]="Invalid password";		traduccio[iErContrasenya][cast]="ContraseÒa incorrecta";		traduccio[iErContrasenya][cat]="Contrasenya incorrecte";
-		traduccio[iOpcioNr][eng]="Unrecognized option";			traduccio[iOpcioNr][cast]="Opcion no reconocida";				traduccio[iOpcioNr][cat]="Opcio no reconeguda";
-		traduccio[iEDeute][eng]="Add/edit debt";				traduccio[iEDeute][cast]="AÒadir/editar deuda";					traduccio[iEDeute][cat]="Afegir/editar deute";
-		traduccio[iIDeute][eng]="Debts information";			traduccio[iIDeute][cast]="Informacion de deudas";				traduccio[iIDeute][cat]="Informacio de deutes";
-		traduccio[iEnrera][eng]="Return";						traduccio[iEnrera][cast]="Volver atras";						traduccio[iEnrera][cat]="Tornar enrera";
-		traduccio[iOpcio][eng]="Choose an option";				traduccio[iOpcio][cast]="Elige una opcion";						traduccio[iOpcio][cat]="Tria una opcio";
-		traduccio[iDeuDiners][eng]="Insert who owes you money";	traduccio[iDeuDiners][cast]="Introduce quien te debe dinero";	traduccio[iDeuDiners][cat]="Introdueix qui et deu diners";
-		traduccio[iQuantitat][eng]="Insert the amount";			traduccio[iQuantitat][cast]="Introduce la cantidad";			traduccio[iQuantitat][cat]="Introdueix la quantitat";
-		traduccio[iDeutor][eng]="Debtor\tAmnt.";				traduccio[iDeutor][cast]="Deutor\tCdad.";						traduccio[iDeutor][cat]="Deutor\tQtat.";
-		traduccio[iTotal][eng]="Total";							traduccio[iTotal][cast]="Total";								traduccio[iTotal][cat]="Total";
+		traduccio[REGISTRE][ENG]="Register";					traduccio[REGISTRE][CAST]="Registrarse";						traduccio[REGISTRE][CAT]="Registrar-se";
+		traduccio[ENTRAR][ENG]="Login";							traduccio[ENTRAR][CAST]="Entrar";								traduccio[ENTRAR][CAT]="Entrar";
+		traduccio[ESCULLOPCIO][ENG]="Choose an option";			traduccio[ESCULLOPCIO][CAST]="Elige una opci√≥n";				traduccio[ESCULLOPCIO][CAT]="Escull una opcio";
+		traduccio[INTNOM][ENG]="Insert username";				traduccio[INTNOM][CAST]="Introduce el nombre de usuario";		traduccio[INTNOM][CAT]="Introdueix el nom d'usuari";
+		traduccio[REPETITUSU][ENG]="User already exists";		traduccio[REPETITUSU][CAST]="Usuario repetido";					traduccio[REPETITUSU][CAT]="Usuari repetit";
+		traduccio[INCONTRASENYA][ENG]="Insert password";		traduccio[INCONTRASENYA][CAST]="Introduce la contrase√±a";		traduccio[INCONTRASENYA][CAT]="Introdueix la contrasenya";
+		traduccio[USUARI][ENG]="User";							traduccio[USUARI][CAST]="Usuario";								traduccio[USUARI][CAT]="Usuari";
+		traduccio[CONTRASENYA][ENG]="Password";					traduccio[CONTRASENYA][CAST]="Contrase√±a";						traduccio[CONTRASENYA][CAT]="Contrasenya";
+		traduccio[BEN][ENG]="Welcome";							traduccio[BEN][CAST]="Bienvenido";								traduccio[BEN][CAT]="Benvingut";
+		traduccio[ERUSUARI][ENG]="Invalid user";				traduccio[ERUSUARI][CAST]="Usuario incorrecto";					traduccio[ERUSUARI][CAT]="Usuari incorrecte";
+		traduccio[ERCONTRASENYA][ENG]="Invalid password";		traduccio[ERCONTRASENYA][CAST]="Contrase√±a incorrecta";			traduccio[ERCONTRASENYA][CAT]="Contrasenya incorrecte";
+		traduccio[OPCIONR][ENG]="Unrecognized option";			traduccio[OPCIONR][CAST]="Opcion no reconocida";				traduccio[OPCIONR][CAT]="Opcio no reconeguda";
+		traduccio[EDEUTE][ENG]="Add/edit debt";					traduccio[EDEUTE][CAST]="A√±adir/editar deuda";					traduccio[EDEUTE][CAT]="Afegir/editar deute";
+		traduccio[IDEUTE][ENG]="Debts information";				traduccio[IDEUTE][CAST]="Informacion de deudas";				traduccio[IDEUTE][CAT]="Informacio de deutes";
+		traduccio[ENRERA][ENG]="Return";						traduccio[ENRERA][CAST]="Volver atr√°s";							traduccio[ENRERA][CAT]="Tornar enrera";
+		traduccio[OPCIO][ENG]="Choose an option";				traduccio[OPCIO][CAST]="Elige una opci√≥n";						traduccio[OPCIO][CAT]="Tria una opcio";
+		traduccio[DEUDINERS][ENG]="Insert who owes you money";	traduccio[DEUDINERS][CAST]="Introduce quien te debe dinero";	traduccio[DEUDINERS][CAT]="Introdueix qui et deu diners";
+		traduccio[QUANTITAT][ENG]="Insert the amount";			traduccio[QUANTITAT][CAST]="Introduce la cantidad";				traduccio[QUANTITAT][CAT]="Introdueix la quantitat";
+		traduccio[DEUTOR][ENG]="Debtor\tAmnt.";					traduccio[DEUTOR][CAST]="Deutor\tCdad.";						traduccio[DEUTOR][CAT]="Deutor\tQtat.";
+		traduccio[TOTAL][ENG]="Total";							traduccio[TOTAL][CAST]="Total";									traduccio[TOTAL][CAT]="Total";
 		
 		int idioma = 0;
 		
@@ -125,7 +127,7 @@ public class Projecte{
 					switch (opcioIdioma){
 					case "1": //ENGLISH
 						
-						idioma = eng;
+						idioma = ENG;
 						
 						monedaInicial="$";
 						monedaFinal="";
@@ -133,18 +135,18 @@ public class Projecte{
 					
 					case "2": //CASTELLANO
 						
-						idioma = cast;
+						idioma = CAST;
 
 						monedaInicial="";
-						monedaFinal="Ä";
+						monedaFinal="‚Ç¨";
 						break;
 					
 					case "3": //CATALA
 						
-						idioma = cat;
+						idioma = CAT;
 
 						monedaInicial="";
-						monedaFinal="Ä";
+						monedaFinal="‚Ç¨";
 						break;
 					
 					default: 
@@ -168,21 +170,23 @@ public class Projecte{
 				}
 				
 				//En cada bucle recompta els usuaris actius
-				System.out.println("\n1- "+traduccio[iRegistre][idioma]);
-				System.out.println("2- "+traduccio[iEntrar][idioma]);
-				System.out.print(traduccio[iEscullOpcio][idioma]+": ");
+				System.out.println(
+					"\n1- "+traduccio[REGISTRE][idioma]+"\n"+
+					"2- "+traduccio[ENTRAR][idioma]+"\n"+
+					traduccio[ESCULLOPCIO][idioma]+": "
+				);
 				opcio = sc.nextLine();
 				
 				switch(opcio){
 				case "1": //Registre
 					
-					System.out.print(traduccio[iIntNom][idioma]+":  ");
+					System.out.print(traduccio[INTNOM][idioma]+":  ");
 					usuari=sc.nextLine();
 					
 					//Comprova si l'usuari ja existeix.
 					for(int i=0;i<usuarisActius;i++){
 						if(usuaris[i].usuari!=null && usuaris[i].usuari.equals(usuari)){
-							System.out.println(traduccio[iRepetitUsu][idioma]);
+							System.out.println(traduccio[REPETITUSU][idioma]);
 							usuariRepetit = true;
 							break;
 						}
@@ -190,7 +194,7 @@ public class Projecte{
 					
 					//Si el nom d'usuari es valid et demana contrasenya i el fica en la array.
 					if(!usuariRepetit){
-						System.out.print(traduccio[iInContrasenya][idioma]+": ");
+						System.out.print(traduccio[INCONTRASENYA][idioma]+": ");
 						contrasenya=sc.nextLine();
 						usuaris[usuarisActius].usuari = usuari;
 						usuaris[usuarisActius].password = contrasenya;
@@ -201,9 +205,9 @@ public class Projecte{
 				case "2": //Login
 					
                     int index=-1; //Variable que guarda en quin index es troba l'usuari.
-                    System.out.print(traduccio[iUsuari][idioma]+": ");
+                    System.out.print(traduccio[USUARI][idioma]+": ");
                     usuari=sc.nextLine(); //Llegim el que Introdueix l'usuari.
-                    System.out.print(traduccio[iContrasenya][idioma]+": ");
+                    System.out.print(traduccio[CONTRASENYA][idioma]+": ");
                     contrasenya=sc.nextLine();
                     
                     for(int i=0;i<usuarisActius;i++){ //Aquest for guarda l'index en el que est√† l'usuari que volem saber i si existeix.
@@ -216,33 +220,35 @@ public class Projecte{
                     
                     if(usuariRepetit){ //Si existeix l'usuari
                     	if(contrasenya.equals(usuaris[index].password)){ // Comprova si la contrasenya es correcta per l'usuari
-            				System.out.println(traduccio[iBen][idioma]+" "+usuari);
+            				System.out.println(traduccio[BEN][idioma]+" "+usuari);
         					System.out.println();
                             pantallaActual=Pantalles.USUARI;
                         }else{
-                        	System.out.println(traduccio[iErContrasenya][idioma]);
+                        	System.out.println(traduccio[ERCONTRASENYA][idioma]);
                         }
                     }else{
-                        System.out.println(traduccio[iErUsuari][idioma]);
+                        System.out.println(traduccio[ERUSUARI][idioma]);
                     }
                     break;
                    
                 default:
-                    System.out.println(traduccio[iOpcioNr][idioma]);
+                    System.out.println(traduccio[OPCIONR][idioma]);
                 }
 
 			}else if(pantallaActual==Pantalles.USUARI){
-				System.out.println("1- "+traduccio[iEDeute][idioma]);
-				System.out.println("2- "+traduccio[iIDeute][idioma]);
-				System.out.println("3- "+traduccio[iEnrera][idioma]);
-				System.out.print(traduccio[iOpcio][idioma]+": ");
+				System.out.println(
+					"1- "+traduccio[EDEUTE][idioma]+"\n"+
+					"2- "+traduccio[IDEUTE][idioma]+"\n"+
+					"3- "+traduccio[ENRERA][idioma]+"\n"+
+					traduccio[OPCIO][idioma]+": "
+				);
 				opcioMenuLogin = sc.nextLine();
 				
 				switch(opcioMenuLogin){
 				case "1": //Afegir deute
-					System.out.print(traduccio[iDeuDiners][idioma]+": ");
+					System.out.print(traduccio[DEUDINERS][idioma]+": ");
 					deutor = sc.nextLine().toUpperCase().trim();
-					System.out.print(traduccio[iQuantitat][idioma]+": ");
+					System.out.print(traduccio[QUANTITAT][idioma]+": ");
 					inputQuantitat = sc.nextLine();
 					boolean quantitatEsNumero=true;
 					
@@ -284,11 +290,13 @@ public class Projecte{
 				break;
 					
 				case "2": //Notifiacions / informaci√≥
-					System.out.println("|---------------|");
-					System.out.println("|\t"+usuari+"\t|");
-					System.out.println("|---------------|");
-					System.out.println("|"+traduccio[iDeutor][idioma]+"\t|");
-					System.out.println("|---------------|");
+					System.out.println(
+						"|---------------|"+"\n"+
+						"|\t"+usuari+"\t|"+"\n"+
+						"|---------------|"+"\n"+
+						"|"+traduccio[DEUTOR][idioma]+"\t|"+"\n"+
+						"|---------------|"
+					);
 					total=0;
 					
 					for(int i=0;i<dades.length;i++){
@@ -299,9 +307,10 @@ public class Projecte{
 						}
 					}
 					
-					System.out.println("|---------------|");
-					System.out.println("|"+traduccio[iTotal][idioma]+"\t"+monedaInicial+total+monedaFinal+"\t|");
-					System.out.println("|---------------|");
+					System.out.println("|---------------|"+"\n"+
+						"|"+traduccio[TOTAL][idioma]+"\t"+monedaInicial+total+monedaFinal+"\t|\n"+
+						"|---------------|\n"
+						);
 					
 					break;
 				case "3": //Enrera
@@ -310,7 +319,7 @@ public class Projecte{
 					break;
 					
 				default:
-					System.out.println(traduccio[iOpcioNr][idioma]);
+					System.out.println(traduccio[OPCIONR][idioma]);
 				}	
 				System.out.println();
 			}
