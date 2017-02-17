@@ -4,27 +4,30 @@ import java.util.Scanner;
 
 
 public class Project{
+	static int index=0;
 	static final int 
-		REGISTRE=0,
-		ENTRAR=1,
-		ESCULLOPCIO=2,
-		INTNOM=3,
-		REPETITUSU=4,
-		INCONTRASENYA=5,
-		USUARI=6,
-		CONTRASENYA=7,
-		BEN=8,
-		ERUSUARI=9,
-		ERCONTRASENYA=10,
-		OPCIONR=11,
-		EDEUTE=12,
-		IDEUTE=13,
-		ENRERA=14,
-		OPCIO=15,
-		DEUDINERS=16,
-		QUANTITAT=17,
-		DEUTOR=18,
-		TOTAL=19;
+		REGISTRE=index++, 
+	    ENTRAR=index++, 
+	    ESCULLOPCIO=index++, 
+	    INTNOM=index++, 
+	    REPETITUSU=index++, 
+	    INCONTRASENYA=index++, 
+	    USUARI=index++, 
+	    CONTRASENYA=index++, 
+	    BEN=index++, 
+	    ERUSUARI=index++, 
+	    ERCONTRASENYA=index++, 
+	    OPCIONR=index++, 
+	    ADEUTE=index++, 
+	    EDEUTE=index++, 
+	    IDEUTE=index++, 
+	    ENRERA=index++, 
+	    OPCIO=index++, 
+	    DEUDINERS=index++, 
+	    DEUDELIMI=index++, 
+	    QUANTITAT=index++, 
+	    DEUTOR=index++, 
+	    TOTAL=index++; 
 	
 	static final int 
 		ENG=0, 
@@ -36,7 +39,7 @@ public class Project{
 	}
 	
 	//Assignació d'idioma
-	static String[][] traduccio = new String[20][3]; //[numParaules][numIdiomes];
+	static String[][] traduccio = new String[index][3]; //[numParaules][numIdiomes];
 	
 	static int idioma = 0;
 
@@ -105,11 +108,13 @@ public class Project{
 		traduccio[ERUSUARI][ENG]="Invalid user";				traduccio[ERUSUARI][CAST]="Usuario incorrecto";					traduccio[ERUSUARI][CAT]="Usuari incorrecte";
 		traduccio[ERCONTRASENYA][ENG]="Invalid password";		traduccio[ERCONTRASENYA][CAST]="Contraseña incorrecta";			traduccio[ERCONTRASENYA][CAT]="Contrasenya incorrecte";
 		traduccio[OPCIONR][ENG]="Unrecognized option";			traduccio[OPCIONR][CAST]="Opcion no reconocida";				traduccio[OPCIONR][CAT]="Opcio no reconeguda";
-		traduccio[EDEUTE][ENG]="Add/edit debt";					traduccio[EDEUTE][CAST]="Añadir/editar deuda";					traduccio[EDEUTE][CAT]="Afegir/editar deute";
+		traduccio[ADEUTE][ENG]="Add/edit debt";         	 	traduccio[ADEUTE][CAST]="Añadir/editar deuda";          		traduccio[ADEUTE][CAT]="Afegir/editar deute"; 
+		traduccio[EDEUTE][ENG]="Delete debt";         	 		traduccio[EDEUTE][CAST]="Eliminar deuda";            			traduccio[EDEUTE][CAT]="Eliminar deute"; 
 		traduccio[IDEUTE][ENG]="Debts information";				traduccio[IDEUTE][CAST]="Informacion de deudas";				traduccio[IDEUTE][CAT]="Informacio de deutes";
 		traduccio[ENRERA][ENG]="Return";						traduccio[ENRERA][CAST]="Volver atrás";							traduccio[ENRERA][CAT]="Tornar enrera";
 		traduccio[OPCIO][ENG]="Choose an option";				traduccio[OPCIO][CAST]="Elige una opción";						traduccio[OPCIO][CAT]="Tria una opcio";
 		traduccio[DEUDINERS][ENG]="Insert who owes you money";	traduccio[DEUDINERS][CAST]="Introduce quien te debe dinero";	traduccio[DEUDINERS][CAT]="Introdueix qui et deu diners";
+		 traduccio[DEUDELIMI][ENG]="Insert who gave you money"; traduccio[DEUDELIMI][CAST]="Introduce quien te ha devuelto dinero";  traduccio[DEUDELIMI][CAT]="Introdueix qui t'ha tornat diners"; 
 		traduccio[QUANTITAT][ENG]="Insert the amount";			traduccio[QUANTITAT][CAST]="Introduce la cantidad";				traduccio[QUANTITAT][CAT]="Introdueix la quantitat";
 		traduccio[DEUTOR][ENG]="Debtor\tAmnt.";					traduccio[DEUTOR][CAST]="Deutor\tCdad.";						traduccio[DEUTOR][CAT]="Deutor\tQtat.";
 		traduccio[TOTAL][ENG]="Total";							traduccio[TOTAL][CAST]="Total";									traduccio[TOTAL][CAT]="Total";
@@ -126,7 +131,7 @@ public class Project{
 		while(stop == false)
 		{		
 			String[] mRegistre = {traduccio[REGISTRE][idioma],traduccio[ENTRAR][idioma]};
-			String[] mDeute = {traduccio[EDEUTE][idioma],traduccio[IDEUTE][idioma],traduccio[ENRERA][idioma]};
+		    String[] mDeute = {traduccio[ADEUTE][idioma],traduccio[EDEUTE][idioma],traduccio[IDEUTE][idioma],traduccio[ENRERA][idioma]}; 
 
 			if(pantallaActual==Pantalles.IDIOMES){
 				
@@ -210,7 +215,7 @@ public class Project{
 					}
 					
 					break;
-					
+								
 				case "2": //Login
 					
                     int index=-1; //Variable que guarda en quin index es troba l'usuari.
@@ -292,12 +297,31 @@ public class Project{
 						System.out.println("*No es un numero*");
 					}
 				break;
+				
+				 case "2": //Resta deute 
+			          System.out.print(traduccio[DEUDELIMI][idioma]+": "); 
+			          deutor = sc.nextLine().toUpperCase().trim(); 
+			          System.out.print(traduccio[QUANTITAT][idioma]+": "); 
+			          inputQuantitat = sc.nextLine(); 
+			          quantitatEsNumero=true; 
+			          for(int i=0;i<inputQuantitat.length();i++){ 
+			            if(inputQuantitat.charAt(i) != '-' && (inputQuantitat.charAt(i)<48 || inputQuantitat.charAt(i)>57)){ 
+			              quantitatEsNumero=false; 
+			            } 
+			          } 
+			          if(quantitatEsNumero){ 
+			            for (int i=0;i<dades.length;i++){ 
+			              if(dades[i].deutor.equals(deutor)){ 
+			                dades[i].quantitat=dades[i].quantitat-quantitat; 
+			            } 
+			              } 
+			          } 
 					
-				case "2": //Notifiacions / informació
+				case "3": //Notifiacions / informació
 					
 					printTaula(usuari, dades, monedaInicial, monedaFinal);
 					break;
-				case "3": //Enrera
+				case "4": //Enrera
 					
 					pantallaActual=Pantalles.PRINCIPAL;
 					break;
