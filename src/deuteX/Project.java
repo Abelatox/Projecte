@@ -1,6 +1,9 @@
+package deuteX;
+
 import java.util.Scanner;
 
-public class Projecte{
+
+public class Project{
 	static final int 
 		REGISTRE=0,
 		ENTRAR=1,
@@ -35,6 +38,8 @@ public class Projecte{
 	//Assignació d'idioma
 	static String[][] traduccio = new String[20][3]; //[numParaules][numIdiomes];
 	
+	static int idioma = 0;
+
 	
 	
 	
@@ -42,16 +47,16 @@ public class Projecte{
 	
 	public static void main(String[] args) {
 		
-		class Usuaris{
-			String usuari;
-			String password;
-		}
+//		class Usuaris{
+//			String usuari;
+//			String password;
+//		}
 		
-		class Dades{
-			String deutor;
-			float quantitat;
-			String prestamista;
-		}
+//		class Dades{
+//			String deutor;
+//			float quantitat;
+//			String prestamista;
+//		}
 		
 		Usuaris[] usuaris = new Usuaris[10];
 		Dades[] dades = new Dades[10];
@@ -109,7 +114,6 @@ public class Projecte{
 		traduccio[DEUTOR][ENG]="Debtor\tAmnt.";					traduccio[DEUTOR][CAST]="Deutor\tCdad.";						traduccio[DEUTOR][CAT]="Deutor\tQtat.";
 		traduccio[TOTAL][ENG]="Total";							traduccio[TOTAL][CAST]="Total";									traduccio[TOTAL][CAT]="Total";
 		
-		int idioma = 0;
 		
 		//Moneda
 		String monedaInicial=""; //Dolars
@@ -291,29 +295,7 @@ public class Projecte{
 					
 				case "2": //Notifiacions / informació
 					
-					//printTaula(usuari, deutor, dades);
-					System.out.println(
-							"|---------------|"+"\n"+
-							"|\t"+usuari+"\t|"+"\n"+
-							"|---------------|"+"\n"+
-							"|"+traduccio[DEUTOR][idioma]+"\t|"+"\n"+
-							"|---------------|"
-						);
-						total=0;
-						
-						for(int i=0;i<dades.length;i++){
-							if(dades[i].prestamista!= null && dades[i].prestamista.equals(usuari)){
-								total=total+dades[i].quantitat;
-								System.out.println("|"+dades[i].deutor+"\t"+monedaInicial+dades[i].quantitat+monedaFinal+"\t|");
-								System.out.println("|---------------|");
-							}
-						}
-						
-						System.out.print("|---------------|"+"\n"+
-							"|"+traduccio[TOTAL][idioma]+"\t"+monedaInicial+total+monedaFinal+"\t|\n"+
-							"|---------------|\n"
-							);
-					
+					printTaula(usuari, dades, monedaInicial, monedaFinal);
 					break;
 				case "3": //Enrera
 					
@@ -326,6 +308,31 @@ public class Projecte{
 				System.out.println();
 			}
 		}
+	}
+	
+	private static void printTaula(String usuari, Dades[] dades, String monedaInicial, String monedaFinal){
+		float total=0;
+		System.out.println(
+				"|---------------|"+"\n"+
+				"|\t"+usuari+"\t|"+"\n"+
+				"|---------------|"+"\n"+
+				"|"+traduccio[DEUTOR][idioma]+"\t|"+"\n"+
+				"|---------------|"
+		);
+		total=0;
+		
+		for(int i=0;i<dades.length;i++){
+			if(dades[i].prestamista!= null && dades[i].prestamista.equals(usuari)){
+				total=total+dades[i].quantitat;
+				System.out.println("|"+dades[i].deutor+"\t"+monedaInicial+dades[i].quantitat+monedaFinal+"\t|");
+				System.out.println("|---------------|");
+			}
+		}
+		
+		System.out.print("|---------------|"+"\n"+
+			"|"+traduccio[TOTAL][idioma]+"\t"+monedaInicial+total+monedaFinal+"\t|\n"+
+			"|---------------|\n"
+		);
 	}
 	
 	private static void printMenu(String[] array){
