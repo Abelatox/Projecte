@@ -32,6 +32,14 @@ public class Projecte{
 		PRINCIPAL, USUARI, IDIOMES
 	}
 	
+	//Assignació d'idioma
+	static String[][] traduccio = new String[20][3]; //[numParaules][numIdiomes];
+	
+	
+	
+	
+	
+	
 	public static void main(String[] args) {
 		
 		class Usuaris{
@@ -79,9 +87,7 @@ public class Projecte{
 		float total=0; //Total de diners
 		boolean usuariRepetit = false;
 		
-		
-		//Assignació d'idioma
-		String[][] traduccio = new String[20][3]; //[numParaules][numIdiomes]
+		//Assignació del vector bidimensional.
 		traduccio[REGISTRE][ENG]="Register";					traduccio[REGISTRE][CAST]="Registrarse";						traduccio[REGISTRE][CAT]="Registrar-se";
 		traduccio[ENTRAR][ENG]="Login";							traduccio[ENTRAR][CAST]="Entrar";								traduccio[ENTRAR][CAT]="Entrar";
 		traduccio[ESCULLOPCIO][ENG]="Choose an option";			traduccio[ESCULLOPCIO][CAST]="Elige una opción";				traduccio[ESCULLOPCIO][CAT]="Escull una opcio";
