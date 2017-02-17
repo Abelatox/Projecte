@@ -20,7 +20,8 @@ public class Project{
 	    OPCIONR=index++, 
 	    ADEUTE=index++, 
 	    EDEUTE=index++, 
-	    IDEUTE=index++, 
+	    IDEUTE=index++,
+	    NOESNUM=index++,
 	    ENRERA=index++, 
 	    OPCIO=index++, 
 	    DEUDINERS=index++, 
@@ -38,6 +39,8 @@ public class Project{
 		PRINCIPAL, USUARI, IDIOMES
 	}
 	
+	static int usuarisActius=0; //Es posa a 0 per quan compti que no surti dels limits
+
 	//Assignació d'idioma
 	static String[][] traduccio = new String[index][3]; //[numParaules][numIdiomes];
 	
@@ -78,7 +81,6 @@ public class Project{
 		usuaris[1].usuari = "Xevi";
 		usuaris[1].password = "456";
 		
-		int usuarisActius=0;
 		Scanner sc = new Scanner(System.in);
 		boolean stop = false;
 		
@@ -111,10 +113,11 @@ public class Project{
 		traduccio[ADEUTE][ENG]="Add/edit debt";         	 	traduccio[ADEUTE][CAST]="Añadir/editar deuda";          		traduccio[ADEUTE][CAT]="Afegir/editar deute"; 
 		traduccio[EDEUTE][ENG]="Delete debt";         	 		traduccio[EDEUTE][CAST]="Eliminar deuda";            			traduccio[EDEUTE][CAT]="Eliminar deute"; 
 		traduccio[IDEUTE][ENG]="Debts information";				traduccio[IDEUTE][CAST]="Informacion de deudas";				traduccio[IDEUTE][CAT]="Informacio de deutes";
+		traduccio[NOESNUM][ENG]="Is not a number";				traduccio[NOESNUM][CAST]="No es un número";						traduccio[NOESNUM][CAT]="No és un nombre";
 		traduccio[ENRERA][ENG]="Return";						traduccio[ENRERA][CAST]="Volver atrás";							traduccio[ENRERA][CAT]="Tornar enrera";
 		traduccio[OPCIO][ENG]="Choose an option";				traduccio[OPCIO][CAST]="Elige una opción";						traduccio[OPCIO][CAT]="Tria una opcio";
 		traduccio[DEUDINERS][ENG]="Insert who owes you money";	traduccio[DEUDINERS][CAST]="Introduce quien te debe dinero";	traduccio[DEUDINERS][CAT]="Introdueix qui et deu diners";
-		 traduccio[DEUDELIMI][ENG]="Insert who gave you money"; traduccio[DEUDELIMI][CAST]="Introduce quien te ha devuelto dinero";  traduccio[DEUDELIMI][CAT]="Introdueix qui t'ha tornat diners"; 
+		traduccio[DEUDELIMI][ENG]="Insert who gave you money"; traduccio[DEUDELIMI][CAST]="Introduce quien te ha devuelto dinero";  traduccio[DEUDELIMI][CAT]="Introdueix qui t'ha tornat diners"; 
 		traduccio[QUANTITAT][ENG]="Insert the amount";			traduccio[QUANTITAT][CAST]="Introduce la cantidad";				traduccio[QUANTITAT][CAT]="Introdueix la quantitat";
 		traduccio[DEUTOR][ENG]="Debtor\tAmnt.";					traduccio[DEUTOR][CAST]="Deutor\tCdad.";						traduccio[DEUTOR][CAT]="Deutor\tQtat.";
 		traduccio[TOTAL][ENG]="Total";							traduccio[TOTAL][CAST]="Total";									traduccio[TOTAL][CAT]="Total";
@@ -179,7 +182,6 @@ public class Project{
 				usuari="";
 				contrasenya="";
 				usuariRepetit=false;
-				usuarisActius=0; //Es posa a 0 per quan compti que no surti dels limits
 				
 				for(int i=0;i<usuaris.length;i++){
 					if(!(usuaris[i].usuari == null))
@@ -223,16 +225,10 @@ public class Project{
                     usuari=sc.nextLine(); //Llegim el que Introdueix l'usuari.
                     System.out.print(traduccio[CONTRASENYA][idioma]+": ");
                     contrasenya=sc.nextLine();
-                    
-                    for(int i=0;i<usuarisActius;i++){ //Aquest for guarda l'index en el que està l'usuari que volem saber i si existeix.
-                        if(usuaris[i].usuari.equals(usuari)){
-                            usuariRepetit = true;
-                            index=i;
-                            break;
-                        }
-                    }
-                    
-                    if(usuariRepetit){ //Si existeix l'usuari
+                   
+                    index=usuariRepetit(usuaris, usuari);
+                  
+                    if(index!=-1){ //Si existeix l'usuari
                     	if(contrasenya.equals(usuaris[index].password)){ // Comprova si la contrasenya es correcta per l'usuari
             				System.out.println(traduccio[BEN][idioma]+" "+usuari);
                             pantallaActual=Pantalles.USUARI;
@@ -259,14 +255,8 @@ public class Project{
 					deutor = sc.nextLine().toUpperCase().trim();
 					System.out.print(traduccio[QUANTITAT][idioma]+": ");
 					inputQuantitat = sc.nextLine();
-					boolean quantitatEsNumero=true;
 					
-					for(int i=0;i<inputQuantitat.length();i++){
-						if(inputQuantitat.charAt(i) != '-' && (inputQuantitat.charAt(i)<48 || inputQuantitat.charAt(i)>57)){
-							quantitatEsNumero=false;
-						}
-					}
-					if(quantitatEsNumero){
+					if(esNumero(inputQuantitat)){
 							
 						quantitat=Float.parseFloat(inputQuantitat);
 						
@@ -286,13 +276,7 @@ public class Project{
 								}
 							}
 						}
-						
-						for(int i = 0; i<dades.length;i++){
-							if(dades[i].quantitat==0){
-								dades[i].deutor=null;
-								dades[i].prestamista=null;
-							}
-						}
+						saldarDeute(dades);
 					}else{
 						System.out.println("*No es un numero*");
 					}
@@ -303,24 +287,33 @@ public class Project{
 			          deutor = sc.nextLine().toUpperCase().trim(); 
 			          System.out.print(traduccio[QUANTITAT][idioma]+": "); 
 			          inputQuantitat = sc.nextLine(); 
-			          quantitatEsNumero=true; 
-			          for(int i=0;i<inputQuantitat.length();i++){ 
-			            if(inputQuantitat.charAt(i) != '-' && (inputQuantitat.charAt(i)<48 || inputQuantitat.charAt(i)>57)){ 
-			              quantitatEsNumero=false; 
-			            } 
-			          } 
-			          if(quantitatEsNumero){ 
-			            for (int i=0;i<dades.length;i++){ 
-			              if(dades[i].deutor.equals(deutor)){ 
-			                dades[i].quantitat=dades[i].quantitat-quantitat; 
-			            } 
-			              } 
-			          } 
-					
+			          
+			          if(esNumero(inputQuantitat)){
+							quantitat=Float.parseFloat(inputQuantitat);
+							for(int i=0;i<dades.length;i++){
+								
+								if(dades[i].deutor==null){
+									dades[i].deutor=deutor;
+									dades[i].quantitat=quantitat;
+									dades[i].prestamista=usuari;
+									break;
+								}else{ //Si el usuari es el mateix es suma / resta a la quantitat que deu
+									if(dades[i].deutor.equals(deutor)){
+										dades[i].quantitat=dades[i].quantitat+quantitat;
+										break;
+									}
+								}
+							}
+							saldarDeute(dades);
+						}else{
+							System.out.println("*No es un numero*");
+						}
+					break;
 				case "3": //Notifiacions / informació
 					
 					printTaula(usuari, dades, monedaInicial, monedaFinal);
 					break;
+					
 				case "4": //Enrera
 					
 					pantallaActual=Pantalles.PRINCIPAL;
@@ -364,5 +357,32 @@ public class Project{
 		for(int i=0;i<array.length;i++){
 			System.out.println((i+1)+"- "+array[i]);
 		}
+	}
+	
+	private static boolean esNumero(String num){
+		for(int i=0;i<num.length();i++){
+			if(num.charAt(i)<48 || num.charAt(i)>57){
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	private static void saldarDeute(Dades[] dades){
+		for(int i = 0; i<dades.length;i++){
+			if(dades[i].quantitat==0){
+				dades[i].deutor=null;
+				dades[i].prestamista=null;
+			}
+		}
+	}
+	
+	private static int usuariRepetit(Usuaris[] usuaris, String usuari){
+		for(int i=0;i<usuarisActius;i++){ //Aquest for guarda l'index en el que està l'usuari que volem saber i si existeix.
+            if(usuaris[i].usuari.equals(usuari)){
+                return i;
+            }
+        }
+		return -1;
 	}
 }
