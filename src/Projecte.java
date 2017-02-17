@@ -109,19 +109,21 @@ public class Projecte{
 		String monedaInicial=""; //Dolars
 		String monedaFinal=""; //Euros
 		
+		//Menus
+		String[] mIdioma = {"English","Castellano","Català"};
 		System.out.println("Benvingut al programa");
 		
 		while(stop == false)
 		{		
+			String[] mRegistre = {traduccio[REGISTRE][idioma],traduccio[ENTRAR][idioma]};
+			String[] mDeute = {traduccio[EDEUTE][idioma],traduccio[IDEUTE][idioma],traduccio[ENRERA][idioma]};
+
 			if(pantallaActual==Pantalles.IDIOMES){
 				
 				do{
-					System.out.println(
-						"\n1- English\n"+
-						"2- Castellano\n"+
-						"3- Catala\n"+
-						"Escull el teu idioma: "
-					);
+					printMenu(mIdioma);
+					System.out.print("Escull el teu idioma: ");
+
 					opcioIdioma=sc.nextLine();
 				
 					switch (opcioIdioma){
@@ -170,11 +172,8 @@ public class Projecte{
 				}
 				
 				//En cada bucle recompta els usuaris actius
-				System.out.println(
-					"\n1- "+traduccio[REGISTRE][idioma]+"\n"+
-					"2- "+traduccio[ENTRAR][idioma]+"\n"+
-					traduccio[ESCULLOPCIO][idioma]+": "
-				);
+				printMenu(mRegistre);
+				System.out.println(traduccio[ESCULLOPCIO][idioma]+": ");
 				opcio = sc.nextLine();
 				
 				switch(opcio){
@@ -221,7 +220,6 @@ public class Projecte{
                     if(usuariRepetit){ //Si existeix l'usuari
                     	if(contrasenya.equals(usuaris[index].password)){ // Comprova si la contrasenya es correcta per l'usuari
             				System.out.println(traduccio[BEN][idioma]+" "+usuari);
-        					System.out.println();
                             pantallaActual=Pantalles.USUARI;
                         }else{
                         	System.out.println(traduccio[ERCONTRASENYA][idioma]);
@@ -236,12 +234,8 @@ public class Projecte{
                 }
 
 			}else if(pantallaActual==Pantalles.USUARI){
-				System.out.println(
-					"1- "+traduccio[EDEUTE][idioma]+"\n"+
-					"2- "+traduccio[IDEUTE][idioma]+"\n"+
-					"3- "+traduccio[ENRERA][idioma]+"\n"+
-					traduccio[OPCIO][idioma]+": "
-				);
+				printMenu(mDeute);
+				System.out.println(traduccio[OPCIO][idioma]+": ");
 				opcioMenuLogin = sc.nextLine();
 				
 				switch(opcioMenuLogin){
@@ -290,27 +284,29 @@ public class Projecte{
 				break;
 					
 				case "2": //Notifiacions / informació
+					
+					//printTaula(usuari, deutor, dades);
 					System.out.println(
-						"|---------------|"+"\n"+
-						"|\t"+usuari+"\t|"+"\n"+
-						"|---------------|"+"\n"+
-						"|"+traduccio[DEUTOR][idioma]+"\t|"+"\n"+
-						"|---------------|"
-					);
-					total=0;
-					
-					for(int i=0;i<dades.length;i++){
-						if(dades[i].prestamista!= null && dades[i].prestamista.equals(usuari)){
-							total=total+dades[i].quantitat;
-							System.out.println("|"+dades[i].deutor+"\t"+monedaInicial+dades[i].quantitat+monedaFinal+"\t|");
-							System.out.println("|---------------|");
-						}
-					}
-					
-					System.out.println("|---------------|"+"\n"+
-						"|"+traduccio[TOTAL][idioma]+"\t"+monedaInicial+total+monedaFinal+"\t|\n"+
-						"|---------------|\n"
+							"|---------------|"+"\n"+
+							"|\t"+usuari+"\t|"+"\n"+
+							"|---------------|"+"\n"+
+							"|"+traduccio[DEUTOR][idioma]+"\t|"+"\n"+
+							"|---------------|"
 						);
+						total=0;
+						
+						for(int i=0;i<dades.length;i++){
+							if(dades[i].prestamista!= null && dades[i].prestamista.equals(usuari)){
+								total=total+dades[i].quantitat;
+								System.out.println("|"+dades[i].deutor+"\t"+monedaInicial+dades[i].quantitat+monedaFinal+"\t|");
+								System.out.println("|---------------|");
+							}
+						}
+						
+						System.out.print("|---------------|"+"\n"+
+							"|"+traduccio[TOTAL][idioma]+"\t"+monedaInicial+total+monedaFinal+"\t|\n"+
+							"|---------------|\n"
+							);
 					
 					break;
 				case "3": //Enrera
@@ -323,6 +319,13 @@ public class Projecte{
 				}	
 				System.out.println();
 			}
+		}
+	}
+	
+	private static void printMenu(String[] array){
+		System.out.println();
+		for(int i=0;i<array.length;i++){
+			System.out.println((i+1)+"- "+array[i]);
 		}
 	}
 }
