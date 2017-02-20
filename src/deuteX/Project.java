@@ -31,7 +31,7 @@ public class Project{
 	    TOTAL=index++; 
 	
 	static final int 
-		ENG=0, 
+		ENG = 0, 
 		CAST = 1,
 		CAT = 2;
 	
@@ -52,17 +52,6 @@ public class Project{
 	
 	
 	public static void main(String[] args) {
-		
-//		class Usuaris{
-//			String usuari;
-//			String password;
-//		}
-		
-//		class Dades{
-//			String deutor;
-//			float quantitat;
-//			String prestamista;
-//		}
 		
 		Usuaris[] usuaris = new Usuaris[10];
 		Dades[] dades = new Dades[10];
@@ -98,29 +87,29 @@ public class Project{
 		boolean usuariRepetit = false;
 		
 		//Assignació del vector bidimensional.
-		traduccio[REGISTRE][ENG]="Register";					traduccio[REGISTRE][CAST]="Registrarse";						traduccio[REGISTRE][CAT]="Registrar-se";
-		traduccio[ENTRAR][ENG]="Login";							traduccio[ENTRAR][CAST]="Entrar";								traduccio[ENTRAR][CAT]="Entrar";
-		traduccio[ESCULLOPCIO][ENG]="Choose an option";			traduccio[ESCULLOPCIO][CAST]="Elige una opción";				traduccio[ESCULLOPCIO][CAT]="Escull una opcio";
-		traduccio[INTNOM][ENG]="Insert username";				traduccio[INTNOM][CAST]="Introduce el nombre de usuario";		traduccio[INTNOM][CAT]="Introdueix el nom d'usuari";
-		traduccio[REPETITUSU][ENG]="User already exists";		traduccio[REPETITUSU][CAST]="Usuario repetido";					traduccio[REPETITUSU][CAT]="Usuari repetit";
-		traduccio[INCONTRASENYA][ENG]="Insert password";		traduccio[INCONTRASENYA][CAST]="Introduce la contraseña";		traduccio[INCONTRASENYA][CAT]="Introdueix la contrasenya";
-		traduccio[USUARI][ENG]="User";							traduccio[USUARI][CAST]="Usuario";								traduccio[USUARI][CAT]="Usuari";
-		traduccio[CONTRASENYA][ENG]="Password";					traduccio[CONTRASENYA][CAST]="Contraseña";						traduccio[CONTRASENYA][CAT]="Contrasenya";
-		traduccio[BEN][ENG]="Welcome";							traduccio[BEN][CAST]="Bienvenido";								traduccio[BEN][CAT]="Benvingut";
-		traduccio[ERUSUARI][ENG]="Invalid user";				traduccio[ERUSUARI][CAST]="Usuario incorrecto";					traduccio[ERUSUARI][CAT]="Usuari incorrecte";
+		traduccio[REGISTRE][ENG]="Register";					traduccio[REGISTRE][CAST]="Registrarse";							traduccio[REGISTRE][CAT]="Registrar-se";
+		traduccio[ENTRAR][ENG]="Login";							traduccio[ENTRAR][CAST]="Entrar";									traduccio[ENTRAR][CAT]="Entrar";
+		traduccio[ESCULLOPCIO][ENG]="Choose an option";			traduccio[ESCULLOPCIO][CAST]="Elige una opción";					traduccio[ESCULLOPCIO][CAT]="Escull una opcio";
+		traduccio[INTNOM][ENG]="Insert username";				traduccio[INTNOM][CAST]="Introduce el nombre de usuario";			traduccio[INTNOM][CAT]="Introdueix el nom d'usuari";
+		traduccio[REPETITUSU][ENG]="User already exists";		traduccio[REPETITUSU][CAST]="Usuario repetido";						traduccio[REPETITUSU][CAT]="Usuari repetit";
+		traduccio[INCONTRASENYA][ENG]="Insert password";		traduccio[INCONTRASENYA][CAST]="Introduce la contraseña";			traduccio[INCONTRASENYA][CAT]="Introdueix la contrasenya";
+		traduccio[USUARI][ENG]="User";							traduccio[USUARI][CAST]="Usuario";									traduccio[USUARI][CAT]="Usuari";
+		traduccio[CONTRASENYA][ENG]="Password";					traduccio[CONTRASENYA][CAST]="Contraseña";							traduccio[CONTRASENYA][CAT]="Contrasenya";
+		traduccio[BEN][ENG]="Welcome";							traduccio[BEN][CAST]="Bienvenido";									traduccio[BEN][CAT]="Benvingut";
+		traduccio[ERUSUARI][ENG]="Invalid user";				traduccio[ERUSUARI][CAST]="Usuario incorrecto";						traduccio[ERUSUARI][CAT]="Usuari incorrecte";
 		traduccio[ERCONTRASENYA][ENG]="Invalid password";		traduccio[ERCONTRASENYA][CAST]="Contraseña incorrecta";			traduccio[ERCONTRASENYA][CAT]="Contrasenya incorrecte";
-		traduccio[OPCIONR][ENG]="Unrecognized option";			traduccio[OPCIONR][CAST]="Opcion no reconocida";				traduccio[OPCIONR][CAT]="Opcio no reconeguda";
-		traduccio[ADEUTE][ENG]="Add/edit debt";         	 	traduccio[ADEUTE][CAST]="Añadir/editar deuda";          		traduccio[ADEUTE][CAT]="Afegir/editar deute"; 
-		traduccio[EDEUTE][ENG]="Delete debt";         	 		traduccio[EDEUTE][CAST]="Eliminar deuda";            			traduccio[EDEUTE][CAT]="Eliminar deute"; 
-		traduccio[IDEUTE][ENG]="Debts information";				traduccio[IDEUTE][CAST]="Informacion de deudas";				traduccio[IDEUTE][CAT]="Informacio de deutes";
+		traduccio[OPCIONR][ENG]="Unrecognized option";			traduccio[OPCIONR][CAST]="Opcion no reconocida";					traduccio[OPCIONR][CAT]="Opcio no reconeguda";
+		traduccio[ADEUTE][ENG]="Add/edit debt";         	 	traduccio[ADEUTE][CAST]="Añadir/editar deuda";          			traduccio[ADEUTE][CAT]="Afegir/editar deute"; 
+		traduccio[EDEUTE][ENG]="Delete debt";         	 		traduccio[EDEUTE][CAST]="Eliminar deuda";            				traduccio[EDEUTE][CAT]="Eliminar deute"; 
+		traduccio[IDEUTE][ENG]="Debts information";				traduccio[IDEUTE][CAST]="Informacion de deudas";					traduccio[IDEUTE][CAT]="Informacio de deutes";
 		traduccio[NOESNUM][ENG]="Is not a number";				traduccio[NOESNUM][CAST]="No es un número";						traduccio[NOESNUM][CAT]="No és un nombre";
 		traduccio[ENRERA][ENG]="Return";						traduccio[ENRERA][CAST]="Volver atrás";							traduccio[ENRERA][CAT]="Tornar enrera";
-		traduccio[OPCIO][ENG]="Choose an option";				traduccio[OPCIO][CAST]="Elige una opción";						traduccio[OPCIO][CAT]="Tria una opcio";
-		traduccio[DEUDINERS][ENG]="Insert who owes you money";	traduccio[DEUDINERS][CAST]="Introduce quien te debe dinero";	traduccio[DEUDINERS][CAT]="Introdueix qui et deu diners";
-		traduccio[DEUDELIMI][ENG]="Insert who gave you money"; traduccio[DEUDELIMI][CAST]="Introduce quien te ha devuelto dinero";  traduccio[DEUDELIMI][CAT]="Introdueix qui t'ha tornat diners"; 
-		traduccio[QUANTITAT][ENG]="Insert the amount";			traduccio[QUANTITAT][CAST]="Introduce la cantidad";				traduccio[QUANTITAT][CAT]="Introdueix la quantitat";
-		traduccio[DEUTOR][ENG]="Debtor\tAmnt.";					traduccio[DEUTOR][CAST]="Deutor\tCdad.";						traduccio[DEUTOR][CAT]="Deutor\tQtat.";
-		traduccio[TOTAL][ENG]="Total";							traduccio[TOTAL][CAST]="Total";									traduccio[TOTAL][CAT]="Total";
+		traduccio[OPCIO][ENG]="Choose an option";				traduccio[OPCIO][CAST]="Elige una opción";							traduccio[OPCIO][CAT]="Tria una opcio";
+		traduccio[DEUDINERS][ENG]="Insert who owes you money";	traduccio[DEUDINERS][CAST]="Introduce quien te debe dinero";		traduccio[DEUDINERS][CAT]="Introdueix qui et deu diners";
+		traduccio[DEUDELIMI][ENG]="Insert who gave you money"; 	traduccio[DEUDELIMI][CAST]="Introduce quien te ha devuelto dinero"; traduccio[DEUDELIMI][CAT]="Introdueix qui t'ha tornat diners"; 
+		traduccio[QUANTITAT][ENG]="Insert the amount";			traduccio[QUANTITAT][CAST]="Introduce la cantidad";					traduccio[QUANTITAT][CAT]="Introdueix la quantitat";
+		traduccio[DEUTOR][ENG]="Debtor\tAmnt.";					traduccio[DEUTOR][CAST]="Deutor\tCdad.";							traduccio[DEUTOR][CAT]="Deutor\tQtat.";
+		traduccio[TOTAL][ENG]="Total";							traduccio[TOTAL][CAST]="Total";										traduccio[TOTAL][CAT]="Total";
 		
 		
 		//Moneda
@@ -148,7 +137,6 @@ public class Project{
 					case "1": //ENGLISH
 						
 						idioma = ENG;
-						
 						monedaInicial="$";
 						monedaFinal="";
 						break;
@@ -156,7 +144,6 @@ public class Project{
 					case "2": //CASTELLANO
 						
 						idioma = CAST;
-
 						monedaInicial="";
 						monedaFinal="€";
 						break;
@@ -164,7 +151,6 @@ public class Project{
 					case "3": //CATALA
 						
 						idioma = CAT;
-
 						monedaInicial="";
 						monedaFinal="€";
 						break;
@@ -347,7 +333,7 @@ public class Project{
 		}
 		
 		System.out.print("|---------------|"+"\n"+
-			"|"+traduccio[TOTAL][idioma]+"\t"+monedaInicial+total+monedaFinal+"\t|\n"+
+			"|"+traduccio[TOTAL][idioma]+":\t"+monedaInicial+total+monedaFinal+"\t|\n"+
 			"|---------------|\n"
 		);
 	}
