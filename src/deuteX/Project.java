@@ -264,7 +264,7 @@ public class Project{
 						}
 						saldarDeute(dades);
 					}else{
-						System.out.println("*No es un numero*");
+						System.out.println(traduccio[NOESNUM][idioma]);
 					}
 				break;
 				
@@ -292,7 +292,7 @@ public class Project{
 							}
 							saldarDeute(dades);
 						}else{
-							System.out.println("*No es un numero*");
+							System.out.println(traduccio[NOESNUM][idioma]);
 						}
 					break;
 				case "3": //Notifiacions / informació
@@ -346,12 +346,16 @@ public class Project{
 	}
 	
 	private static boolean esNumero(String num){
-		for(int i=0;i<num.length();i++){
-			if(num.charAt(i)<48 || num.charAt(i)>57){
-				return false;
+		if(!num.equals(""))
+		{
+			for(int i=0;i<num.length();i++){
+				if(num.charAt(i)<48 || num.charAt(i)>57){
+					return false;
+				}
 			}
+			return true;
 		}
-		return true;
+		return false;
 	}
 	
 	private static void saldarDeute(Dades[] dades){
