@@ -2,8 +2,9 @@ package deuteX;
 
 import java.util.Scanner;
 
-
-public class Project{
+public class Project extends FuncionsAuxiliars{
+	
+	//Index per les frases de traducció
 	static int index=0;
 	static final int 
 		REGISTRE=index++, 
@@ -53,6 +54,7 @@ public class Project{
 	
 	public static void main(String[] args) {
 		
+		//Inicialització de les class
 		Usuaris[] usuaris = new Usuaris[10];
 		Dades[] dades = new Dades[10];
 		
@@ -97,13 +99,13 @@ public class Project{
 		traduccio[CONTRASENYA][ENG]="Password";					traduccio[CONTRASENYA][CAST]="Contraseña";							traduccio[CONTRASENYA][CAT]="Contrasenya";
 		traduccio[BEN][ENG]="Welcome";							traduccio[BEN][CAST]="Bienvenido";									traduccio[BEN][CAT]="Benvingut";
 		traduccio[ERUSUARI][ENG]="Invalid user";				traduccio[ERUSUARI][CAST]="Usuario incorrecto";						traduccio[ERUSUARI][CAT]="Usuari incorrecte";
-		traduccio[ERCONTRASENYA][ENG]="Invalid password";		traduccio[ERCONTRASENYA][CAST]="Contraseña incorrecta";			traduccio[ERCONTRASENYA][CAT]="Contrasenya incorrecte";
+		traduccio[ERCONTRASENYA][ENG]="Invalid password";		traduccio[ERCONTRASENYA][CAST]="Contraseña incorrecta";				traduccio[ERCONTRASENYA][CAT]="Contrasenya incorrecte";
 		traduccio[OPCIONR][ENG]="Unrecognized option";			traduccio[OPCIONR][CAST]="Opcion no reconocida";					traduccio[OPCIONR][CAT]="Opcio no reconeguda";
 		traduccio[ADEUTE][ENG]="Add/edit debt";         	 	traduccio[ADEUTE][CAST]="Añadir/editar deuda";          			traduccio[ADEUTE][CAT]="Afegir/editar deute"; 
 		traduccio[EDEUTE][ENG]="Delete debt";         	 		traduccio[EDEUTE][CAST]="Eliminar deuda";            				traduccio[EDEUTE][CAT]="Eliminar deute"; 
 		traduccio[IDEUTE][ENG]="Debts information";				traduccio[IDEUTE][CAST]="Informacion de deudas";					traduccio[IDEUTE][CAT]="Informacio de deutes";
-		traduccio[NOESNUM][ENG]="Is not a number";				traduccio[NOESNUM][CAST]="No es un número";						traduccio[NOESNUM][CAT]="No és un nombre";
-		traduccio[ENRERA][ENG]="Return";						traduccio[ENRERA][CAST]="Volver atrás";							traduccio[ENRERA][CAT]="Tornar enrera";
+		traduccio[NOESNUM][ENG]="Is not a positive number";		traduccio[NOESNUM][CAST]="No es un número positivo";				traduccio[NOESNUM][CAT]="No és un nombre positiu";
+		traduccio[ENRERA][ENG]="Return";						traduccio[ENRERA][CAST]="Volver atrás";								traduccio[ENRERA][CAT]="Tornar enrera";
 		traduccio[OPCIO][ENG]="Choose an option";				traduccio[OPCIO][CAST]="Elige una opción";							traduccio[OPCIO][CAT]="Tria una opcio";
 		traduccio[DEUDINERS][ENG]="Insert who owes you money";	traduccio[DEUDINERS][CAST]="Introduce quien te debe dinero";		traduccio[DEUDINERS][CAT]="Introdueix qui et deu diners";
 		traduccio[DEUDELIMI][ENG]="Insert who gave you money"; 	traduccio[DEUDELIMI][CAST]="Introduce quien te ha devuelto dinero"; traduccio[DEUDELIMI][CAT]="Introdueix qui t'ha tornat diners"; 
@@ -257,7 +259,6 @@ public class Project{
 							}else{ //Si el usuari es el mateix es suma / resta a la quantitat que deu
 								if(dades[i].deutor.equals(deutor)){
 									dades[i].quantitat=dades[i].quantitat+quantitat;
-									
 									break;
 								}
 							}
@@ -283,9 +284,9 @@ public class Project{
 									dades[i].quantitat=quantitat;
 									dades[i].prestamista=usuari;
 									break;
-								}else{ //Si el usuari es el mateix es suma / resta a la quantitat que deu
+								}else{ //Si el deutor es el mateix es suma / resta a la quantitat que deu
 									if(dades[i].deutor.equals(deutor)){
-										dades[i].quantitat=dades[i].quantitat+quantitat;
+										dades[i].quantitat=dades[i].quantitat-quantitat;
 										break;
 									}
 								}
@@ -313,66 +314,5 @@ public class Project{
 		}
 	}
 	
-	private static void printTaula(String usuari, Dades[] dades, String monedaInicial, String monedaFinal){
-		float total=0;
-		System.out.println(
-				"|---------------|"+"\n"+
-				"|\t"+usuari+"\t|"+"\n"+
-				"|---------------|"+"\n"+
-				"|"+traduccio[DEUTOR][idioma]+"\t|"+"\n"+
-				"|---------------|"
-		);
-		total=0;
-		
-		for(int i=0;i<dades.length;i++){
-			if(dades[i].prestamista!= null && dades[i].prestamista.equals(usuari)){
-				total=total+dades[i].quantitat;
-				System.out.println("|"+dades[i].deutor+"\t"+monedaInicial+dades[i].quantitat+monedaFinal+"\t|");
-				System.out.println("|---------------|");
-			}
-		}
-		
-		System.out.print("|---------------|"+"\n"+
-			"|"+traduccio[TOTAL][idioma]+":\t"+monedaInicial+total+monedaFinal+"\t|\n"+
-			"|---------------|\n"
-		);
-	}
 	
-	private static void printMenu(String[] array){
-		System.out.println();
-		for(int i=0;i<array.length;i++){
-			System.out.println((i+1)+"- "+array[i]);
-		}
-	}
-	
-	private static boolean esNumero(String num){
-		if(!num.equals(""))
-		{
-			for(int i=0;i<num.length();i++){
-				if(num.charAt(i)<48 || num.charAt(i)>57){
-					return false;
-				}
-			}
-			return true;
-		}
-		return false;
-	}
-	
-	private static void saldarDeute(Dades[] dades){
-		for(int i = 0; i<dades.length;i++){
-			if(dades[i].quantitat==0){
-				dades[i].deutor=null;
-				dades[i].prestamista=null;
-			}
-		}
-	}
-	
-	private static int usuariRepetit(Usuaris[] usuaris, String usuari){
-		for(int i=0;i<usuarisActius;i++){ //Aquest for guarda l'index en el que està l'usuari que volem saber i si existeix.
-            if(usuaris[i].usuari.equals(usuari)){
-                return i;
-            }
-        }
-		return -1;
-	}
 }
