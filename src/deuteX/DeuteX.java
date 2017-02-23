@@ -2,7 +2,7 @@ package deuteX;
 
 import java.util.Scanner;
 
-public class Project extends FuncionsAuxiliars{
+public class DeuteX extends FuncionsAuxiliars{
 	
 	//Index per les frases de traducció
 	static int index=0;
@@ -23,6 +23,7 @@ public class Project extends FuncionsAuxiliars{
 	    EDEUTE=index++, 
 	    IDEUTE=index++,
 	    NOESNUM=index++,
+	    NODEURES=index++,
 	    ENRERA=index++, 
 	    OPCIO=index++, 
 	    DEUDINERS=index++, 
@@ -105,6 +106,7 @@ public class Project extends FuncionsAuxiliars{
 		traduccio[EDEUTE][ENG]="Delete debt";         	 		traduccio[EDEUTE][CAST]="Eliminar deuda";            				traduccio[EDEUTE][CAT]="Eliminar deute"; 
 		traduccio[IDEUTE][ENG]="Debts information";				traduccio[IDEUTE][CAST]="Informacion de deudas";					traduccio[IDEUTE][CAT]="Informacio de deutes";
 		traduccio[NOESNUM][ENG]="Is not a positive number";		traduccio[NOESNUM][CAST]="No es un número positivo";				traduccio[NOESNUM][CAT]="No és un nombre positiu";
+		traduccio[NODEURES][ENG]="does not owe you anything.";	traduccio[NODEURES][CAST]="no te debe nada.";						traduccio[NODEURES][CAT]="no et deu res.";
 		traduccio[ENRERA][ENG]="Return";						traduccio[ENRERA][CAST]="Volver atrás";								traduccio[ENRERA][CAT]="Tornar enrera";
 		traduccio[OPCIO][ENG]="Choose an option";				traduccio[OPCIO][CAST]="Elige una opción";							traduccio[OPCIO][CAT]="Tria una opcio";
 		traduccio[DEUDINERS][ENG]="Insert who owes you money";	traduccio[DEUDINERS][CAST]="Introduce quien te debe dinero";		traduccio[DEUDINERS][CAT]="Introdueix qui et deu diners";
@@ -272,29 +274,34 @@ public class Project extends FuncionsAuxiliars{
 				 case "2": //Resta deute 
 			          System.out.print(traduccio[DEUDELIMI][idioma]+": "); 
 			          deutor = sc.nextLine().toUpperCase().trim(); 
-			          System.out.print(traduccio[QUANTITAT][idioma]+": "); 
-			          inputQuantitat = sc.nextLine(); 
-			          
-			          if(esNumero(inputQuantitat)){
-							quantitat=Float.parseFloat(inputQuantitat);
-							for(int i=0;i<dades.length;i++){
-								
-								if(dades[i].deutor==null){
-									dades[i].deutor=deutor;
-									dades[i].quantitat=quantitat;
-									dades[i].prestamista=usuari;
-									break;
-								}else{ //Si el deutor es el mateix es suma / resta a la quantitat que deu
-									if(dades[i].deutor.equals(deutor)){
-										dades[i].quantitat=dades[i].quantitat-quantitat;
+			          if(existeixDeutor(dades, deutor, usuari))
+			          {
+				          System.out.print(traduccio[QUANTITAT][idioma]+": "); 
+				          inputQuantitat = sc.nextLine(); 
+				          
+				          if(esNumero(inputQuantitat)){
+								quantitat=Float.parseFloat(inputQuantitat);
+								for(int i=0;i<dades.length;i++){
+									
+									if(dades[i].deutor==null){
+										dades[i].deutor=deutor;
+										dades[i].quantitat=quantitat;
+										dades[i].prestamista=usuari;
 										break;
+									}else{ //Si el deutor es el mateix es suma / resta a la quantitat que deu
+										if(dades[i].deutor.equals(deutor)){
+											dades[i].quantitat=dades[i].quantitat-quantitat;
+											break;
+										}
 									}
 								}
+								saldarDeute(dades);
+							}else{
+								System.out.println(traduccio[NOESNUM][idioma]);
 							}
-							saldarDeute(dades);
-						}else{
-							System.out.println(traduccio[NOESNUM][idioma]);
-						}
+			          }else{
+			        	  System.out.println(deutor+" "+traduccio[NODEURES][idioma]);
+			          }
 					break;
 				case "3": //Notifiacions / informació
 					
