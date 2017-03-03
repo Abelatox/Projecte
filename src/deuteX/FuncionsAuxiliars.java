@@ -1,8 +1,13 @@
 package deuteX;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 public class FuncionsAuxiliars {
 
-	public static void printTaula(String usuari, Dades[] dades, String monedaInicial, String monedaFinal){
+	public static void printTaula(Connection conn,String usuari,String monedaInicial, String monedaFinal){
 		float total=0;
 		System.out.println(
 				"|---------------|\n"+
@@ -12,14 +17,20 @@ public class FuncionsAuxiliars {
 				"|---------------|"
 		);
 		total=0;
-		
-		for(int i=0;i<dades.length;i++){
-			if(dades[i].prestamista!= null && dades[i].prestamista.equals(usuari)){
-				total=total+dades[i].quantitat;
-				System.out.println("|"+dades[i].deutor+"\t"+monedaInicial+dades[i].quantitat+monedaFinal+"\t|");
-				System.out.println("|---------------|");
+		try{
+			Statement st = conn.createStatement();
+			int idUsuari=FuncionsDatabase.getUserID(conn, usuari);
+			ResultSet rs = st.executeQuery("select * from deutes where prestamista = '"+idUsuari+"' ");
+			while (rs.next()){
+					total=total+Float.parseFloat(rs.getString("quantitat"));
+					System.out.println("|"+rs.getString("deutor")+"\t"+rs.getString("quantitat")+"\t|");
+					System.out.println("|---------------|");
 			}
+			
+		}catch(SQLException e){
+			e.printStackTrace();
 		}
+				
 		
 		System.out.print("|---------------|\n"+
 			"|"+DeuteX.traduccio[DeuteX.TOTAL][DeuteX.idioma]+":\t"+monedaInicial+total+monedaFinal+"\t|\n"+

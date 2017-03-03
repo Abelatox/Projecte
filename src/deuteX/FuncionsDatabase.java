@@ -80,4 +80,56 @@ public class FuncionsDatabase {
 			e.printStackTrace();
 		}
 	}
+	public static void afegirDeute(Connection conn, String deutor,String prestamista,double quantitat){
+		Statement st;
+		try{
+			int usuariID=FuncionsDatabase.getUserID(conn, prestamista);
+			int prestamistaID=-1;
+			String dbDeutor="";
+			st = conn.createStatement();
+			ResultSet rs = st.executeQuery(" select * from usuaris u left join deutes d on u.id_usuari=d.prestamista");
+			while(rs.next()){
+				if(rs.getString("id_usuari").equals(rs.getString("prestamista"))){
+					if(rs.getString("deutor").equals(deutor)){
+						prestamistaID= Integer.parseInt(rs.getString("prestamista"));
+						dbDeutor=rs.getString("deutor");
+					}
+				}
+			}
+			//Comprovem si el deutor ja existeix.
+			if(prestamistaID == usuariID && dbDeutor.equals(deutor)){
+				st.execute("UPDATE deutes SET quantitat = quantitat + "+quantitat + " where prestamista = '"+usuariID+"' and deutor = '" + deutor+"' " );
+			}else{
+				st.execute(" INSERT INTO deutes (deutor,quantitat,prestamista) VALUES ('"+deutor+"','"+quantitat+"','"+usuariID+"') ");
+			}
+			eliminarSaldades(conn);
+		}catch (SQLException e){
+			e.printStackTrace();
+		}
+	}
+	public static void restarDeute(Connection conn, String deutor,String prestamista,double quantitat){
+		Statement st;
+		try{
+			int usuariID=FuncionsDatabase.getUserID(conn, prestamista);
+			int prestamistaID=-1;
+			String dbDeutor="";
+			st = conn.createStatement();
+			ResultSet rs = st.executeQuery(" select * from usuaris u left join deutes d on u.id_usuari=d.prestamista");
+			while(rs.next()){
+				if(rs.getString("id_usuari").equals(rs.getString("prestamista"))){
+					if(rs.getString("deutor").equals(deutor)){
+						prestamistaID= Integer.parseInt(rs.getString("prestamista"));
+						dbDeutor=rs.getString("deutor");
+					}
+				}
+			}
+			//Comprovem si el deutor ja existeix.
+			if(prestamistaID == usuariID && dbDeutor.equals(deutor)){
+				st.execute("UPDATE deutes SET quantitat = quantitat - "+quantitat + " where prestamista = '"+usuariID+"' and deutor = '" + deutor+"' " );
+			}
+			eliminarSaldades(conn);
+		}catch (SQLException e){
+			e.printStackTrace();
+		}
+	}
 }

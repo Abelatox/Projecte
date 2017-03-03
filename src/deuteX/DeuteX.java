@@ -84,14 +84,6 @@ public class DeuteX extends FuncionsAuxiliars{
 			System.out.println("No s'ha trovat el driver");
 		}
 		
-		//Inicialització de les class
-		
-		Dades[] dades = new Dades[10];
-		
-		for(int i=0;i<10;i++){
-			dades[i] = new Dades();
-		}
-		
 		//Definició de la variable de la pantalla actual.
 		Pantalles pantallaActual = Pantalles.IDIOMES;
 		
@@ -222,7 +214,7 @@ public class DeuteX extends FuncionsAuxiliars{
 							try {
 								Statement st = conn.createStatement();
 								st.execute(" insert into usuaris (nom,pass) values ('"+usuari+"','"+contrasenya+"') ");
-								conn.close();
+								st.close();
 							} catch (SQLException e) {
 								e.printStackTrace();
 							}
@@ -269,21 +261,7 @@ public class DeuteX extends FuncionsAuxiliars{
 						quantitat=Float.parseFloat(inputQuantitat);
 						
 						//Afegim les dades a la class Dades
-						for(int i=0;i<dades.length;i++){
-							
-							if(dades[i].deutor==null){
-								dades[i].deutor=deutor;
-								dades[i].quantitat=quantitat;
-								dades[i].prestamista=usuari;
-								break;
-							}else{ //Si el usuari es el mateix es suma / resta a la quantitat que deu
-								if(dades[i].deutor.equals(deutor)){
-									dades[i].quantitat=dades[i].quantitat+quantitat;
-									break;
-								}
-							}
-						}
-						saldarDeute(dades);
+						FuncionsDatabase.afegirDeute(conn, deutor, usuari, quantitat);
 					}else{
 						System.out.println(traduccio[NOESNUM][idioma]);
 					}
@@ -292,38 +270,23 @@ public class DeuteX extends FuncionsAuxiliars{
 				 case "2": //Resta deute 
 			          System.out.print(traduccio[DEUDELIMI][idioma]+": "); 
 			          deutor = sc.nextLine().toUpperCase().trim(); 
-			          if(existeixDeutor(dades, deutor, usuari))
 			          {
 				          System.out.print(traduccio[QUANTITAT][idioma]+": "); 
 				          inputQuantitat = sc.nextLine(); 
 				          
 				          if(esNumero(inputQuantitat)){
 								quantitat=Float.parseFloat(inputQuantitat);
-								for(int i=0;i<dades.length;i++){
-									
-									if(dades[i].deutor==null){
-										dades[i].deutor=deutor;
-										dades[i].quantitat=quantitat;
-										dades[i].prestamista=usuari;
-										break;
-									}else{ //Si el deutor es el mateix es suma / resta a la quantitat que deu
-										if(dades[i].deutor.equals(deutor)){
-											dades[i].quantitat=dades[i].quantitat-quantitat;
-											break;
-										}
-									}
-								}
-								saldarDeute(dades);
+								FuncionsDatabase.restarDeute(conn, deutor, usuari, quantitat);	
 							}else{
 								System.out.println(traduccio[NOESNUM][idioma]);
 							}
-			          }else{
-			        	  System.out.println(deutor+" "+traduccio[NODEURES][idioma]);
-			          }
+			          }//else{
+			        	//  System.out.println(deutor+" "+traduccio[NODEURES][idioma]);
+			          //}
 					break;
 				case "3": //Notifiacions / informació
 					
-					printTaula(usuari, dades, monedaInicial, monedaFinal);
+					printTaula(conn,usuari,monedaInicial, monedaFinal);
 					break;
 					
 				case "4": //Enrera
