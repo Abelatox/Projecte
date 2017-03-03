@@ -1,10 +1,11 @@
 package deuteX;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Scanner;
 
-import com.sun.corba.se.impl.ior.GenericTaggedComponent;
-
-import java.sql.*;
 public class DeuteX extends FuncionsAuxiliars{
 	
 	
@@ -13,6 +14,7 @@ public class DeuteX extends FuncionsAuxiliars{
 	static final String DB_URL = "jdbc:postgresql://192.168.2.215/DeuteX";
 	static final String DB_USER="postgres";
 	static final String DB_PASSWORD="smx";
+	
 	//Index per les frases de traducció
 	static int index=0;
 	static final int 
@@ -67,7 +69,7 @@ public class DeuteX extends FuncionsAuxiliars{
 		try {
 			Class.forName("org.postgresql.Driver");
 			conn=DriverManager.getConnection(DB_URL,DB_USER,DB_PASSWORD);
-			Statement st = conn.createStatement();
+		/*	Statement st = conn.createStatement();
 			ResultSet rs = st.executeQuery( "SELECT * FROM usuaris;" );
 			System.out.println("id_usuari\tnom\tpass");
 			while (rs.next()) {
@@ -75,7 +77,7 @@ public class DeuteX extends FuncionsAuxiliars{
 				String camp2=rs.getString("nom");
 				String camp3=rs.getString("pass");
 				System.out.println(camp1+"\t"+camp2+"\t"+camp3);
-			}
+			}*/
 		}catch(SQLException sqle){
 			sqle.printStackTrace();
 		}catch(ClassNotFoundException cnfe){
@@ -83,22 +85,15 @@ public class DeuteX extends FuncionsAuxiliars{
 		}
 		
 		//Inicialització de les class
-		Usuaris[] usuaris = new Usuaris[10];
+		
 		Dades[] dades = new Dades[10];
 		
 		for(int i=0;i<10;i++){
-			usuaris[i] = new Usuaris();
 			dades[i] = new Dades();
 		}
 		
 		//Definició de la variable de la pantalla actual.
 		Pantalles pantallaActual = Pantalles.IDIOMES;
-		
-		//Usuaris inicials
-		usuaris[0].usuari = "Abel";
-		usuaris[0].password = "123";
-		usuaris[1].usuari = "Xevi";
-		usuaris[1].password = "456";
 		
 		Scanner sc = new Scanner(System.in);
 		boolean stop = false;
@@ -200,10 +195,7 @@ public class DeuteX extends FuncionsAuxiliars{
 				contrasenya="";
 				usuariRepetit=false;
 				
-				for(int i=0;i<usuaris.length;i++){
-					if(!(usuaris[i].usuari == null))
-						usuarisActius++;
-				}
+				
 				
 				//En cada bucle recompta els usuaris actius
 				printMenu(mRegistre);
@@ -216,46 +208,45 @@ public class DeuteX extends FuncionsAuxiliars{
 					System.out.print(traduccio[INTNOM][idioma]+":  ");
 					usuari=sc.nextLine();
 					
-					//Comprova si l'usuari ja existeix.
-					for(int i=0;i<usuarisActius;i++){
-						if(usuaris[i].usuari!=null && usuaris[i].usuari.equals(usuari)){
-							System.out.println(traduccio[REPETITUSU][idioma]);
-							usuariRepetit = true;
-							break;
-						}
+					if(FuncionsDatabase.existeixUsuari(conn,usuari)){
+						System.out.println(traduccio[REPETITUSU][idioma]);
+						usuariRepetit = true;
 					}
 					
 					//Si el nom d'usuari es valid et demana contrasenya i el fica en la array.
 					if(!usuariRepetit){
 						System.out.print(traduccio[INCONTRASENYA][idioma]+": ");
 						contrasenya=sc.nextLine();
-						usuaris[usuarisActius].usuari = usuari;
-						usuaris[usuarisActius].password = contrasenya;
+						if(conn != null)
+					    {
+							try {
+								Statement st = conn.createStatement();
+								st.execute(" insert into usuaris (nom,pass) values ('"+usuari+"','"+contrasenya+"') ");
+								conn.close();
+							} catch (SQLException e) {
+								e.printStackTrace();
+							}
+					    }	
 					}
 					
 					break;
 								
 				case "2": //Login
 					
-                    int index=-1; //Variable que guarda en quin index es troba l'usuari.
-                    System.out.print(traduccio[USUARI][idioma]+": ");
+					System.out.print(traduccio[USUARI][idioma]+": ");
                     usuari=sc.nextLine(); //Llegim el que Introdueix l'usuari.
                     System.out.print(traduccio[CONTRASENYA][idioma]+": ");
                     contrasenya=sc.nextLine();
-                   
-                    index=usuariRepetit(usuaris, usuari);
-                  
-                    if(index!=-1){ //Si existeix l'usuari
-                    	if(contrasenya.equals(usuaris[index].password)){ // Comprova si la contrasenya es correcta per l'usuari
-            				System.out.println(traduccio[BEN][idioma]+" "+usuari);
-                            pantallaActual=Pantalles.USUARI;
-                        }else{
-                        	System.out.println(traduccio[ERCONTRASENYA][idioma]);
-                        }
+                
+                	if(FuncionsDatabase.validarLogin(conn, usuari, contrasenya)){ // Comprova si la contrasenya es correcta per l'usuari
+        				System.out.println(traduccio[BEN][idioma]+" "+usuari);
+    					System.out.println();
+                        pantallaActual=Pantalles.USUARI;
                     }else{
-                        System.out.println(traduccio[ERUSUARI][idioma]);
+                    	System.out.println(traduccio[ERCONTRASENYA][idioma]);
                     }
-                    break;
+                	
+                	break;
                    
                 default:
                     System.out.println(traduccio[OPCIONR][idioma]);
