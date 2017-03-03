@@ -2,8 +2,17 @@ package deuteX;
 
 import java.util.Scanner;
 
+import com.sun.corba.se.impl.ior.GenericTaggedComponent;
+
+import java.sql.*;
 public class DeuteX extends FuncionsAuxiliars{
 	
+	
+	//JDBC driver name i base de dades URL
+	static final String JDBC_DRIVER="com.postgresql.jdbc.Driver";
+	static final String DB_URL = "jdbc:postgresql://192.168.2.215/DeuteX";
+	static final String DB_USER="postgres";
+	static final String DB_PASSWORD="smx";
 	//Index per les frases de traducció
 	static int index=0;
 	static final int 
@@ -54,6 +63,24 @@ public class DeuteX extends FuncionsAuxiliars{
 	
 	
 	public static void main(String[] args) {
+		Connection conn=null;
+		try {
+			Class.forName("org.postgresql.Driver");
+			conn=DriverManager.getConnection(DB_URL,DB_USER,DB_PASSWORD);
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery( "SELECT * FROM usuaris;" );
+			System.out.println("id_usuari\tnom\tpass");
+			while (rs.next()) {
+				int camp1=rs.getInt("id_usuari");
+				String camp2=rs.getString("nom");
+				String camp3=rs.getString("pass");
+				System.out.println(camp1+"\t"+camp2+"\t"+camp3);
+			}
+		}catch(SQLException sqle){
+			sqle.printStackTrace();
+		}catch(ClassNotFoundException cnfe){
+			System.out.println("No s'ha trovat el driver");
+		}
 		
 		//Inicialització de les class
 		Usuaris[] usuaris = new Usuaris[10];
