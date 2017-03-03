@@ -23,7 +23,7 @@ public class FuncionsAuxiliars {
 			ResultSet rs = st.executeQuery("select * from deutes where prestamista = '"+idUsuari+"' ");
 			while (rs.next()){
 					total=total+Float.parseFloat(rs.getString("quantitat"));
-					System.out.println("|"+rs.getString("deutor")+"\t"+rs.getString("quantitat")+"\t|");
+					System.out.println("|"+rs.getString("deutor")+"\t"+DeuteX.monedaInicial+rs.getString("quantitat")+DeuteX.monedaFinal+"\t|");
 					System.out.println("|---------------|");
 			}
 			
@@ -58,32 +58,4 @@ public class FuncionsAuxiliars {
 		return false;
 	}
 	
-	public static void saldarDeute(Dades[] dades){
-		for(int i = 0; i<dades.length;i++){
-			if(dades[i].quantitat==0){
-				dades[i].deutor=null;
-				dades[i].prestamista=null;
-			}
-		}
-	}
-	
-	public static int usuariRepetit(Usuaris[] usuaris, String usuari){
-		for(int i=0;i<DeuteX.usuarisActius;i++){ //Aquest for guarda l'index en el que està l'usuari que volem saber i si existeix.
-            if(usuaris[i].usuari.equals(usuari)){
-                return i;
-            }
-        }
-		return -1;
-	}
-	
-	public static boolean existeixDeutor(Dades[] dades, String deutor, String usuari){
-		for(int i=0; i<dades.length;i++){
-			if(dades[i].deutor != null){
-				if(dades[i].deutor.equals(deutor) && dades[i].prestamista.equals(usuari)){
-					return true;
-				}
-      	  	}
-        }
-		return false;
-	}
 }

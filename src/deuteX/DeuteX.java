@@ -59,6 +59,9 @@ public class DeuteX extends FuncionsAuxiliars{
 	
 	static int idioma = 0;
 
+	//Moneda
+	static String monedaInicial=""; //Dolars
+	static String monedaFinal=""; //Euros
 	
 	
 	
@@ -130,9 +133,7 @@ public class DeuteX extends FuncionsAuxiliars{
 		traduccio[TOTAL][ENG]="Total";							traduccio[TOTAL][CAST]="Total";										traduccio[TOTAL][CAT]="Total";
 		
 		
-		//Moneda
-		String monedaInicial=""; //Dolars
-		String monedaFinal=""; //Euros
+		
 		
 		//Menus
 		String[] mIdioma = {"English","Castellano","Català"};
@@ -257,10 +258,7 @@ public class DeuteX extends FuncionsAuxiliars{
 					inputQuantitat = sc.nextLine();
 					
 					if(esNumero(inputQuantitat)){
-							
 						quantitat=Float.parseFloat(inputQuantitat);
-						
-						//Afegim les dades a la class Dades
 						FuncionsDatabase.afegirDeute(conn, deutor, usuari, quantitat);
 					}else{
 						System.out.println(traduccio[NOESNUM][idioma]);
