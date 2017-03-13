@@ -45,11 +45,11 @@ public class FuncionsAuxiliars {
 		}
 	}
 	
-	public static boolean esNumero(String num){
+	public static boolean esNumeroPositiu(String num){
 		if(!num.equals(""))
 		{
 			for(int i=0;i<num.length();i++){
-				if(num.charAt(i)<48 || num.charAt(i)>57){
+				if((num.charAt(i)<48 || num.charAt(i)>57) && num.charAt(i) != '.'){
 					return false;
 				}
 			}

@@ -248,7 +248,7 @@ public class DeuteX extends FuncionsAuxiliars{
 					System.out.print(traduccio[QUANTITAT][idioma]+": ");
 					inputQuantitat = sc.nextLine();
 					
-					if(esNumero(inputQuantitat)){
+					if(esNumeroPositiu(inputQuantitat)){
 						quantitat=Float.parseFloat(inputQuantitat);
 						FuncionsDatabase.afegirDeute(conn, deutor, usuari, quantitat);
 					}else{
@@ -263,7 +263,7 @@ public class DeuteX extends FuncionsAuxiliars{
 				          System.out.print(traduccio[QUANTITAT][idioma]+": "); 
 				          inputQuantitat = sc.nextLine(); 
 				          
-				          if(esNumero(inputQuantitat)){
+				          if(esNumeroPositiu(inputQuantitat)){
 								quantitat=Float.parseFloat(inputQuantitat);
 								FuncionsDatabase.restarDeute(conn, deutor, usuari, quantitat);	
 							}else{

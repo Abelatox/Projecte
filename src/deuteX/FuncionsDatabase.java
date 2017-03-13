@@ -93,12 +93,11 @@ public class FuncionsDatabase {
 					if(rs.getString("deutor").equals(deutor)){
 						prestamistaID= Integer.parseInt(rs.getString("prestamista"));
 						dbDeutor=rs.getString("deutor");
-						System.out.println("id_usuari"+rs.getString("id_usuari")+" prestamista"+(rs.getString("prestamista")));
-
+						break;
 					}
 				}
 			}
-			System.out.println("('"+deutor+"','"+quantitat+"','"+usuariID+"')");
+			//System.out.println("('"+deutor+"','"+quantitat+"','"+usuariID+"')");
 
 			//Comprovem si el deutor ja existeix.
 			if(prestamistaID == usuariID && dbDeutor.equals(deutor)){
@@ -124,6 +123,7 @@ public class FuncionsDatabase {
 					if(rs.getString("deutor").equals(deutor)){
 						prestamistaID= Integer.parseInt(rs.getString("prestamista"));
 						dbDeutor=rs.getString("deutor");
+						break;
 					}
 				}
 			}
