@@ -93,9 +93,13 @@ public class FuncionsDatabase {
 					if(rs.getString("deutor").equals(deutor)){
 						prestamistaID= Integer.parseInt(rs.getString("prestamista"));
 						dbDeutor=rs.getString("deutor");
+						System.out.println("id_usuari"+rs.getString("id_usuari")+" prestamista"+(rs.getString("prestamista")));
+
 					}
 				}
 			}
+			System.out.println("('"+deutor+"','"+quantitat+"','"+usuariID+"')");
+
 			//Comprovem si el deutor ja existeix.
 			if(prestamistaID == usuariID && dbDeutor.equals(deutor)){
 				st.execute("UPDATE deutes SET quantitat = quantitat + "+quantitat + " where prestamista = '"+usuariID+"' and deutor = '" + deutor+"' " );
