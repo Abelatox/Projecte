@@ -11,7 +11,8 @@ public class DeuteX extends FuncionsAuxiliars{
 	
 	//JDBC driver name i base de dades URL
 	static final String JDBC_DRIVER="org.postgresql.Driver";
-	static final String DB_URL = "jdbc:postgresql://192.168.2.215/DeuteX";
+	//static final String DB_URL = "jdbc:postgresql://192.168.2.215/DeuteX";
+	static final String DB_URL = "jdbc:postgresql://192.168.1.140/DeuteX";
 	static final String DB_USER="postgres";
 	static final String DB_PASSWORD="smx";
 	
