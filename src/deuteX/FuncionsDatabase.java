@@ -100,10 +100,11 @@ public class FuncionsDatabase {
 
 			//Comprovem si el deutor ja existeix.
 			if(prestamistaID == usuariID && dbDeutor.equals(deutor)){
-				st.execute("UPDATE deutes SET quantitat = quantitat + "+quantitat + " where prestamista = '"+usuariID+"' and deutor = '" + deutor+"' " );
+				st.execute(" UPDATE deutes SET quantitat = quantitat + "+quantitat + " where prestamista = '"+usuariID+"' and deutor = '" + deutor+"' " );
 			}else{
 				st.execute(" INSERT INTO deutes (deutor,quantitat,prestamista) VALUES ('"+deutor+"','"+quantitat+"','"+usuariID+"') ");
 			}
+			//S'eliminen les deuded saldades
 			eliminarSaldades(conn);
 		}catch (SQLException e){
 			e.printStackTrace();

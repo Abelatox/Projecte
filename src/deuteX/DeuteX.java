@@ -178,9 +178,7 @@ public class DeuteX extends FuncionsAuxiliars{
 			}else if(pantallaActual==Pantalles.PRINCIPAL){
 				usuari="";
 				contrasenya="";
-				usuariRepetit=false;
-				
-				
+				usuariRepetit=false;				
 				
 				//En cada bucle recompta els usuaris actius
 				printMenu(mRegistre);
@@ -260,19 +258,17 @@ public class DeuteX extends FuncionsAuxiliars{
 				 case "2": //Resta deute 
 			          System.out.print(traduccio[DEUDELIMI][idioma]+": "); 
 			          deutor = sc.nextLine().toUpperCase().trim(); 
-			          {
-				          System.out.print(traduccio[QUANTITAT][idioma]+": "); 
-				          inputQuantitat = sc.nextLine(); 
-				          
-				          if(esNumeroPositiu(inputQuantitat)){
-								quantitat=Float.parseFloat(inputQuantitat);
-								FuncionsDatabase.restarDeute(conn, deutor, usuari, quantitat);	
-							}else{
-								System.out.println(traduccio[NOESNUM][idioma]);
-							}
-			          }//else{
-			        	//  System.out.println(deutor+" "+traduccio[NODEURES][idioma]);
-			          //}
+		          
+			          System.out.print(traduccio[QUANTITAT][idioma]+": "); 
+			          inputQuantitat = sc.nextLine(); 
+			          
+			          if(esNumeroPositiu(inputQuantitat)){
+							quantitat=Float.parseFloat(inputQuantitat);
+							FuncionsDatabase.restarDeute(conn, deutor, usuari, quantitat);	
+						}else{
+							System.out.println(traduccio[NOESNUM][idioma]);
+						}
+			          
 					break;
 				case "3": //Notifiacions / informació
 					
