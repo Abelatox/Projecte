@@ -11,8 +11,8 @@ public class DeuteX extends FuncionsAuxiliars{
 	
 	//JDBC driver name i base de dades URL
 	static final String JDBC_DRIVER="org.postgresql.Driver";
-	//static final String DB_URL = "jdbc:postgresql://192.168.2.215/DeuteX";
-	static final String DB_URL = "jdbc:postgresql://192.168.1.140/DeuteX";
+	static final String DB_URL = "jdbc:postgresql://192.168.2.215/DeuteX";
+	//static final String DB_URL = "jdbc:postgresql://192.168.2.140/DeuteX";
 	static final String DB_USER="postgres";
 	static final String DB_PASSWORD="smx";
 	
@@ -101,7 +101,7 @@ public class DeuteX extends FuncionsAuxiliars{
 		//Assignació del vector bidimensional.
 		traduccio[REGISTRE][ENG]="Register";					traduccio[REGISTRE][CAST]="Registrarse";							traduccio[REGISTRE][CAT]="Registrar-se";
 		traduccio[ENTRAR][ENG]="Login";							traduccio[ENTRAR][CAST]="Entrar";									traduccio[ENTRAR][CAT]="Entrar";
-		traduccio[ESCULLOPCIO][ENG]="Choose an option";			traduccio[ESCULLOPCIO][CAST]="Elige una opción";					traduccio[ESCULLOPCIO][CAT]="Escull una opcio";
+		traduccio[ESCULLOPCIO][ENG]="Choose an option";			traduccio[ESCULLOPCIO][CAST]="Elige una opción";					traduccio[ESCULLOPCIO][CAT]="Escull una opció";
 		traduccio[INTNOM][ENG]="Insert username";				traduccio[INTNOM][CAST]="Introduce el nombre de usuario";			traduccio[INTNOM][CAT]="Introdueix el nom d'usuari";
 		traduccio[REPETITUSU][ENG]="User already exists";		traduccio[REPETITUSU][CAST]="Usuario repetido";						traduccio[REPETITUSU][CAT]="Usuari repetit";
 		traduccio[INCONTRASENYA][ENG]="Insert password";		traduccio[INCONTRASENYA][CAST]="Introduce la contraseña";			traduccio[INCONTRASENYA][CAT]="Introdueix la contrasenya";
@@ -131,47 +131,18 @@ public class DeuteX extends FuncionsAuxiliars{
 		String[] mIdioma = {"English","Castellano","Català"};
 		System.out.println("Benvingut al programa");
 		
+		tIdioma tIdioma = new tIdioma();
+
 		while(stop == false)
 		{		
 			String[] mRegistre = {traduccio[REGISTRE][idioma],traduccio[ENTRAR][idioma]};
 		    String[] mDeute = {traduccio[ADEUTE][idioma],traduccio[EDEUTE][idioma],traduccio[IDEUTE][idioma],traduccio[ENRERA][idioma]}; 
 
 			if(pantallaActual==Pantalles.IDIOMES){
-				
-				do{
-					printMenu(mIdioma);
-					System.out.print("Escull el teu idioma: ");
-
-					opcioIdioma=sc.nextLine();
-				
-					switch (opcioIdioma){
-					case "1": //ENGLISH
-						
-						idioma = ENG;
-						monedaInicial="$";
-						monedaFinal="";
-						break;
-					
-					case "2": //CASTELLANO
-						
-						idioma = CAST;
-						monedaInicial="";
-						monedaFinal="€";
-						break;
-					
-					case "3": //CATALA
-						
-						idioma = CAT;
-						monedaInicial="";
-						monedaFinal="€";
-						break;
-					
-					default: 
-						opcioIdioma="0";
-						System.out.println("Idioma incorrecte\n");
-					}
-					
-				}while(opcioIdioma.equals("0")); //Quan l'idioma �s 1, 2 o 3 passa a la pantalla principal, sino segueix fent bucle
+				tIdioma = assignaIdioma(mIdioma);
+				idioma=tIdioma.idioma;
+				monedaInicial=tIdioma.monedaInicial;
+				monedaFinal=tIdioma.monedaFinal;
 				
 				pantallaActual=Pantalles.PRINCIPAL;
 				
