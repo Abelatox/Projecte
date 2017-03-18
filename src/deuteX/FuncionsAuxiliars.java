@@ -4,10 +4,17 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class FuncionsAuxiliars {
-
+	/**
+	 * Imprimeix la taula dels deutes
+	 * @param conn Connexió a la BD
+	 * @param usuari Usuari actual
+	 * @param monedaInicial Moneda abans del número
+	 * @param monedaFinal Moneda després del número
+	 */
 	public static void printTaula(Connection conn,String usuari,String monedaInicial, String monedaFinal){
 		float total=0;
 		System.out.println(
@@ -40,14 +47,18 @@ public class FuncionsAuxiliars {
 			"|---------------|\n"
 		);
 	}
-	
-	public static tIdioma assignaIdioma(String[] mIdioma){
+	/**
+	 * Assigna l'idioma al programa
+	 * @return (tIdioma) Idioma
+	 */
+	public static tIdioma assignaIdioma(){
 		int 
 		ENG = 0, 
 		CAST = 1,
 		CAT = 2;
 		Scanner sc = new Scanner(System.in);
 		String opcioIdioma;
+		String[] mIdioma = {"English","Castellano","CatalÃ "};
 
 		tIdioma idioma = new tIdioma();
 		do{
@@ -58,17 +69,14 @@ public class FuncionsAuxiliars {
 		
 			switch (opcioIdioma){
 			case "1": //ENGLISH
-				
 				idioma.idioma = ENG; idioma.monedaInicial="$"; idioma.monedaFinal="";
 				break;
 			
 			case "2": //CASTELLANO
-				
 				idioma.idioma = CAST; idioma.monedaInicial=""; idioma.monedaFinal="â‚¬";
 				break;
 			
 			case "3": //CATALA
-				
 				idioma.idioma = CAT; idioma.monedaInicial=""; idioma.monedaFinal="â‚¬";
 				break;
 			
@@ -81,6 +89,10 @@ public class FuncionsAuxiliars {
 		return idioma;
 	}
 	
+	/**
+	 * Imprimeix els menus
+	 * @param array Array que conté els valors del menú
+	 */
 	public static void printMenu(String[] array){
 		System.out.println();
 		for(int i=0;i<array.length;i++){
@@ -88,17 +100,18 @@ public class FuncionsAuxiliars {
 		}
 	}
 	
+	/**
+	 * Comprova si un número és positiu
+	 * @param num Número a comprovar en String
+	 * @return (boolean) true si el número és positiu
+	 */
+	//TODO provar de forma més simple amb un try catch
 	public static boolean esNumeroPositiu(String num){
-		if(!num.equals(""))
-		{
-			for(int i=0;i<num.length();i++){
-				if((num.charAt(i)<48 || num.charAt(i)>57) && num.charAt(i) != '.'){
-					return false;
-				}
-			}
-			return true;
+		try{
+			Float.parseFloat(num);
+		}catch(Exception e){
+			return false;
 		}
-		return false;
+		return true;
 	}
-	
 }

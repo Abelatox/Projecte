@@ -1,15 +1,41 @@
 package deuteX;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 public class FuncionsDatabase {
+	/**
+	 * Connexió a la Base de Dades
+	 * @param jdbcDriver Ubicació del driver
+	 * @param dbUrl URL de la Base de Dades
+	 * @param dbUser Nom d'usuari de la Base de Dades
+	 * @param dbPassword Contrassenya de l'usuari de la Base de Dades
+	 * @return (Connection) Connexió a la Base de Dades
+	 */
+	public static Connection connexioBD(String jdbcDriver, String dbUrl, String dbUser, String dbPassword) {
+		Connection conn=null;
+		try {
+			Class.forName(jdbcDriver);
+			conn = DriverManager.getConnection(dbUrl,dbUser,dbPassword);
+		}catch(SQLException sqle){
+			sqle.printStackTrace();
+		}catch(ClassNotFoundException cnfe){
+			System.out.println("No s'ha trobat el driver");
+		}
+		return conn;
+	}
 	
-//Comprova si l'usuari ja estÃ  creat a la base de dades. 
+	/**
+	 * Comprova si l'usuari ja està creat a la base de dades. 
+	 * @param conn Connexió a la BD
+	 * @param usuari Usuari a cercar a la BD
+	 * @return (boolean) true si l'usuari existeix
+	 */
 	public static boolean existeixUsuari(Connection conn, String usuari){
-		//Si la connexiÃ³ no Ã©s nulÂ·la
+		//Si la connexió no és nul·la
 		if(conn != null)
 	    {
 			try {
@@ -33,9 +59,15 @@ public class FuncionsDatabase {
 		return false;
 	}
 	
-	//Comprova el login d'entrada si l'usuari i la contrasenya estan a la base de dades i sÃ³n correctes
+	/**
+	 * Comprova el login d'entrada si l'usuari i la contrasenya estan a la base de dades i són correctes
+	 * @param conn Connexió a la BD
+	 * @param usuari Nom d'usuari
+	 * @param password Contrasenya de l'usuari
+	 * @return (boolean) true si les dades són correctes
+	 */
 	public static boolean validarLogin(Connection conn, String usuari, String password){
-		//Si la connexiÃ³ no Ã©s nulÂ·la
+		//Si la connexió no és nul·la
 		if(conn != null)
 	    {
 			try {
@@ -58,6 +90,12 @@ public class FuncionsDatabase {
 		return false;
 	}
 	
+	/**
+	 * Obté la ID de l'usuari de la BD
+	 * @param conn Connexió a la BD
+	 * @param usuari Usuari de qui retornar la ID
+	 * @return (Int) ID de l'usuari
+	 */
 	public static int getUserID(Connection conn, String usuari){
 		int prestamistaID=-1;
 		Statement st;
@@ -81,6 +119,10 @@ public class FuncionsDatabase {
 		return prestamistaID;
 	}
 	
+	/**
+	 * Elimina totes les deudes saldades
+	 * @param conn Connexió a la BD
+	 */
 	public static void eliminarSaldades(Connection conn){
 		Statement st;
 		try {
@@ -92,6 +134,14 @@ public class FuncionsDatabase {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Afegeix un deute o suma si n'existeix
+	 * @param conn Connexió a la BD
+	 * @param deutor Persona que deu diners a l'usuari
+	 * @param prestamista Usuari actual del programa
+	 * @param quantitat Quantitat de diners
+	 */
 	public static void afegirDeute(Connection conn, String deutor,String prestamista,double quantitat){
 		Statement st;
 		try{
@@ -109,8 +159,7 @@ public class FuncionsDatabase {
 					}
 				}
 			}
-			//System.out.println("(deutor'"+deutor+"','quantitat"+quantitat+"','usuariID"+usuariID+"')");
-
+			
 			//Comprovem si el deutor ja existeix.
 			if(prestamistaID == usuariID && dbDeutor.equals(deutor)){
 				st.execute("UPDATE deutes SET quantitat = quantitat + "+quantitat + " where prestamista = '"+usuariID+"' and deutor = '" + deutor+"' " );
@@ -122,6 +171,14 @@ public class FuncionsDatabase {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Resta part d'un deute
+	 * @param conn Connexió a la BD
+	 * @param deutor Persona que deu diners a l'usuari
+	 * @param prestamista Usuari actual del programa
+	 * @param quantitat Quantitat de diners
+	 */
 	public static void restarDeute(Connection conn, String deutor,String prestamista,double quantitat){
 		Statement st;
 		try{
