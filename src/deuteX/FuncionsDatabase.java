@@ -8,12 +8,12 @@ import java.sql.Statement;
 
 public class FuncionsDatabase {
 	/**
-	 * Connexió a la Base de Dades
-	 * @param jdbcDriver Ubicació del driver
+	 * Connexio a la Base de Dades
+	 * @param jdbcDriver UbicaciÃ³ del driver
 	 * @param dbUrl URL de la Base de Dades
 	 * @param dbUser Nom d'usuari de la Base de Dades
 	 * @param dbPassword Contrassenya de l'usuari de la Base de Dades
-	 * @return (Connection) Connexió a la Base de Dades
+	 * @return (Connection) Connexio a la Base de Dades
 	 */
 	public static Connection connexioBD(String jdbcDriver, String dbUrl, String dbUser, String dbPassword) {
 		Connection conn=null;
@@ -29,13 +29,13 @@ public class FuncionsDatabase {
 	}
 	
 	/**
-	 * Comprova si l'usuari ja està creat a la base de dades. 
-	 * @param conn Connexió a la BD
+	 * Comprova si l'usuari existeix a la base de dades. 
+	 * @param conn Connexio a la BD
 	 * @param usuari Usuari a cercar a la BD
 	 * @return (boolean) true si l'usuari existeix
 	 */
 	public static boolean existeixUsuari(Connection conn, String usuari){
-		//Si la connexió no és nul·la
+		//Si la connexio no es nula
 		if(conn != null)
 	    {
 			try {
@@ -60,14 +60,14 @@ public class FuncionsDatabase {
 	}
 	
 	/**
-	 * Comprova el login d'entrada si l'usuari i la contrasenya estan a la base de dades i són correctes
-	 * @param conn Connexió a la BD
+	 * Comprova el login d'entrada si l'usuari i la contrasenya estan a la base de dades i son correctes
+	 * @param conn Connexio a la BD
 	 * @param usuari Nom d'usuari
 	 * @param password Contrasenya de l'usuari
-	 * @return (boolean) true si les dades són correctes
+	 * @return (boolean) true si les dades son correctes
 	 */
 	public static boolean validarLogin(Connection conn, String usuari, String password){
-		//Si la connexió no és nul·la
+		//Si la connexio no es nula
 		if(conn != null)
 	    {
 			try {
@@ -91,8 +91,8 @@ public class FuncionsDatabase {
 	}
 	
 	/**
-	 * Obté la ID de l'usuari de la BD
-	 * @param conn Connexió a la BD
+	 * Obte la ID de l'usuari de la BD
+	 * @param conn Connexio a la BD
 	 * @param usuari Usuari de qui retornar la ID
 	 * @return (Int) ID de l'usuari
 	 */
@@ -121,7 +121,7 @@ public class FuncionsDatabase {
 	
 	/**
 	 * Elimina totes les deudes saldades
-	 * @param conn Connexió a la BD
+	 * @param conn Connexio a la BD
 	 */
 	public static void eliminarSaldades(Connection conn){
 		Statement st;
@@ -137,7 +137,7 @@ public class FuncionsDatabase {
 	
 	/**
 	 * Afegeix un deute o suma si n'existeix
-	 * @param conn Connexió a la BD
+	 * @param conn ConnexiÃ³ a la BD
 	 * @param deutor Persona que deu diners a l'usuari
 	 * @param prestamista Usuari actual del programa
 	 * @param quantitat Quantitat de diners
@@ -174,7 +174,7 @@ public class FuncionsDatabase {
 	
 	/**
 	 * Resta part d'un deute
-	 * @param conn Connexió a la BD
+	 * @param conn ConnexiÃ³ a la BD
 	 * @param deutor Persona que deu diners a l'usuari
 	 * @param prestamista Usuari actual del programa
 	 * @param quantitat Quantitat de diners

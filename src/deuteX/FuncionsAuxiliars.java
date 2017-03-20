@@ -10,10 +10,10 @@ import java.util.Scanner;
 public class FuncionsAuxiliars {
 	/**
 	 * Imprimeix la taula dels deutes
-	 * @param conn Connexió a la BD
+	 * @param conn Connexi() a la BD
 	 * @param usuari Usuari actual
-	 * @param monedaInicial Moneda abans del número
-	 * @param monedaFinal Moneda després del número
+	 * @param monedaInicial Moneda abans del n()mero
+	 * @param monedaFinal Moneda despr()s del n()mero
 	 */
 	public static void printTaula(Connection conn,String usuari,String monedaInicial, String monedaFinal){
 		float total=0;
@@ -85,13 +85,13 @@ public class FuncionsAuxiliars {
 				System.out.println("Idioma incorrecte\n");
 			}
 			
-		}while(opcioIdioma.equals("0")); //Quan l'idioma ï¿½s 1, 2 o 3 passa a la pantalla principal, sino segueix fent bucle
+		}while(opcioIdioma.equals("0")); //Quan l'idioma ()s 1, 2 o 3 passa a la pantalla principal, sino segueix fent bucle
 		return idioma;
 	}
 	
 	/**
 	 * Imprimeix els menus
-	 * @param array Array que conté els valors del menú
+	 * @param array Array que cont() els valors del men()
 	 */
 	public static void printMenu(String[] array){
 		System.out.println();
@@ -101,11 +101,11 @@ public class FuncionsAuxiliars {
 	}
 	
 	/**
-	 * Comprova si un número és positiu
-	 * @param num Número a comprovar en String
-	 * @return (boolean) true si el número és positiu
+	 * Comprova si un n()mero ()s positiu
+	 * @param num N()mero a comprovar en String
+	 * @return (boolean) true si el n()mero ()s positiu
 	 */
-	//TODO provar de forma més simple amb un try catch
+	//TODO provar de forma m()s simple amb un try catch
 	public static boolean esNumeroPositiu(String num){
 		try{
 			Float.parseFloat(num);
@@ -114,4 +114,29 @@ public class FuncionsAuxiliars {
 		}
 		return true;
 	}
+	
+	public static String[] separaParaules(String text){
+		int anteriorEspai=0;
+		int index=0;
+		String[] array = new String[comptaParaules(text)];
+		for(int i =0;i<text.length();i++){
+			if(text.charAt(i)== ' '|| i==text.length()-1){
+				array[index] = text.substring(anteriorEspai,i+1).trim();
+				anteriorEspai=i+1;
+				index++;
+			}
+		}
+		return array;
+	}
+	
+	private static int comptaParaules(String text){
+		int comptador=0;
+		for(int i =0;i<text.length();i++){
+			if(text.charAt(i)== ' '|| i==text.length()-1){
+				comptador++;
+			}
+		}
+		return comptador;
+	}
+	
 }

@@ -1,7 +1,6 @@
 package deuteX;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
@@ -10,8 +9,8 @@ public class DeuteX extends FuncionsAuxiliars{
 	
 	//JDBC driver name i base de dades URL
 	static final String JDBC_DRIVER="org.postgresql.Driver";
-	//static final String DB_URL = "jdbc:postgresql://192.168.2.215/DeuteX";
-	static final String DB_URL = "jdbc:postgresql://192.168.1.140/DeuteX";
+	static final String DB_URL = "jdbc:postgresql://192.168.2.215/DeuteX";
+	//static final String DB_URL = "jdbc:postgresql://192.168.1.140/DeuteX";
 	static final String DB_USER="postgres";
 	static final String DB_PASSWORD="smx";
 	
@@ -52,10 +51,8 @@ public class DeuteX extends FuncionsAuxiliars{
 		PRINCIPAL, USUARI, IDIOMES
 	}
 	
-	static int usuarisActius=0; //Es posa a 0 per quan compti que no surti dels limits
-
 	//Assignació d'idioma
-	static String[][] traduccio = new String[index][3]; //[numParaules][numIdiomes];
+	static String[][] traduccio = new String[index][3]; //[quantitatParaules][quantitatIdiomes];
 	
 	static int idioma = 0;
 
@@ -65,25 +62,251 @@ public class DeuteX extends FuncionsAuxiliars{
 	
 	static String usuari="",contrasenya="";
 	static Pantalles pantallaActual = Pantalles.IDIOMES;
-
 	
 	
+	/**
+	 * Funció principal per el programa DeuteX
+	 * Permet crear i entrar amb usuaris, afegir i restar deutes i també mostra una taula de les deutes.
+	 * @param args
+	 */
 	public static void main(String[] args) {
+		//Agafem la connexió de la Base de Dades
 		Connection conn = FuncionsDatabase.connexioBD(JDBC_DRIVER,DB_URL,DB_USER,DB_PASSWORD);
 		
-		//Definició de la variable de la pantalla actual.
+		/*if(args[0] != null){
+			//Interpret de comandes
+		}*/
 		
 		Scanner sc = new Scanner(System.in);
 		boolean stop = false;
+						
+		//Carreguem la traducció
+		assignarTraducció();
 		
-		//Opcions de menú
+		System.out.println("Benvingut al programa");
+		
+		//Bucle principal
+		while(stop == false){
+			interpret(conn);
+			/*if(pantallaActual==Pantalles.IDIOMES){
+				processarPantallaIdiomes();
+				
+			}else if(pantallaActual==Pantalles.PRINCIPAL){
+				processarPantallaPrincipal(conn);
+				
+			}else if(pantallaActual==Pantalles.USUARI){
+				processarPantallaUsuari(conn);				
+			}*/
+		}
+	}
+	
+	/**
+	 * Interpret de comandes
+	 */
+	private static void interpret(Connection conn){
+		Scanner sc = new Scanner(System.in);
+		System.out.println("\nIntrodueix ordre:");
+		String input = sc.nextLine();
+		
+		String[] paraules = FuncionsAuxiliars.separaParaules(input);
+		if(paraules[0] != null){
+			switch(paraules[0]){
+			case "registrar":
+				System.out.println("Registrant a "+paraules[1]);
+				registrar(conn,paraules[1],paraules[2]);
+				break;
+			case "afegir":
+				
+				break;
+			}
+		}
+		
+	}
+	
+	/**
+	 * Processa la pantalla de selecció d'idioma
+	 */
+	private static void processarPantallaIdiomes(){
+		tIdioma tIdioma = new tIdioma();
+		tIdioma = assignaIdioma();
+		idioma=tIdioma.idioma;
+		monedaInicial=tIdioma.monedaInicial;
+		monedaFinal=tIdioma.monedaFinal;
+		
+		pantallaActual=Pantalles.PRINCIPAL;
+	}
+	
+	/**
+	 * Processa la pantalla de registre / login
+	 * @param conn
+	 */
+	private static void processarPantallaPrincipal(Connection conn){
+		Scanner sc = new Scanner(System.in);
+		String[] mRegistre = {traduccio[REGISTRE][idioma],traduccio[ENTRAR][idioma]};
 		String opcio; //Opcio de registre/login (1-2)
+
+		contrasenya="";
+		
+		printMenu(mRegistre);
+		System.out.println(traduccio[ESCULLOPCIO][idioma]+": ");
+		opcio = sc.nextLine();
+		
+		switch(opcio){
+		case "1": //Registre
+			System.out.print(traduccio[INTNOM][idioma]+":  ");
+			String usuari = sc.nextLine();
+			System.out.print(traduccio[INCONTRASENYA][idioma]+": ");
+			String contrasenya = sc.nextLine();
+
+			registrar(conn,usuari,contrasenya);
+			break;
+						
+		case "2": //Login
+			login(conn);
+        	break;
+           
+        default:
+            System.out.println(traduccio[OPCIONR][idioma]);
+        }
+	}
+	
+	/**
+	 * Processa la pantalla de quan l'usuari ha entrat
+	 * @param conn
+	 */
+	private static void processarPantallaUsuari(Connection conn){
+		Scanner sc = new Scanner(System.in);
 		String opcioMenuLogin; //Opcions d'usuari (1-3)
+
+		String[] mDeute = {traduccio[ADEUTE][idioma],traduccio[EDEUTE][idioma],traduccio[IDEUTE][idioma],traduccio[ENRERA][idioma]}; 
+
+		printMenu(mDeute);
+		System.out.println(traduccio[OPCIO][idioma]+": ");
+		opcioMenuLogin = sc.nextLine();
 		
+		switch(opcioMenuLogin){
+		case "1": //Afegir deute
+			afegirDeute(conn, usuari);
+		break;
+		 case "2": //Resta deute 
+	        restarDeute(conn, usuari);
+			break;
+			
+		case "3": //Notifiacions / informació
+			printTaula(conn,usuari,monedaInicial, monedaFinal);
+			break;
+			
+		case "4": //Enrera
+			pantallaActual=Pantalles.PRINCIPAL;
+			break;
+			
+		default:
+			System.out.println(traduccio[OPCIONR][idioma]);
+		}	
+		System.out.println();
+	}
+
+	/**
+	 * Funció per registrar un usuari
+	 * @param conn Connexió a la BD
+	 */
+	private static void registrar(Connection conn, String user, String password){
+		Scanner sc = new Scanner(System.in);
+		        
+		usuari=user;
+
+		if(FuncionsDatabase.existeixUsuari(conn,usuari)){
+			System.out.println(traduccio[REPETITUSU][idioma]);
+		}else{			
+			contrasenya=password;
+
+			
+			if(conn != null)
+		    {
+				try {
+					Statement st = conn.createStatement();
+					st.execute(" insert into usuaris (nom,pass) values ('"+usuari+"','"+contrasenya+"') ");
+					st.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		    }	
+		}
+	}
+	
+	/**
+	 * Funció per validar login
+	 * @param conn Connexió a la BD
+	 */
+	private static void login(Connection conn){
+		Scanner sc = new Scanner(System.in);
+		System.out.print(traduccio[USUARI][idioma]+": ");
+        usuari=sc.nextLine(); //Llegim el que Introdueix l'usuari.
+        System.out.print(traduccio[CONTRASENYA][idioma]+": ");
+        contrasenya=sc.nextLine();
+    
+    	if(FuncionsDatabase.validarLogin(conn, usuari, contrasenya)){ // Comprova si la contrasenya es correcta per l'usuari
+			System.out.println(traduccio[BEN][idioma]+" "+usuari);
+			System.out.println();
+            pantallaActual=Pantalles.USUARI;
+        }else{
+        	System.out.println(traduccio[ERCONTRASENYA][idioma]);
+        }
+	}
+	
+	/**
+	 * Afegeix el deute a un usuari
+	 * @param conn Connexió a la BD
+	 * @param usuari Usuari actual
+	 */
+	private static void afegirDeute(Connection conn, String usuari){
+		Scanner sc = new Scanner(System.in);
+		String deutor;
+		String inputQuantitat;
+		float quantitat;
+
+		System.out.print(traduccio[DEUDINERS][idioma]+": ");
+		deutor = sc.nextLine().toUpperCase().trim();
+		System.out.print(traduccio[QUANTITAT][idioma]+": ");
+		inputQuantitat = sc.nextLine();
 		
-		String deutor=""; //Qui deu diners
-		
-		//Assignació del vector bidimensional.
+		if(esNumeroPositiu(inputQuantitat)){
+			quantitat=Float.parseFloat(inputQuantitat);
+			FuncionsDatabase.afegirDeute(conn, deutor, usuari, quantitat);
+		}else{
+			System.out.println(traduccio[NOESNUM][idioma]);
+		}
+	}
+	
+	/**
+	 * Resta el deute a un usuari
+	 * @param conn Connexió a la BD
+	 * @param usuari Usuari actual
+	 */
+	private static void restarDeute(Connection conn, String usuari){
+		Scanner sc = new Scanner(System.in);
+		String deutor;
+		String inputQuantitat;
+		float quantitat;
+		System.out.print(traduccio[DEUDELIMI][idioma]+": "); 
+        deutor = sc.nextLine().toUpperCase().trim(); 
+     
+        System.out.print(traduccio[QUANTITAT][idioma]+": "); 
+        inputQuantitat = sc.nextLine(); 
+         
+        if(esNumeroPositiu(inputQuantitat)){
+			quantitat=Float.parseFloat(inputQuantitat);
+			FuncionsDatabase.restarDeute(conn, deutor, usuari, quantitat);	
+		}else{
+			System.out.println(traduccio[NOESNUM][idioma]);
+		}
+	}
+	
+	/**
+	 * Assigna les traduccions a la array
+	 */
+	private static void assignarTraducció(){
+		//Assignació de la array bidimensional.
 		traduccio[REGISTRE][ENG]="Register";					traduccio[REGISTRE][CAST]="Registrarse";							traduccio[REGISTRE][CAT]="Registrar-se";
 		traduccio[ENTRAR][ENG]="Login";							traduccio[ENTRAR][CAST]="Entrar";									traduccio[ENTRAR][CAT]="Entrar";
 		traduccio[ESCULLOPCIO][ENG]="Choose an option";			traduccio[ESCULLOPCIO][CAST]="Elige una opción";					traduccio[ESCULLOPCIO][CAT]="Escull una opció";
@@ -108,149 +331,5 @@ public class DeuteX extends FuncionsAuxiliars{
 		traduccio[QUANTITAT][ENG]="Insert the amount";			traduccio[QUANTITAT][CAST]="Introduce la cantidad";					traduccio[QUANTITAT][CAT]="Introdueix la quantitat";
 		traduccio[DEUTOR][ENG]="Debtor\tAmnt.";					traduccio[DEUTOR][CAST]="Deutor\tCdad.";							traduccio[DEUTOR][CAT]="Deutor\tQtat.";
 		traduccio[TOTAL][ENG]="Total";							traduccio[TOTAL][CAST]="Total";										traduccio[TOTAL][CAT]="Total";
-		
-		
-		
-		
-		System.out.println("Benvingut al programa");
-		
-		tIdioma tIdioma = new tIdioma();
-		
-		//Bucle principal
-		while(stop == false)
-		{		
-			String[] mRegistre = {traduccio[REGISTRE][idioma],traduccio[ENTRAR][idioma]};
-		    String[] mDeute = {traduccio[ADEUTE][idioma],traduccio[EDEUTE][idioma],traduccio[IDEUTE][idioma],traduccio[ENRERA][idioma]}; 
-
-			if(pantallaActual==Pantalles.IDIOMES){
-				tIdioma = assignaIdioma();
-				idioma=tIdioma.idioma;
-				monedaInicial=tIdioma.monedaInicial;
-				monedaFinal=tIdioma.monedaFinal;
-				
-				pantallaActual=Pantalles.PRINCIPAL;
-				
-			}else if(pantallaActual==Pantalles.PRINCIPAL){
-				usuari="";
-				contrasenya="";
-				
-				printMenu(mRegistre);
-				System.out.println(traduccio[ESCULLOPCIO][idioma]+": ");
-				opcio = sc.nextLine();
-				
-				switch(opcio){
-				case "1": //Registre
-					registrar(conn);
-					break;
-								
-				case "2": //Login
-					login(conn);
-                	break;
-                   
-                default:
-                    System.out.println(traduccio[OPCIONR][idioma]);
-                }
-
-			}else if(pantallaActual==Pantalles.USUARI){
-				printMenu(mDeute);
-				System.out.println(traduccio[OPCIO][idioma]+": ");
-				opcioMenuLogin = sc.nextLine();
-				
-				switch(opcioMenuLogin){
-				case "1": //Afegir deute
-					afegirDeute(conn, usuari, deutor);
-				break;
-				 case "2": //Resta deute 
-			        restarDeute(conn, usuari, deutor);
-					break;
-					
-				case "3": //Notifiacions / informació
-					printTaula(conn,usuari,monedaInicial, monedaFinal);
-					break;
-					
-				case "4": //Enrera
-					pantallaActual=Pantalles.PRINCIPAL;
-					break;
-					
-				default:
-					System.out.println(traduccio[OPCIONR][idioma]);
-				}	
-				System.out.println();
-			}
-		}
 	}
-	
-	private static void registrar(Connection conn){
-		Scanner sc = new Scanner(System.in);
-		if(FuncionsDatabase.existeixUsuari(conn,usuari)){
-			System.out.println(traduccio[REPETITUSU][idioma]);
-		}else{
-			//Si el nom d'usuari es valid et demana contrasenya i el fica en la array.
-			System.out.print(traduccio[INCONTRASENYA][idioma]+": ");
-			contrasenya=sc.nextLine();
-			
-			if(conn != null)
-		    {
-				try {
-					Statement st = conn.createStatement();
-					st.execute(" insert into usuaris (nom,pass) values ('"+usuari+"','"+contrasenya+"') ");
-					st.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-		    }	
-		}
-	}
-	private static void login(Connection conn){
-		Scanner sc = new Scanner(System.in);
-		System.out.print(traduccio[USUARI][idioma]+": ");
-        usuari=sc.nextLine(); //Llegim el que Introdueix l'usuari.
-        System.out.print(traduccio[CONTRASENYA][idioma]+": ");
-        contrasenya=sc.nextLine();
-    
-    	if(FuncionsDatabase.validarLogin(conn, usuari, contrasenya)){ // Comprova si la contrasenya es correcta per l'usuari
-			System.out.println(traduccio[BEN][idioma]+" "+usuari);
-			System.out.println();
-            pantallaActual=Pantalles.USUARI;
-        }else{
-        	System.out.println(traduccio[ERCONTRASENYA][idioma]);
-        }
-	}
-	private static void afegirDeute(Connection conn, String usuari, String deutor){
-		Scanner sc = new Scanner(System.in);
-		String inputQuantitat;
-		float quantitat;
-
-		System.out.print(traduccio[DEUDINERS][idioma]+": ");
-		deutor = sc.nextLine().toUpperCase().trim();
-		System.out.print(traduccio[QUANTITAT][idioma]+": ");
-		inputQuantitat = sc.nextLine();
-		
-		if(esNumeroPositiu(inputQuantitat)){
-			quantitat=Float.parseFloat(inputQuantitat);
-			FuncionsDatabase.afegirDeute(conn, deutor, usuari, quantitat);
-		}else{
-			System.out.println(traduccio[NOESNUM][idioma]);
-		}
-	}
-	
-	private static void restarDeute(Connection conn, String usuari, String deutor){
-		Scanner sc = new Scanner(System.in);
-		String inputQuantitat;
-		float quantitat;
-		System.out.print(traduccio[DEUDELIMI][idioma]+": "); 
-        deutor = sc.nextLine().toUpperCase().trim(); 
-     
-        System.out.print(traduccio[QUANTITAT][idioma]+": "); 
-        inputQuantitat = sc.nextLine(); 
-         
-        if(esNumeroPositiu(inputQuantitat)){
-			quantitat=Float.parseFloat(inputQuantitat);
-			FuncionsDatabase.restarDeute(conn, deutor, usuari, quantitat);	
-		}else{
-			System.out.println(traduccio[NOESNUM][idioma]);
-		}
-	}
-	
-	
 }
