@@ -81,9 +81,9 @@ public class DeuteX extends FuncionsAuxiliars{
 		boolean stop = false;
 						
 		//Carreguem la traducció
-		assignarTraducció();
+		assignarTraduccio();
 		
-		System.out.println("Benvingut al programa");
+		System.out.println("Benvingut a DeuteX");
 		
 		//Bucle principal
 		while(stop == false){
@@ -110,14 +110,36 @@ public class DeuteX extends FuncionsAuxiliars{
 		
 		String[] paraules = FuncionsAuxiliars.separaParaules(input);
 		if(paraules[0] != null){
+			String deutor, prestamista;
+			double quantitat;
 			switch(paraules[0]){
 			case "registrar":
 				System.out.println("Registrant a "+paraules[1]);
 				registrar(conn,paraules[1],paraules[2]);
 				break;
 			case "afegir":
-				
+				deutor = paraules[1];
+				prestamista = paraules[2];
+				quantitat = Float.parseFloat(paraules[3]);
+				System.out.println(deutor+ prestamista+ quantitat);
+				//FuncionsDatabase.afegirDeute(conn, deutor, prestamista, quantitat);
+
 				break;
+			case "restar":
+				deutor = paraules[1];
+				prestamista = paraules[2];
+				quantitat = Float.parseFloat(paraules[3]);
+				
+				FuncionsDatabase.restarDeute(conn, deutor, prestamista, quantitat);
+
+				break;
+			case "mostrarTaula":
+				String usuari = paraules[1];
+				FuncionsAuxiliars.printTaula(conn, usuari, monedaInicial, monedaFinal);
+				break;
+			default:
+				System.out.println("Opcio no reconeguda: "+paraules[0]);
+
 			}
 		}
 		
@@ -212,7 +234,6 @@ public class DeuteX extends FuncionsAuxiliars{
 	 */
 	private static void registrar(Connection conn, String user, String password){
 		Scanner sc = new Scanner(System.in);
-		        
 		usuari=user;
 
 		if(FuncionsDatabase.existeixUsuari(conn,usuari)){
@@ -220,7 +241,6 @@ public class DeuteX extends FuncionsAuxiliars{
 		}else{			
 			contrasenya=password;
 
-			
 			if(conn != null)
 		    {
 				try {
@@ -305,7 +325,7 @@ public class DeuteX extends FuncionsAuxiliars{
 	/**
 	 * Assigna les traduccions a la array
 	 */
-	private static void assignarTraducció(){
+	private static void assignarTraduccio(){
 		//Assignació de la array bidimensional.
 		traduccio[REGISTRE][ENG]="Register";					traduccio[REGISTRE][CAST]="Registrarse";							traduccio[REGISTRE][CAT]="Registrar-se";
 		traduccio[ENTRAR][ENG]="Login";							traduccio[ENTRAR][CAST]="Entrar";									traduccio[ENTRAR][CAT]="Entrar";
