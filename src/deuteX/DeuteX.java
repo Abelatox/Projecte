@@ -9,8 +9,8 @@ public class DeuteX extends FuncionsAuxiliars{
 	
 	//JDBC driver name i base de dades URL
 	static final String JDBC_DRIVER="org.postgresql.Driver";
-	static final String DB_URL = "jdbc:postgresql://192.168.2.215/DeuteX";
-	//static final String DB_URL = "jdbc:postgresql://192.168.1.140/DeuteX";
+	//static final String DB_URL = "jdbc:postgresql://192.168.2.215/DeuteX";
+	static final String DB_URL = "jdbc:postgresql://192.168.1.140/DeuteX";
 	static final String DB_USER="postgres";
 	static final String DB_PASSWORD="smx";
 	
@@ -110,27 +110,25 @@ public class DeuteX extends FuncionsAuxiliars{
 		
 		String[] paraules = FuncionsAuxiliars.separaParaules(input);
 		if(paraules[0] != null){
-			String deutor, prestamista;
-			double quantitat;
+			String deutor, prestamista, quantitat;
 			switch(paraules[0]){
 			case "registrar":
 				System.out.println("Registrant a "+paraules[1]);
 				registrar(conn,paraules[1],paraules[2]);
+				
 				break;
 			case "afegir":
 				deutor = paraules[1];
 				prestamista = paraules[2];
-				quantitat = Float.parseFloat(paraules[3]);
-				System.out.println(deutor+ prestamista+ quantitat);
-				//FuncionsDatabase.afegirDeute(conn, deutor, prestamista, quantitat);
+				quantitat = paraules[3];
+				afegirDeute(conn, deutor, prestamista, quantitat);
 
 				break;
 			case "restar":
 				deutor = paraules[1];
 				prestamista = paraules[2];
-				quantitat = Float.parseFloat(paraules[3]);
-				
-				FuncionsDatabase.restarDeute(conn, deutor, prestamista, quantitat);
+				quantitat = paraules[3];
+				restarDeute(conn, deutor, prestamista, quantitat);
 
 				break;
 			case "mostrarTaula":
@@ -139,10 +137,8 @@ public class DeuteX extends FuncionsAuxiliars{
 				break;
 			default:
 				System.out.println("Opcio no reconeguda: "+paraules[0]);
-
 			}
-		}
-		
+		}		
 	}
 	
 	/**
@@ -205,13 +201,22 @@ public class DeuteX extends FuncionsAuxiliars{
 		printMenu(mDeute);
 		System.out.println(traduccio[OPCIO][idioma]+": ");
 		opcioMenuLogin = sc.nextLine();
-		
+		String deutor,quantitat;
+
 		switch(opcioMenuLogin){
 		case "1": //Afegir deute
-			afegirDeute(conn, usuari);
+			System.out.print(traduccio[DEUDINERS][idioma]+": ");
+			deutor = sc.nextLine();
+			System.out.print(traduccio[QUANTITAT][idioma]+": ");
+			quantitat = sc.nextLine();
+			afegirDeute(conn, usuari, deutor, quantitat);
 		break;
-		 case "2": //Resta deute 
-	        restarDeute(conn, usuari);
+		 case "2": //Resta deute
+			System.out.print(traduccio[DEUDINERS][idioma]+": ");
+			deutor = sc.nextLine();
+			System.out.print(traduccio[QUANTITAT][idioma]+": ");
+			quantitat = sc.nextLine();
+	        restarDeute(conn, usuari, deutor, quantitat);
 			break;
 			
 		case "3": //Notifiacions / informació
@@ -279,16 +284,10 @@ public class DeuteX extends FuncionsAuxiliars{
 	 * @param conn Connexió a la BD
 	 * @param usuari Usuari actual
 	 */
-	private static void afegirDeute(Connection conn, String usuari){
+	private static void afegirDeute(Connection conn, String usuari, String deutor, String inputQuantitat){
 		Scanner sc = new Scanner(System.in);
-		String deutor;
-		String inputQuantitat;
 		float quantitat;
-
-		System.out.print(traduccio[DEUDINERS][idioma]+": ");
-		deutor = sc.nextLine().toUpperCase().trim();
-		System.out.print(traduccio[QUANTITAT][idioma]+": ");
-		inputQuantitat = sc.nextLine();
+		deutor=deutor.toUpperCase().trim();
 		
 		if(esNumeroPositiu(inputQuantitat)){
 			quantitat=Float.parseFloat(inputQuantitat);
@@ -303,16 +302,10 @@ public class DeuteX extends FuncionsAuxiliars{
 	 * @param conn Connexió a la BD
 	 * @param usuari Usuari actual
 	 */
-	private static void restarDeute(Connection conn, String usuari){
+	private static void restarDeute(Connection conn, String usuari, String deutor, String inputQuantitat){
 		Scanner sc = new Scanner(System.in);
-		String deutor;
-		String inputQuantitat;
 		float quantitat;
-		System.out.print(traduccio[DEUDELIMI][idioma]+": "); 
-        deutor = sc.nextLine().toUpperCase().trim(); 
-     
-        System.out.print(traduccio[QUANTITAT][idioma]+": "); 
-        inputQuantitat = sc.nextLine(); 
+		deutor=deutor.toUpperCase().trim();
          
         if(esNumeroPositiu(inputQuantitat)){
 			quantitat=Float.parseFloat(inputQuantitat);
