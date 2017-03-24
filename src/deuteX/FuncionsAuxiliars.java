@@ -95,6 +95,7 @@ public class FuncionsAuxiliars {
 	 */
 	public static void printMenu(String[] array){
 		System.out.println();
+		
 		for(int i=0;i<array.length;i++){
 			System.out.println((i+1)+"- "+array[i]);
 		}
@@ -107,6 +108,7 @@ public class FuncionsAuxiliars {
 	 */
 	//TODO provar de forma m()s simple amb un try catch
 	public static boolean esNumeroPositiu(String num){
+		
 		try{
 			Float.parseFloat(num);
 		}catch(Exception e){
@@ -114,29 +116,15 @@ public class FuncionsAuxiliars {
 		}
 		return true;
 	}
-	
+	/**
+	 * Separa paraules i retorna un array amb les paraules separades per espai. 
+	 * @param text
+	 * @return array [] int
+	 */
 	public static String[] separaParaules(String text){
-		int anteriorEspai=0;
-		int index=0;
-		String[] array = new String[comptaParaules(text)];
-		for(int i =0;i<text.length();i++){
-			if(text.charAt(i)== ' '|| i==text.length()-1){
-				array[index] = text.substring(anteriorEspai,i+1).trim();
-				anteriorEspai=i+1;
-				index++;
-			}
-		}
+		String [] array = text.split(" ");
 		return array;
 	}
 	
-	private static int comptaParaules(String text){
-		int comptador=0;
-		for(int i =0;i<text.length();i++){
-			if(text.charAt(i)== ' '|| i==text.length()-1){
-				comptador++;
-			}
-		}
-		return comptador;
-	}
 	
 }
