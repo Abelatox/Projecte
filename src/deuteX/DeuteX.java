@@ -86,8 +86,8 @@ public class DeuteX extends FuncionsAuxiliars{
 		
 		//Bucle principal
 		while(stop == false){
-			//interpret(conn);
-			if(pantallaActual==Pantalles.IDIOMES){
+			interpret(conn);
+			/*if(pantallaActual==Pantalles.IDIOMES){
 				processarPantallaIdiomes();
 				
 			}else if(pantallaActual==Pantalles.PRINCIPAL){
@@ -95,7 +95,7 @@ public class DeuteX extends FuncionsAuxiliars{
 				
 			}else if(pantallaActual==Pantalles.USUARI){
 				processarPantallaUsuari(conn);				
-			}
+			}*/
 		}
 	}
 	
@@ -112,7 +112,7 @@ public class DeuteX extends FuncionsAuxiliars{
 			String deutor, prestamista, quantitat;
 			
 			switch(paraules[0]){
-			
+				
 				case "registrar":
 					System.out.println("Registrant a "+paraules[1]);
 					registrar(conn,paraules[1],paraules[2]);
@@ -136,9 +136,18 @@ public class DeuteX extends FuncionsAuxiliars{
 					String usuari = paraules[1];
 					FuncionsAuxiliars.printTaula(conn, usuari, monedaInicial, monedaFinal);
 					break;
+					
+				case "help":
+					sortir();
+					break;
+					
+				case "bye":
+					sortir();
+					break;
+					
 				default:
 				System.out.println("Opcio no reconeguda: "+paraules[0]);
-			}
+			}					
 		}		
 	}
 	
