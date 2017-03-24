@@ -40,7 +40,9 @@ public class DeuteX extends FuncionsAuxiliars{
 	    DEUDELIMI=index++, 
 	    QUANTITAT=index++, 
 	    DEUTOR=index++, 
-	    TOTAL=index++; 
+	    TOTAL=index++,
+	    ADEU=index++,
+		SORTIR=index++;
 	
 	static final int 
 		ENG = 0, 
@@ -63,6 +65,8 @@ public class DeuteX extends FuncionsAuxiliars{
 	static String usuari="",contrasenya="";
 	static Pantalles pantallaActual = Pantalles.IDIOMES;
 	
+	//Variable del bucle principal del programa
+	static boolean stop = false;
 	
 	/**
 	 * Funció principal per el programa DeuteX
@@ -74,7 +78,6 @@ public class DeuteX extends FuncionsAuxiliars{
 		Connection conn = FuncionsDatabase.connexioBD(JDBC_DRIVER,DB_URL,DB_USER,DB_PASSWORD);
 		
 		Scanner sc = new Scanner(System.in);
-		boolean stop = false;
 						
 		//Carreguem la traducció
 		assignarTraduccio();
@@ -83,8 +86,8 @@ public class DeuteX extends FuncionsAuxiliars{
 		
 		//Bucle principal
 		while(stop == false){
-			interpret(conn);
-			/*if(pantallaActual==Pantalles.IDIOMES){
+			//interpret(conn);
+			if(pantallaActual==Pantalles.IDIOMES){
 				processarPantallaIdiomes();
 				
 			}else if(pantallaActual==Pantalles.PRINCIPAL){
@@ -92,18 +95,17 @@ public class DeuteX extends FuncionsAuxiliars{
 				
 			}else if(pantallaActual==Pantalles.USUARI){
 				processarPantallaUsuari(conn);				
-			}*/
+			}
 		}
 	}
 	
 	/**
 	 * Interpret de comandes
 	 */
-	private static void interpret(Connection conn){
+	public static void interpret(Connection conn){
 		Scanner sc = new Scanner(System.in);
 		System.out.println("\nIntrodueix ordre:");
 		String input = sc.nextLine();
-		
 		String[] paraules = FuncionsAuxiliars.separaParaules(input);
 		
 		if(paraules[0] != null){
@@ -143,7 +145,7 @@ public class DeuteX extends FuncionsAuxiliars{
 	/**
 	 * Processa la pantalla de selecció d'idioma
 	 */
-	private static void processarPantallaIdiomes(){
+	public static void processarPantallaIdiomes(){
 		tIdioma tIdioma = new tIdioma();
 		tIdioma = assignaIdioma();
 		idioma=tIdioma.idioma;
@@ -157,10 +159,10 @@ public class DeuteX extends FuncionsAuxiliars{
 	 * Processa la pantalla de registre / login
 	 * @param conn
 	 */
-	private static void processarPantallaPrincipal(Connection conn){
+	public static void processarPantallaPrincipal(Connection conn){
 		Scanner sc = new Scanner(System.in);
-		String[] mRegistre = {traduccio[REGISTRE][idioma],traduccio[ENTRAR][idioma]};
-		String opcio; //Opcio de registre/login (1-2)
+		String[] mRegistre = {traduccio[REGISTRE][idioma],traduccio[ENTRAR][idioma],traduccio[SORTIR][idioma]};
+		String opcio; //Opcio de registre/login (1-3)
 
 		contrasenya="";
 		
@@ -181,7 +183,11 @@ public class DeuteX extends FuncionsAuxiliars{
 			case "2": //Login
 				login(conn);
 	        	break;
-	           
+	        	
+			case "3": //Sortir del programa
+				sortir();
+				break;
+	 
 	        default:
             System.out.println(traduccio[OPCIONR][idioma]);
         }
@@ -191,11 +197,11 @@ public class DeuteX extends FuncionsAuxiliars{
 	 * Processa la pantalla de quan l'usuari ha entrat
 	 * @param conn
 	 */
-	private static void processarPantallaUsuari(Connection conn){
+	public static void processarPantallaUsuari(Connection conn){
 		Scanner sc = new Scanner(System.in);
-		String opcioMenuLogin; //Opcions d'usuari (1-3)
+		String opcioMenuLogin; //Opcions d'usuari (1-5)
 
-		String[] mDeute = {traduccio[ADEUTE][idioma],traduccio[EDEUTE][idioma],traduccio[IDEUTE][idioma],traduccio[ENRERA][idioma]}; 
+		String[] mDeute = {traduccio[ADEUTE][idioma],traduccio[EDEUTE][idioma],traduccio[IDEUTE][idioma],traduccio[ENRERA][idioma],traduccio[SORTIR][idioma]}; 
 
 		printMenu(mDeute);
 		System.out.println(traduccio[OPCIO][idioma]+": ");
@@ -224,6 +230,11 @@ public class DeuteX extends FuncionsAuxiliars{
 				
 			case "4": //Enrera
 				pantallaActual=Pantalles.PRINCIPAL;
+				usuari="";
+				break;
+				
+			case "5": //Sortir del programa
+				sortir();
 				break;
 				
 			default:
@@ -236,7 +247,7 @@ public class DeuteX extends FuncionsAuxiliars{
 	 * Funció per registrar un usuari
 	 * @param conn Connexió a la BD
 	 */
-	private static void registrar(Connection conn, String user, String password){
+	public static void registrar(Connection conn, String user, String password){
 		Scanner sc = new Scanner(System.in);
 		usuari=user;
 
@@ -245,8 +256,7 @@ public class DeuteX extends FuncionsAuxiliars{
 		}else{			
 			contrasenya=password;
 
-			if(conn != null)
-		    {
+			if(conn != null){
 				try {
 					Statement st = conn.createStatement();
 					st.execute(" insert into usuaris (nom,pass) values ('"+usuari+"','"+contrasenya+"') ");
@@ -262,7 +272,7 @@ public class DeuteX extends FuncionsAuxiliars{
 	 * Funció per validar login
 	 * @param conn Connexió a la BD
 	 */
-	private static void login(Connection conn){
+	public static void login(Connection conn){
 		Scanner sc = new Scanner(System.in);
 		System.out.print(traduccio[USUARI][idioma]+": ");
         usuari=sc.nextLine(); //Llegim el que Introdueix l'usuari.
@@ -283,7 +293,7 @@ public class DeuteX extends FuncionsAuxiliars{
 	 * @param conn Connexió a la BD
 	 * @param usuari Usuari actual
 	 */
-	private static void afegirDeute(Connection conn, String usuari, String deutor, String inputQuantitat){
+	public static void afegirDeute(Connection conn, String usuari, String deutor, String inputQuantitat){
 		Scanner sc = new Scanner(System.in);
 		float quantitat;
 		deutor=deutor.toUpperCase().trim();
@@ -301,7 +311,7 @@ public class DeuteX extends FuncionsAuxiliars{
 	 * @param conn Connexió a la BD
 	 * @param usuari Usuari actual
 	 */
-	private static void restarDeute(Connection conn, String usuari, String deutor, String inputQuantitat){
+	public static void restarDeute(Connection conn, String usuari, String deutor, String inputQuantitat){
 		Scanner sc = new Scanner(System.in);
 		float quantitat;
 		deutor=deutor.toUpperCase().trim();
@@ -313,11 +323,18 @@ public class DeuteX extends FuncionsAuxiliars{
 			System.out.println(traduccio[NOESNUM][idioma]);
 		}
 	}
+	/**
+	 * Comiat i tencar el programa
+	 */
+	public static void sortir(){
+		System.out.println(traduccio[ADEU][idioma]+" "+usuari);
+		stop=true;
+	}
 	
 	/**
 	 * Assigna les traduccions a la array
 	 */
-	private static void assignarTraduccio(){
+	public static void assignarTraduccio(){
 		//Assignació de la array bidimensional.
 		traduccio[REGISTRE][ENG]="Register";					traduccio[REGISTRE][CAST]="Registrarse";							traduccio[REGISTRE][CAT]="Registrar-se";
 		traduccio[ENTRAR][ENG]="Login";							traduccio[ENTRAR][CAST]="Entrar";									traduccio[ENTRAR][CAT]="Entrar";
@@ -336,12 +353,15 @@ public class DeuteX extends FuncionsAuxiliars{
 		traduccio[IDEUTE][ENG]="Debts information";				traduccio[IDEUTE][CAST]="Informacion de deudas";					traduccio[IDEUTE][CAT]="Informacio de deutes";
 		traduccio[NOESNUM][ENG]="Is not a positive number";		traduccio[NOESNUM][CAST]="No es un número positivo";				traduccio[NOESNUM][CAT]="No és un nombre positiu";
 		traduccio[NODEURES][ENG]="does not owe you anything.";	traduccio[NODEURES][CAST]="no te debe nada.";						traduccio[NODEURES][CAT]="no et deu res.";
-		traduccio[ENRERA][ENG]="Return";						traduccio[ENRERA][CAST]="Volver atrás";								traduccio[ENRERA][CAT]="Tornar enrera";
+		traduccio[ENRERA][ENG]="Go back";						traduccio[ENRERA][CAST]="Volver atrás";								traduccio[ENRERA][CAT]="Tornar enrera";
 		traduccio[OPCIO][ENG]="Choose an option";				traduccio[OPCIO][CAST]="Elige una opción";							traduccio[OPCIO][CAT]="Tria una opcio";
 		traduccio[DEUDINERS][ENG]="Insert who owes you money";	traduccio[DEUDINERS][CAST]="Introduce quien te debe dinero";		traduccio[DEUDINERS][CAT]="Introdueix qui et deu diners";
 		traduccio[DEUDELIMI][ENG]="Insert who gave you money"; 	traduccio[DEUDELIMI][CAST]="Introduce quien te ha devuelto dinero"; traduccio[DEUDELIMI][CAT]="Introdueix qui t'ha tornat diners"; 
 		traduccio[QUANTITAT][ENG]="Insert the amount";			traduccio[QUANTITAT][CAST]="Introduce la cantidad";					traduccio[QUANTITAT][CAT]="Introdueix la quantitat";
 		traduccio[DEUTOR][ENG]="Debtor\tAmnt.";					traduccio[DEUTOR][CAST]="Deutor\tCdad.";							traduccio[DEUTOR][CAT]="Deutor\tQtat.";
 		traduccio[TOTAL][ENG]="Total";							traduccio[TOTAL][CAST]="Total";										traduccio[TOTAL][CAT]="Total";
+		traduccio[SORTIR][ENG]="Exit";							traduccio[SORTIR][CAST]="Salir";									traduccio[SORTIR][CAT]="Sortir";
+		traduccio[ADEU][ENG]="Goodbye";						traduccio[ADEU][CAST]="Adios";										traduccio[ADEU][CAT]="Adéu";
+		
 	}
 }
