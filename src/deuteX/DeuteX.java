@@ -9,8 +9,8 @@ public class DeuteX extends FuncionsAuxiliars{
 	
 	//JDBC driver name i base de dades URL
 	static final String JDBC_DRIVER="org.postgresql.Driver";
-	//static final String DB_URL = "jdbc:postgresql://192.168.2.215/DeuteX";
-	static final String DB_URL = "jdbc:postgresql://192.168.1.140/DeuteX";
+	static final String DB_URL = "jdbc:postgresql://192.168.2.215/DeuteX";
+	//static final String DB_URL = "jdbc:postgresql://192.168.1.140/DeuteX";
 	static final String DB_USER="postgres";
 	static final String DB_PASSWORD="smx";
 	
@@ -73,10 +73,6 @@ public class DeuteX extends FuncionsAuxiliars{
 		//Agafem la connexió de la Base de Dades
 		Connection conn = FuncionsDatabase.connexioBD(JDBC_DRIVER,DB_URL,DB_USER,DB_PASSWORD);
 		
-		/*if(args[0] != null){
-			//Interpret de comandes
-		}*/
-		
 		Scanner sc = new Scanner(System.in);
 		boolean stop = false;
 						
@@ -109,33 +105,36 @@ public class DeuteX extends FuncionsAuxiliars{
 		String input = sc.nextLine();
 		
 		String[] paraules = FuncionsAuxiliars.separaParaules(input);
+		
 		if(paraules[0] != null){
 			String deutor, prestamista, quantitat;
+			
 			switch(paraules[0]){
-			case "registrar":
-				System.out.println("Registrant a "+paraules[1]);
-				registrar(conn,paraules[1],paraules[2]);
-				
-				break;
-			case "afegir":
-				deutor = paraules[1];
-				prestamista = paraules[2];
-				quantitat = paraules[3];
-				afegirDeute(conn, deutor, prestamista, quantitat);
-
-				break;
-			case "restar":
-				deutor = paraules[1];
-				prestamista = paraules[2];
-				quantitat = paraules[3];
-				restarDeute(conn, deutor, prestamista, quantitat);
-
-				break;
-			case "mostrarTaula":
-				String usuari = paraules[1];
-				FuncionsAuxiliars.printTaula(conn, usuari, monedaInicial, monedaFinal);
-				break;
-			default:
+			
+				case "registrar":
+					System.out.println("Registrant a "+paraules[1]);
+					registrar(conn,paraules[1],paraules[2]);
+					
+					break;
+				case "afegir":
+					deutor = paraules[1];
+					prestamista = paraules[2];
+					quantitat = paraules[3];
+					afegirDeute(conn, deutor, prestamista, quantitat);
+	
+					break;
+				case "restar":
+					deutor = paraules[1];
+					prestamista = paraules[2];
+					quantitat = paraules[3];
+					restarDeute(conn, deutor, prestamista, quantitat);
+	
+					break;
+				case "mostrarTaula":
+					String usuari = paraules[1];
+					FuncionsAuxiliars.printTaula(conn, usuari, monedaInicial, monedaFinal);
+					break;
+				default:
 				System.out.println("Opcio no reconeguda: "+paraules[0]);
 			}
 		}		
@@ -170,20 +169,20 @@ public class DeuteX extends FuncionsAuxiliars{
 		opcio = sc.nextLine();
 		
 		switch(opcio){
-		case "1": //Registre
-			System.out.print(traduccio[INTNOM][idioma]+":  ");
-			String usuari = sc.nextLine();
-			System.out.print(traduccio[INCONTRASENYA][idioma]+": ");
-			String contrasenya = sc.nextLine();
-
-			registrar(conn,usuari,contrasenya);
-			break;
-						
-		case "2": //Login
-			login(conn);
-        	break;
-           
-        default:
+			case "1": //Registre
+				System.out.print(traduccio[INTNOM][idioma]+":  ");
+				String usuari = sc.nextLine();
+				System.out.print(traduccio[INCONTRASENYA][idioma]+": ");
+				String contrasenya = sc.nextLine();
+	
+				registrar(conn,usuari,contrasenya);
+				break;
+							
+			case "2": //Login
+				login(conn);
+	        	break;
+	           
+	        default:
             System.out.println(traduccio[OPCIONR][idioma]);
         }
 	}
@@ -204,31 +203,31 @@ public class DeuteX extends FuncionsAuxiliars{
 		String deutor,quantitat;
 
 		switch(opcioMenuLogin){
-		case "1": //Afegir deute
-			System.out.print(traduccio[DEUDINERS][idioma]+": ");
-			deutor = sc.nextLine();
-			System.out.print(traduccio[QUANTITAT][idioma]+": ");
-			quantitat = sc.nextLine();
-			afegirDeute(conn, usuari, deutor, quantitat);
-		break;
-		 case "2": //Resta deute
-			System.out.print(traduccio[DEUDINERS][idioma]+": ");
-			deutor = sc.nextLine();
-			System.out.print(traduccio[QUANTITAT][idioma]+": ");
-			quantitat = sc.nextLine();
-	        restarDeute(conn, usuari, deutor, quantitat);
+			case "1": //Afegir deute
+				System.out.print(traduccio[DEUDINERS][idioma]+": ");
+				deutor = sc.nextLine();
+				System.out.print(traduccio[QUANTITAT][idioma]+": ");
+				quantitat = sc.nextLine();
+				afegirDeute(conn, usuari, deutor, quantitat);
 			break;
-			
-		case "3": //Notifiacions / informació
-			printTaula(conn,usuari,monedaInicial, monedaFinal);
-			break;
-			
-		case "4": //Enrera
-			pantallaActual=Pantalles.PRINCIPAL;
-			break;
-			
-		default:
-			System.out.println(traduccio[OPCIONR][idioma]);
+			 case "2": //Resta deute
+				System.out.print(traduccio[DEUDINERS][idioma]+": ");
+				deutor = sc.nextLine();
+				System.out.print(traduccio[QUANTITAT][idioma]+": ");
+				quantitat = sc.nextLine();
+		        restarDeute(conn, usuari, deutor, quantitat);
+				break;
+				
+			case "3": //Notifiacions / informació
+				printTaula(conn,usuari,monedaInicial, monedaFinal);
+				break;
+				
+			case "4": //Enrera
+				pantallaActual=Pantalles.PRINCIPAL;
+				break;
+				
+			default:
+				System.out.println(traduccio[OPCIONR][idioma]);
 		}	
 		System.out.println();
 	}
