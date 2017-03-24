@@ -17,6 +17,7 @@ public class FuncionsDatabase {
 	 */
 	public static Connection connexioBD(String jdbcDriver, String dbUrl, String dbUser, String dbPassword) {
 		Connection conn=null;
+		
 		try {
 			Class.forName(jdbcDriver);
 			conn = DriverManager.getConnection(dbUrl,dbUser,dbPassword);
@@ -36,17 +37,18 @@ public class FuncionsDatabase {
 	 */
 	public static boolean existeixUsuari(Connection conn, String usuari){
 		//Si la connexio no es nula
-		if(conn != null)
-	    {
+		if(conn != null){
+			
 			try {
 				Statement st = conn.createStatement();
 				ResultSet rs = st.executeQuery("select * from usuaris");
 				
-				while(rs.next())
+				while(rs.next()){
 					//Comprova si l'usuari està a la Base de Dades
-				if(usuari.equals(rs.getString("nom"))){
-					//Retorna un valor cert perquè pugui continuar.
-					return true;
+					if(usuari.equals(rs.getString("nom"))){
+						//Retorna un valor cert perquè pugui continuar.
+						return true;
+					}
 				}
 				//Tanquem les connexions a la base de dades.
 				rs.close();
@@ -68,8 +70,8 @@ public class FuncionsDatabase {
 	 */
 	public static boolean validarLogin(Connection conn, String usuari, String password){
 		//Si la connexio no es nula
-		if(conn != null)
-	    {
+		if(conn != null){
+			
 			try {
 				Statement st = conn.createStatement();
 				ResultSet rs = st.executeQuery("select * from usuaris");
@@ -99,6 +101,7 @@ public class FuncionsDatabase {
 	public static int getUserID(Connection conn, String usuari){
 		int prestamistaID=-1;
 		Statement st;
+		
 		try {
 			st = conn.createStatement();
 			ResultSet rs = st.executeQuery(" select * from usuaris u where u.nom like '"+usuari+"' ");
@@ -125,6 +128,7 @@ public class FuncionsDatabase {
 	 */
 	public static void eliminarSaldades(Connection conn){
 		Statement st;
+		
 		try {
 			st = conn.createStatement();
 			st.execute(" delete from deutes where quantitat = 0 ");
@@ -144,6 +148,7 @@ public class FuncionsDatabase {
 	 */
 	public static void afegirDeute(Connection conn, String deutor,String prestamista,double quantitat){
 		Statement st;
+		
 		try{
 			int usuariID=FuncionsDatabase.getUserID(conn, prestamista);
 			int prestamistaID=-1;
@@ -181,12 +186,14 @@ public class FuncionsDatabase {
 	 */
 	public static void restarDeute(Connection conn, String deutor,String prestamista,double quantitat){
 		Statement st;
+		
 		try{
 			int usuariID=FuncionsDatabase.getUserID(conn, prestamista);
 			int prestamistaID=-1;
 			String dbDeutor="";
 			st = conn.createStatement();
 			ResultSet rs = st.executeQuery(" select * from usuaris u left join deutes d on u.id_usuari=d.prestamista");
+			
 			while(rs.next()){
 				if(rs.getString("id_usuari").equals(rs.getString("prestamista"))){
 					if(rs.getString("deutor").equals(deutor)){
@@ -195,6 +202,7 @@ public class FuncionsDatabase {
 					}
 				}
 			}
+			
 			//Comprovem si el deutor ja existeix.
 			if(prestamistaID == usuariID && dbDeutor.equals(deutor)){
 				st.execute("UPDATE deutes SET quantitat = quantitat - "+quantitat + " where prestamista = '"+usuariID+"' and deutor = '" + deutor+"' " );
