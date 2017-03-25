@@ -9,8 +9,8 @@ public class DeuteX extends FuncionsAuxiliars{
 	
 	//JDBC driver name i base de dades URL
 	static final String JDBC_DRIVER="org.postgresql.Driver";
-	static final String DB_URL = "jdbc:postgresql://192.168.2.215/DeuteX";
-	//static final String DB_URL = "jdbc:postgresql://192.168.1.140/DeuteX";
+	//static final String DB_URL = "jdbc:postgresql://192.168.2.215/DeuteX";
+	static final String DB_URL = "jdbc:postgresql://192.168.1.140/DeuteX";
 	static final String DB_USER="postgres";
 	static final String DB_PASSWORD="smx";
 	
@@ -105,50 +105,53 @@ public class DeuteX extends FuncionsAuxiliars{
 	public static void interpret(Connection conn){
 		Scanner sc = new Scanner(System.in);
 		System.out.println("\nIntrodueix ordre:");
-		String input = sc.nextLine();
-		String[] paraules = FuncionsAuxiliars.separaParaules(input);
-		
-		if(paraules[0] != null){
-			String deutor, prestamista, quantitat;
+		String ordre;
+		while(sc.hasNextLine()){
+			ordre = sc.nextLine();
+			String[] paraules = FuncionsAuxiliars.separaParaules(ordre);
 			
-			switch(paraules[0]){
+			if(paraules[0] != null){
+				String deutor, prestamista, quantitat;
 				
-				case "registrar":
-					System.out.println("Registrant a "+paraules[1]);
-					registrar(conn,paraules[1],paraules[2]);
+				switch(paraules[0]){
 					
-					break;
-				case "afegir":
-					deutor = paraules[1];
-					prestamista = paraules[2];
-					quantitat = paraules[3];
-					afegirDeute(conn, deutor, prestamista, quantitat);
-	
-					break;
-				case "restar":
-					deutor = paraules[1];
-					prestamista = paraules[2];
-					quantitat = paraules[3];
-					restarDeute(conn, deutor, prestamista, quantitat);
-	
-					break;
-				case "mostrarTaula":
-					String usuari = paraules[1];
-					FuncionsAuxiliars.printTaula(conn, usuari, monedaInicial, monedaFinal);
-					break;
-					
-				case "help":
-					sortir();
-					break;
-					
-				case "bye":
-					sortir();
-					break;
-					
-				default:
-				System.out.println("Opcio no reconeguda: "+paraules[0]);
-			}					
-		}		
+					case "registrar":
+						System.out.println("Registrant a "+paraules[1]);
+						registrar(conn,paraules[1],paraules[2]);
+						
+						break;
+					case "afegir":
+						deutor = paraules[1];
+						prestamista = paraules[2];
+						quantitat = paraules[3];
+						afegirDeute(conn, deutor, prestamista, quantitat);
+		
+						break;
+					case "restar":
+						deutor = paraules[1];
+						prestamista = paraules[2];
+						quantitat = paraules[3];
+						restarDeute(conn, deutor, prestamista, quantitat);
+		
+						break;
+					case "mostrarTaula":
+						String usuari = paraules[1];
+						FuncionsAuxiliars.printTaula(conn, usuari, monedaInicial, monedaFinal);
+						break;
+						
+					case "help":
+						sortir();
+						break;
+						
+					case "bye":
+						sortir();
+						break;
+						
+					default:
+					System.out.println("Opcio no reconeguda: "+paraules[0]);
+				}					
+			}	
+		}
 	}
 	
 	/**
