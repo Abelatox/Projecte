@@ -84,18 +84,24 @@ public class DeuteX extends FuncionsAuxiliars{
 		
 		System.out.println("Benvingut a DeuteX");
 		
+		//Activar intèrpret de commandes
+		boolean activarInterpret = true;
+		
 		//Bucle principal
 		while(stop == false){
-			interpret(conn);
-			/*if(pantallaActual==Pantalles.IDIOMES){
-				processarPantallaIdiomes();
-				
-			}else if(pantallaActual==Pantalles.PRINCIPAL){
-				processarPantallaPrincipal(conn);
-				
-			}else if(pantallaActual==Pantalles.USUARI){
-				processarPantallaUsuari(conn);				
-			}*/
+			if(activarInterpret){
+				interpret(conn);
+			}else{
+				if(pantallaActual==Pantalles.IDIOMES){
+					processarPantallaIdiomes();
+					
+				}else if(pantallaActual==Pantalles.PRINCIPAL){
+					processarPantallaPrincipal(conn);
+					
+				}else if(pantallaActual==Pantalles.USUARI){
+					processarPantallaUsuari(conn);				
+				}
+			}
 		}
 	}
 	
@@ -140,7 +146,7 @@ public class DeuteX extends FuncionsAuxiliars{
 						break;
 						
 					case "help":
-						sortir();
+						mostrarAjuda();
 						break;
 						
 					case "bye":
@@ -335,6 +341,28 @@ public class DeuteX extends FuncionsAuxiliars{
 			System.out.println(traduccio[NOESNUM][idioma]);
 		}
 	}
+	
+	private static void mostrarAjuda(){
+		System.out.println("\nregistrar <usuari> <contrasenya>");
+		System.out.println("Registra un usuari");
+		System.out.println("registrar Pol 1234");
+		System.out.println("\nafegir <usuari> <deutor> <quantitat>");
+		System.out.println("Afegeix / incrementa un deute a un usuari");
+		System.out.println("afegir Xevi Albert 5");
+		System.out.println("\nrestar <usuari> <deutor> <quantitat>");
+		System.out.println("Resta un deute a un usuari");
+		System.out.println("restar Abel Josep 10");
+		System.out.println("\nmostrarTaula <usuari>");
+		System.out.println("Mostra la taula de deutes d'un usuari");
+		System.out.println("mostrarTaula Xevi");
+		System.out.println("\nhelp");
+		System.out.println("Mostra aquesta ajuda");
+		System.out.println("\nbye");
+		System.out.println("Surt del programa");
+
+
+	}
+	
 	/**
 	 * Comiat i tencar el programa
 	 */
