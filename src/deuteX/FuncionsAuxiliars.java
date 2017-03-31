@@ -10,10 +10,10 @@ import java.util.Scanner;
 public class FuncionsAuxiliars {
 	/**
 	 * Imprimeix la taula dels deutes
-	 * @param conn Connexi() a la BD
+	 * @param conn Connexió a la BD
 	 * @param usuari Usuari actual
-	 * @param monedaInicial Moneda abans del n()mero
-	 * @param monedaFinal Moneda despr()s del n()mero
+	 * @param monedaInicial Moneda abans del número
+	 * @param monedaFinal Moneda després del número
 	 */
 	public static void printTaula(Connection conn,String usuari,String monedaInicial, String monedaFinal){
 		float total=0;
@@ -91,7 +91,7 @@ public class FuncionsAuxiliars {
 	
 	/**
 	 * Imprimeix els menus
-	 * @param array Array que cont() els valors del men()
+	 * @param array Array que conté els valors del menú
 	 */
 	public static void printMenu(String[] array){
 		System.out.println();
@@ -102,9 +102,9 @@ public class FuncionsAuxiliars {
 	}
 	
 	/**
-	 * Comprova si un n()mero ()s positiu
-	 * @param num N()mero a comprovar en String
-	 * @return (boolean) true si el n()mero ()s positiu
+	 * Comprova si un número és positiu
+	 * @param num Número a comprovar en String
+	 * @return (boolean) true si el número és positiu
 	 */
 	//TODO provar de forma m()s simple amb un try catch
 	public static boolean esNumeroPositiu(String num){

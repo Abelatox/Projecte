@@ -71,7 +71,7 @@ public class DeuteX extends FuncionsAuxiliars{
 	/**
 	 * Funció principal per el programa DeuteX
 	 * Permet crear i entrar amb usuaris, afegir i restar deutes i també mostra una taula de les deutes.
-	 * @param args
+	 * @param args Arguments no utilitzats
 	 */
 	public static void main(String[] args) {
 		//Agafem la connexió de la Base de Dades
@@ -107,6 +107,7 @@ public class DeuteX extends FuncionsAuxiliars{
 	
 	/**
 	 * Interpret de comandes
+	 * @param conn Connexio a la BD
 	 */
 	public static void interpret(Connection conn){
 		Scanner sc = new Scanner(System.in);
@@ -175,7 +176,7 @@ public class DeuteX extends FuncionsAuxiliars{
 	
 	/**
 	 * Processa la pantalla de registre / login
-	 * @param conn
+	 * @param conn Connexio a la BD
 	 */
 	public static void processarPantallaPrincipal(Connection conn){
 		Scanner sc = new Scanner(System.in);
@@ -213,7 +214,7 @@ public class DeuteX extends FuncionsAuxiliars{
 	
 	/**
 	 * Processa la pantalla de quan l'usuari ha entrat
-	 * @param conn
+	 * @param conn Connexio a la BD
 	 */
 	public static void processarPantallaUsuari(Connection conn){
 		Scanner sc = new Scanner(System.in);
@@ -342,7 +343,7 @@ public class DeuteX extends FuncionsAuxiliars{
 		}
 	}
 	
-	private static void mostrarAjuda(){
+	public static void mostrarAjuda(){
 		System.out.println("\nregistrar <usuari> <contrasenya>");
 		System.out.println("Registra un usuari");
 		System.out.println("registrar Pol 1234");
